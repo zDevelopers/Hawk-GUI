@@ -1,0 +1,7 @@
+[package]
+name = "uhcreloaded-reports"
+version = "0.1.0"
+authors = ["Amaury Carrade <amaury@carrade.eu>"]
+edition = "2018"
+
+[dependencies]
