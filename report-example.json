@@ -1,0 +1,101 @@
+{
+  "match_uuid": "9be8ef14-a14e-4f96-b61e-b865c27ada8f",
+  "title": "§5KTZ §dVII",
+  "date": "2018-12-16T11:08:26",
+  "teams": [
+    {
+      "name": "The team name",
+      "color": "DARK_BLUE",
+      "players": [
+        {
+          "uuid": "55b89885-673c-4458-a8bd-33ad9c6190b4",
+          "name": "Dada_exe",
+          "statistics": {
+            "play_time": 8772,
+            "sneak_time": 776,
+            "movements": {
+              "walk_one_cm": 470555,
+              "crouch_one_cm": 21591,
+              "sprint_one_cm": 1860641,
+              "swim_one_cm": 50097,
+              "fall_one_cm": 1554843,
+              "climb_one_cm": 7752,
+              "fly_one_cm": 9606272,
+              "walk_under_water_one_cm": 37865,
+              "minecart_one_cm": 0,
+              "boat_one_cm": 0,
+              "pig_one_cm": 0,
+              "horse_one_cm": 0,
+              "aviate_one_cm": 0
+            },
+            "actions": {
+              "jump": 10399,
+              "eat": 23,
+              "mob_kills": 23,
+              "player_kills": 3,
+              "drops": 234,
+              "enchant_item": 12,
+              "animals_bread": 4,
+              "fish_caught": 12,
+              "talked_to_villager": 4,
+              "traded_with_villager": 3,
+              "interact_with_crafting_table": 87,
+              "interact_with_furnace": 34,
+              "interact_with_brewingstand": 4,
+              "open_chest": 1,
+              "trigger_trapped_chest": 2,
+              "pot_flower": 1,
+              "play_record": 1
+            },
+            "mining": {
+              "cobblestone": 366,
+              "diamond_ore": 9,
+              "iron_ore": 12,
+              "gold_ore": 15,
+              "emerald_ore": 2
+            },
+            "pickup": {
+              "string": 3,
+              "gunpowder": 2
+            }
+          }
+        },
+        {
+          "uuid": "0dd34bda-c13b-473b-a887-368027ca05ca",
+          "name": "Jenjeur"
+        }
+      ]
+    },
+    {
+      "name": "#BananaForScale",
+      "color": "YELLOW",
+      "players": [
+        {
+          "uuid": "da04cd54-c6c7-4672-97c5-85663f5bccf6",
+          "name": "AmauryPi"
+        },
+        {
+          "uuid": "6e84adc0-b6e6-406c-b3da-772a7459ce15",
+          "name": "Morgan_A"
+        }
+      ]
+    }
+  ],
+  "damages": [
+    {
+      "damage_cause": "PLAYER_SWEEP",
+      "weapon": "SWORD_IRON",
+      "damager": "55b89885-673c-4458-a8bd-33ad9c6190b4",
+      "damagee": "da04cd54-c6c7-4672-97c5-85663f5bccf6",
+      "damage": 4,
+      "lethal": false
+    }
+  ],
+  "heals": [
+    {
+      "heal_cause": "GOLDEN_APPLE",
+      "healed": "0dd34bda-c13b-473b-a887-368027ca05ca",
+      "heal": 8
+    }
+  ]
+}
