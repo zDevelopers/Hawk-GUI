@@ -1,7 +1,5 @@
-use std::collections::BTreeMap;
 use std::collections::HashMap;
 
-use rocket_contrib::templates::tera::{FilterFn, from_value, Result, to_value, Value};
 
 /// Parses Minecraft color codes into HTML formatting.
 ///
