@@ -1,4 +1,7 @@
+use std::collections::BTreeMap;
 use std::collections::HashMap;
+
+use rocket_contrib::templates::tera::{FilterFn, from_value, Result, to_value, Value};
 
 /// Parses Minecraft color codes into HTML formatting.
 ///
@@ -13,7 +16,7 @@ pub fn parse_color_codes(raw_string: String) -> String {
         return String::from("§");
     }
 
-    let mut formatted_string = String::from("");
+    let mut formatted_string = String::with_capacity(raw_string.len() * 2);
 
     let mut colors_map = HashMap::new();
     let mut formattings_map = HashMap::new();
@@ -40,6 +43,9 @@ pub fn parse_color_codes(raw_string: String) -> String {
     formattings_map.insert('n', "text-decoration: underline;");
     formattings_map.insert('o', "font-style: italic;");
     formattings_map.insert('r', "color: inherit;");
+
+    let colors_map = colors_map;
+    let formattings_map = formattings_map;
 
     let mut code_detected = false;
     let mut nested_formatters = 0u8;
@@ -103,6 +109,8 @@ pub fn parse_color_codes(raw_string: String) -> String {
 
     // We close all remaining <span> tags, if any
     for _ in 0..nested_formatters { formatted_string += &String::from("</span>") }
+
+    formatted_string.shrink_to_fit();
 
     let formatted_string = formatted_string;
 

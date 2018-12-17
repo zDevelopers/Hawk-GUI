@@ -17,7 +17,7 @@
                     <div class="columns is-vcentered">
                         <div class="column is-7">
                             <h1 class="title">
-                                {{ match_title_formatted | safe }}
+                                {{ match_title | minecraft | safe }}
                             </h1>
                             <h2 class="subtitle">
                                 {{ match_id }}

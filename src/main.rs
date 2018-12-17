@@ -9,6 +9,7 @@ use std::collections::HashMap;
 use rocket_contrib::json::{Json, JsonValue};
 use rocket_contrib::serve::StaticFiles;
 use rocket_contrib::templates::Template;
+use rocket_contrib::templates::tera::to_value;
 
 use lib::minecraft::parse_color_codes;
 use lib::report_raw::Report;
@@ -27,7 +28,7 @@ fn publish(match_report: Json<Report>) -> Json<Report> {
 fn display_match(match_id: String) -> Template {
     let mut context = HashMap::new();
     context.insert("match_id", match_id);
-    context.insert("match_title_formatted", parse_color_codes(String::from("§5§lKTZ §d§lVII")).to_string());
+    context.insert("match_title", String::from("§5§lKTZ §d§lVII"));
 
     Template::render("report", context)
 }
@@ -58,7 +59,9 @@ fn main() {
     rocket::ignite()
         .mount("/", routes![index, publish, display_match, display_match_json])
         .mount("/static", StaticFiles::from("static/dist"))
-        .attach(Template::fairing())
+        .attach(Template::custom(|engines| {
+            engines.tera.register_filter("minecraft", |input, _args| Ok(to_value(parse_color_codes(input.as_str().unwrap_or("").to_string())).unwrap()))
+        }))
         .register(catchers!(error_unprocessable_entity))
         .launch();
 }
