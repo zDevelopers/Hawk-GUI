@@ -9,3 +9,5 @@
 .directory
 .Trash-*
 .nfs*
+
+.sass-cache

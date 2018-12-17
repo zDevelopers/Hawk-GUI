@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, user-scalable=yes" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+        <title>Récapitulatif de partie {{ match_id }}</title>
+
+        <link rel="stylesheet" href="/static/css/uhcreloaded-reports.min.css" />
+    </head>
+    <body>
+        <header class="hero is-primary is-bold">
+            <div class="hero-body">
+                <div class="container">
+                    <div class="columns is-vcentered">
+                        <div class="column is-7">
+                            <h1 class="title">
+                                {{ match_title_formatted | safe }}
+                            </h1>
+                            <h2 class="subtitle">
+                                {{ match_id }}
+                            </h2>
+                        </div>
+                        <div class="column is-5 has-text-right uhc-winners">
+                            <h3>Les gagnants</h3>
+                            <ul>
+                                <li>
+                                    <figure class="image tooltip is-tooltip-bottom" data-tooltip="Dada_exe">
+                                        <img src="https://api.cassayre.me/minecraft/helmet/10/Dada_exe" alt="Dada_exe" />
+                                    </figure>
+                                </li>
+                                <li>
+                                    <figure class="image tooltip is-tooltip-bottom" data-tooltip="Jenjeur">
+                                        <img src="https://api.cassayre.me/minecraft/helmet/10/Jenjeur" alt="Jenjeur" />
+                                    </figure>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-foot">
+                <nav class="tabs is-boxed is-fullwidtth">
+                    <div class="container">
+                        <ul>
+                            <li class="is-active">
+                                <a>Récapitulatif de partie</a>
+                            </li>
+                            <li>
+                                <a>Dégâts et régénérations</a>
+                            </li>
+                            <li>
+                                <a>Joueurs et statistiques</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <section class="section">
+            <div class="container">
+                <p>pomf</p>
+            </div>
+        </section>
+
+        <footer>
+            <div class="content has-text-centered">
+                <p>
+                    Généré grâce au <a href="https://github.com/zDevelopers/UHPlugin">plugin UHCReloaded</a> par
+                    <a href="https://amaury.carrade.eu">Amaury Carrade</a>. Site web de récapitulatifs développé
+                    avec amour <a href="https://github.com/zDevelopers/UHCR-Reports">en Rust</a> grâce à
+                    <a href="https://rocket.rs">Rocket</a>.<br />
+                    Nous ne sommes pas responsables du contenu de ce site (en particulier, des pseudonymes et noms d'équipe).
+                </p>
+            </div>
+        </footer>
+    </body>
+</html>

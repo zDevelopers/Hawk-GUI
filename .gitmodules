@@ -1,0 +1,6 @@
+[submodule "static/scss/bulma"]
+	path = static/scss/bulma
+	url = https://github.com/jgthms/bulma
+[submodule "static/scss/bulma-tooltip"]
+	path = static/scss/bulma-tooltip
+	url = https://github.com/Wikiki/bulma-tooltip.git
