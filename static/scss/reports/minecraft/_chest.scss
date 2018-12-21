@@ -1,0 +1,70 @@
+@import "variables";
+
+$minecraft-chest-inner-border-top-left: #262626;
+$minecraft-chest-inner-border-bottom-right: #919191;
+
+.chest {
+  padding: .6rem .6rem .8rem;
+
+  background-color: $minecraft-gray-active;
+
+  border-top: $minecraft-border-top-left 7px solid;
+  border-left: $minecraft-border-top-left 7px solid;
+  border-right: $minecraft-border-bottom-right 7px solid;
+  border-bottom: $minecraft-border-bottom-right 7px solid;
+
+  border-radius: 10px;
+
+  font-family: $family-minecraft;
+
+  h3.chest-title {
+    padding-top: 0;
+    padding-bottom: 0;
+
+    position: relative;
+    top: -.4rem;
+    font-size: $size-medium;
+
+    color: $minecraft-text;
+    text-shadow: 1px 1px 0 rgba($minecraft-text, .2);
+
+    &.is-all-caps {
+      top: -.7rem;
+
+      font-size: $size-large;
+      font-variant: all-small-caps;
+
+      letter-spacing: 2px;
+    }
+  }
+
+  .chest-inner {
+    padding: 1em;
+
+    box-shadow:  7px  7px 10px 0 rgba($minecraft-chest-inner-border-top-left, .4) inset,
+    -7px -7px 10px 0 rgba($minecraft-chest-inner-border-bottom-right, .2) inset;
+
+    border-top: $minecraft-chest-inner-border-top-left 3px solid;
+    border-left: $minecraft-chest-inner-border-top-left 3px solid;
+    border-right: $minecraft-chest-inner-border-bottom-right 3px solid;
+    border-bottom: $minecraft-chest-inner-border-bottom-right 3px solid;
+
+    background-size: 32px;
+    background-repeat: repeat;
+
+    &.is-sandstone {
+      background-image: url("../images/sandstone.png");
+    }
+
+    &.is-scrollable {
+      overflow: auto;
+      max-height: 60vh;
+
+      background-attachment: local;
+    }
+  }
+}
+
+.column > .chest {
+  margin: auto .5rem;
+}

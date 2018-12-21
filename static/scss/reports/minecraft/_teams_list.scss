@@ -1,0 +1,51 @@
+@import "variables";
+@import "../../bulma/sass/utilities/functions";
+
+.teams-list {
+  h4 {
+    position: relative;
+
+    margin-top: 2rem;
+    margin-bottom: .8rem;
+
+    &:not(:first-of-type) {
+      margin-top: 3rem;
+    }
+
+    font-size: $size-large;
+
+    &:before {
+      content: '';
+
+      display: block;
+
+      position: absolute;
+      top: -.4rem;
+      left: -.1rem;
+
+      height: 8px;
+      width: 10%;
+    }
+
+    @each $color-name, $color-hex in zip(map_keys($minecraft-colors-foreground), map_values($minecraft-colors-foreground)) {
+      &.team-#{$color-name} {
+        &.has-text-colored {
+          color: $color-hex;
+        }
+
+        &.has-outline {
+          $outline-color: if(colorLuminance($color-hex) > .8, darken($color-hex, 36%), darken($color-hex, 30%));
+
+          text-shadow: -1px -1px 0 $outline-color,
+                        1px -1px 0 $outline-color,
+                       -1px  1px 0 $outline-color,
+                        1px  1px 0 $outline-color;
+        }
+
+        &:before {
+          background-color: $color-hex;
+        }
+      }
+    }
+  }
+}

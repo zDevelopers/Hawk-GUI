@@ -1,0 +1,81 @@
+@import "variables";
+
+.player {
+  display: flex;
+  align-items: center;
+
+  padding: .4rem;
+  margin: .2rem;
+
+  border-radius: 4px;
+
+  font-family: $family-minecraft;
+  font-size: $size-normal;
+
+  color: $minecraft-text;
+
+  figure {
+    display: block;
+
+    img {
+      width: 32px;
+      height: 32px;
+
+      border-radius: 4px;
+    }
+  }
+
+  span {
+    display: block;
+    padding-left: .4rem;
+
+    flex-grow: 2;
+  }
+
+  &.is-large {
+    figure img {
+      width: 48px;
+      height: 48px;
+    }
+    span {
+      padding-left: .8rem;
+    }
+  }
+
+  &.is-centered {
+    span {
+      text-align: center;
+      padding: 0;
+    }
+  }
+
+  @each $color-name, $color-hex in zip(map_keys($minecraft-colors-foreground), map_values($minecraft-colors-foreground)) {
+    &.is-#{$color-name} {
+      color: $color-hex;
+
+      &.has-background {
+        background-color: rgba(map_get($minecraft-colors-background, $color-name), .8);
+      }
+
+      &.has-hover:hover {
+        background-color: rgba(map_get($minecraft-colors-background, $color-name), .7);
+      }
+    }
+
+    &.is-#{$color-name}-hover:hover {
+      color: $color-hex;
+      background-color: rgba(map_get($minecraft-colors-background, $color-name), .7);
+    }
+  }
+}
+
+ul.players-list {
+  display: flex;
+  flex-wrap: wrap;
+
+  max-width: 100%;
+
+  li {
+    width: 33%;
+  }
+}

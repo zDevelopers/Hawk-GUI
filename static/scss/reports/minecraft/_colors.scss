@@ -1,0 +1,21 @@
+@import "variables";
+
+@each $color-name, $color-hex in zip(map_keys($minecraft-colors-foreground), map_values($minecraft-colors-foreground)) {
+  .has-minecraft-#{$color-name}-color {
+    color: $color-hex;
+
+    &.has-shadow {
+      text-shadow: 1px 1px 0 rgba($minecraft-text, .2);
+    }
+
+    &.has-colored-shadow {
+      text-shadow: 1px 1px 0 rgba($color-hex, .2);
+    }
+  }
+}
+
+@each $color-name, $color-hex in zip(map_keys($minecraft-colors-background), map_values($minecraft-colors-background)) {
+  .has-minecraft-#{$color-name}-background {
+    background-color: $color-hex;
+  }
+}

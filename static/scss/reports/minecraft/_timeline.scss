@@ -1,0 +1,204 @@
+@import "variables";
+
+$minecraft-timeline-colors: (
+        generic: (
+                icon-background: #c4c5c6,
+                icon-border-top-left: $minecraft-border-top-left,
+                icon-border-bottom-right: $minecraft-border-bottom-right,
+                title-background: #036a97,
+                title-border-top-left: #0489c1,
+                title-border-bottom-right: #012f42,
+                title-text: #FFFFFF,
+                title-shadow: #3e3f40,
+        ),
+        death: (
+                icon-background: #aa7e0f,
+                icon-border-top-left: #dba213,
+                icon-border-bottom-right: #493606,
+                title-background: #b98f2c,
+                title-border-top-left: #dba213,
+                title-border-bottom-right: #493606,
+                title-text: #FFFFFF,
+                title-shadow: #3f3f3f,
+        )
+);
+
+$minecraft-timeline-details-background: #212223;
+$minecraft-timeline-details-border: #545556;
+$minecraft-timeline-details-text: #a9aaab;
+
+$minecraft-timeline-line-outer: #2A2A2A;
+$minecraft-timeline-line-inner: #FFFFFF;
+
+$minecraft-timeline-width: 90%;
+
+
+.minecraft-timeline {
+  position: relative;
+
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 3rem;
+
+  font-family: $family-minecraft;
+  font-size: $size-normal;
+
+  &:before {
+    content: '';
+
+    display: block;
+    position: absolute;
+
+    left: calc(3rem + 21px);
+    top: calc(1rem + 8px);
+
+    width: 6px;
+    height: calc(100% - 3.4rem);
+
+    background: $minecraft-timeline-line-inner;
+    border: solid 2px $minecraft-timeline-line-outer;
+  }
+
+  .timeline-item {
+    &:not(:last-child) {
+      padding-bottom: 1rem;
+
+      &:not(.has-details) {
+        padding-bottom: 1.5rem;
+      }
+    }
+
+    .timeline-item-header {
+      position: relative;
+
+      figure {
+        position: absolute; // Required, else the title is above the icon.
+
+        width: 48px;
+        height: 48px;
+
+        padding-top: 4px;
+
+        border-width: 4px;
+        border-style: solid;
+        border-radius: 6px;
+
+        text-align: center;
+
+        z-index: 400;
+
+        img {
+          width: 32px;
+          height: 32px;
+
+          // We want to keep the pixels. Else, the image is blurred (because of aliasing).
+          image-rendering: crisp-edges;
+        }
+
+        &.is-head img {
+          border-radius: 6px;
+        }
+      }
+
+      h4 {
+        position: absolute;
+
+        top: 5px;
+        left: -8px;
+
+        padding-top: 3px;
+        padding-bottom: 4px;
+        padding-left: 64px;
+
+        width: $minecraft-timeline-width;
+
+        border-width: 4px;
+        border-style: solid;
+        border-radius: 6px;
+
+        cursor: default;
+
+        // For the details pane not going above the title.
+        z-index: 90;
+
+        time {
+          display: none;
+
+          position: absolute;
+
+          left: $minecraft-timeline-width - 11%;
+          top: 1em;
+
+          padding: .1em .5em;
+          height: 2.1em;
+
+          border: solid 3px #26035d;
+          border-radius: 5px;
+
+          background: rgba(0, 0, 20, .9);
+
+          cursor: default;
+        }
+
+        &:hover time {
+          display: block;
+        }
+      }
+
+      .is-clearfix {
+        height: 48px !important;
+      }
+    }
+
+    &.has-details h4 {
+      border-bottom-right-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
+
+    @each $key, $colors in zip(map_keys($minecraft-timeline-colors), map_values($minecraft-timeline-colors)) {
+      &.is-#{$key}-event {
+        .timeline-item-header {
+          figure {
+            background-color: map_get($colors, icon-background);
+            border-top-color: map_get($colors, icon-border-top-left);
+            border-left-color: map_get($colors, icon-border-top-left);
+            border-bottom-color: map_get($colors, icon-border-bottom-right);
+            border-right-color: map_get($colors, icon-border-bottom-right);
+          }
+
+          h4 {
+            background-color: map_get($colors, title-background);
+
+            border-top-color: map_get($colors, title-border-top-left);
+            border-left-color: map_get($colors, title-border-top-left);
+            border-bottom-color: map_get($colors, title-border-bottom-right);
+            border-right-color: map_get($colors, title-border-bottom-right);
+
+            color: map_get($colors, title-text);
+            text-shadow: 1px 1px 0 rgba(map_get($colors, title-shadow), .2);
+          }
+        }
+      }
+    }
+
+    .timeline-item-details {
+      position: relative;
+      left: -8px;
+      top: -.8rem;
+
+      width: $minecraft-timeline-width;
+
+      padding: .7rem .5rem .4rem;
+
+      border: solid 4px $minecraft-timeline-details-border;
+      border-radius: 6px;
+
+      background: $minecraft-timeline-details-background;
+      color: $minecraft-timeline-details-text;
+
+      font-size: .9rem;
+
+      cursor: default;
+    }
+  }
+}

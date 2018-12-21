@@ -1,0 +1,37 @@
+@import "variables";
+
+.minecraft-tooltip[data-tooltip] {
+  position: relative;
+
+  &:hover:before {
+    content: attr(data-tooltip);
+
+    position: absolute;
+    top: 108%;
+    left: 50%;
+    bottom: auto;
+    right: auto;
+
+    transform: translate(-50%, -1rem);
+
+    padding: .1em .5em;
+    height: 2.1em;
+
+    border: solid 3px #26035d;
+    border-radius: 5px;
+
+    background: rgba(0,0,20,.9);
+
+    font-family: $family-minecraft;
+
+    color: white;
+    white-space: nowrap;
+
+    z-index: 9001;
+  }
+
+  &.is-text-tooltip:hover:before {
+    left: 0;
+    top: 85%;
+  }
+}

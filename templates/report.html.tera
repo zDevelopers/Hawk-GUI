@@ -6,48 +6,52 @@
         <meta name="viewport" content="width=device-width, user-scalable=yes" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-        <title>Récapitulatif de partie {{ match_id }}</title>
+        <title>{{ match_title | minecraft | striptags }} – Récapitulatif de partie</title>
 
         <link rel="stylesheet" href="/static/css/uhcreloaded-reports.min.css" />
+        <link rel="icon" href="/static/images/apple-golden.png" />
     </head>
+
     <body>
-        <header class="hero is-primary is-bold">
+        <header class="hero">
             <div class="hero-body">
                 <div class="container">
                     <div class="columns is-vcentered">
                         <div class="column is-7">
                             <h1 class="title">
-                                {{ match_title | minecraft | safe }}
+                                {{ match_title | minecraft }}
                             </h1>
                             <h2 class="subtitle">
-                                {{ match_id }}
+                                9 joueurs - 15 décembre 2018
                             </h2>
                         </div>
                         <div class="column is-5 has-text-right uhc-winners">
-                            <h3>Les gagnants</h3>
-                            <ul>
-                                <li>
-                                    <figure class="image tooltip is-tooltip-bottom" data-tooltip="Dada_exe">
-                                        <img src="https://api.cassayre.me/minecraft/helmet/10/Dada_exe" alt="Dada_exe" />
-                                    </figure>
-                                </li>
-                                <li>
-                                    <figure class="image tooltip is-tooltip-bottom" data-tooltip="Jenjeur">
-                                        <img src="https://api.cassayre.me/minecraft/helmet/10/Jenjeur" alt="Jenjeur" />
-                                    </figure>
-                                </li>
-                            </ul>
+                            <aside class="chest">
+                                <h3 class="chest-title is-all-caps">Les gagnants</h3>
+                                <ul>
+                                    <li>
+                                        <figure class="image minecraft-tooltip" data-tooltip="Dada_exe">
+                                            <img src="https://api.cassayre.me/minecraft/helmet/10/Dada_exe" alt="Dada_exe" />
+                                        </figure>
+                                    </li>
+                                    <li>
+                                        <figure class="image minecraft-tooltip" data-tooltip="Jenjeur">
+                                            <img src="https://api.cassayre.me/minecraft/helmet/10/Jenjeur" alt="Jenjeur" />
+                                        </figure>
+                                    </li>
+                                </ul>
+                            </aside>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="hero-foot">
-                <nav class="tabs is-boxed is-fullwidtth">
+                <nav class="tabs is-boxed is-fullwidth">
                     <div class="container">
                         <ul>
                             <li class="is-active">
-                                <a>Récapitulatif de partie</a>
+                                <a>Récapitulatif</a>
                             </li>
                             <li>
                                 <a>Dégâts et régénérations</a>
@@ -63,7 +67,343 @@
 
         <section class="section">
             <div class="container">
-                <p>pomf</p>
+                <div class="columns">
+                    <div class="column">
+                        <article class="chest">
+                            <h3 class="chest-title">Déroulement de la partie</h3>
+
+                            <div class="chest-inner is-sandstone">
+                                <ul class="minecraft-timeline">
+                                    <li class="timeline-item is-generic-event">
+                                        <div class="timeline-item-header">
+                                            <figure aria-hidden="true">
+                                                <span class="item-clock-midday"></span>
+                                            </figure>
+                                            <h4>
+                                                Début de la partie
+                                                <time datetime="2018-12-15T22:15:33" title="22h15">00h00</time>
+                                            </h4>
+                                            <div class="is-clearfix"></div>
+                                        </div>
+                                    </li>
+                                    <li class="timeline-item is-death-event has-details">
+                                        <div class="timeline-item-header">
+                                            <figure class="is-head" aria-hidden="true">
+                                                <img src="https://api.cassayre.me/minecraft/helmet/2/Vayan91" alt="" />
+                                            </figure>
+                                            <h4>
+                                                Mort de Vayan91
+                                                <time datetime="2018-12-15T22:39:58" title="22:39:58">00h24</time>
+                                            </h4>
+                                            <div class="is-clearfix"></div>
+                                        </div>
+                                        <div class="timeline-item-details">
+                                            Vayan91 was slain by Cave Spider
+                                        </div>
+                                    </li>
+                                    <li class="timeline-item is-generic-event">
+                                        <div class="timeline-item-header">
+                                            <figure aria-hidden="true">
+                                                <span class="item-diamond"></span>
+                                            </figure>
+                                            <h4>
+                                                Morgan_A trouve le premier diamant
+                                                <time datetime="2018-12-15T22:56:00" title="22:56:34">00h41</time>
+                                            </h4>
+                                            <div class="is-clearfix"></div>
+                                        </div>
+                                    </li>
+                                    <li class="timeline-item is-generic-event">
+                                        <div class="timeline-item-header">
+                                            <figure aria-hidden="true">
+                                                <span class="block-portal"></span>
+                                            </figure>
+                                            <h4>
+                                                Mexknak entre premier dans le Nether
+                                                <time datetime="2018-12-15T23:14:00" title="23:14:08">00h59</time>
+                                            </h4>
+                                            <div class="is-clearfix"></div>
+                                        </div>
+                                    </li>
+                                    <li class="timeline-item is-generic-event">
+                                        <div class="timeline-item-header">
+                                            <figure aria-hidden="true">
+                                                <span class="item-book-enchanted"></span>
+                                            </figure>
+                                            <h4>
+                                                Jenjeur enchante le premier objet
+                                                <time datetime="2018-12-15T23:14:00" title="23:27:12">01h12</time>
+                                            </h4>
+                                            <div class="is-clearfix"></div>
+                                        </div>
+                                    </li>
+                                    <li class="timeline-item is-death-event has-details">
+                                        <div class="timeline-item-header">
+                                            <figure class="is-head" aria-hidden="true">
+                                                <img src="https://api.cassayre.me/minecraft/helmet/2/AmauryPi" alt="" />
+                                            </figure>
+                                            <h4>
+                                                Mort de AmauryPi
+                                                <time datetime="2018-12-15T00:07:19" title="00:07:19">01h53</time>
+                                            </h4>
+                                            <div class="is-clearfix"></div>
+                                        </div>
+                                        <div class="timeline-item-details">
+                                            AmauryPi tried to swim into lava
+                                        </div>
+                                    </li>
+                                    <li class="timeline-item is-death-event has-details">
+                                        <div class="timeline-item-header">
+                                            <figure class="is-head" aria-hidden="true">
+                                                <img src="https://api.cassayre.me/minecraft/helmet/2/Singer49" alt="" />
+                                            </figure>
+                                            <h4>
+                                                Mort de Singer49
+                                            </h4>
+                                            <div class="is-clearfix"></div>
+                                        </div>
+                                        <div class="timeline-item-details">
+                                            Singer49 was shot by Skeleton
+                                        </div>
+                                    </li>
+                                    <li class="timeline-item is-generic-event has-details">
+                                        <div class="timeline-item-header">
+                                            <figure aria-hidden="true">
+                                                <span class="gui-forcefield-red"></span>
+                                            </figure>
+                                            <h4>
+                                                Réduction de la bordure
+                                            </h4>
+                                            <div class="is-clearfix"></div>
+                                        </div>
+                                        <div class="timeline-item-details">
+                                            Jusqu'à 400×400 en 40 minutes
+                                        </div>
+                                    </li>
+                                    <li class="timeline-item is-generic-event">
+                                        <div class="timeline-item-header">
+                                            <figure aria-hidden="true">
+                                                <span class="item-brewing-stand"></span>
+                                            </figure>
+                                            <h4>
+                                                Dada_exe brasse la première potion
+                                            </h4>
+                                            <div class="is-clearfix"></div>
+                                        </div>
+                                    </li>
+                                    <li class="timeline-item is-death-event has-details">
+                                        <div class="timeline-item-header">
+                                            <figure class="is-head" aria-hidden="true">
+                                                <img src="https://api.cassayre.me/minecraft/helmet/2/MrLefra99" alt="" />
+                                            </figure>
+                                            <h4>
+                                                Mort de MrLefra99
+                                            </h4>
+                                            <div class="is-clearfix"></div>
+                                        </div>
+                                        <div class="timeline-item-details">
+                                            MrLefra99 was slain by Dada_exe
+                                        </div>
+                                    </li>
+                                    <li class="timeline-item is-death-event has-details">
+                                        <div class="timeline-item-header">
+                                            <figure class="is-head" aria-hidden="true">
+                                                <img src="https://api.cassayre.me/minecraft/helmet/2/Mexknak" alt="" />
+                                            </figure>
+                                            <h4>
+                                                Mort de Mexknak
+                                            </h4>
+                                            <div class="is-clearfix"></div>
+                                        </div>
+                                        <div class="timeline-item-details">
+                                            Mexknak was shot by Jenjeur
+                                        </div>
+                                    </li>
+                                    <li class="timeline-item is-death-event has-details">
+                                        <div class="timeline-item-header">
+                                            <figure class="is-head" aria-hidden="true">
+                                                <img src="https://api.cassayre.me/minecraft/helmet/2/Morgan_A" alt="" />
+                                            </figure>
+                                            <h4>
+                                                Mort de Morgan_A
+                                            </h4>
+                                            <div class="is-clearfix"></div>
+                                        </div>
+                                        <div class="timeline-item-details">
+                                            Morgan_A was slain by Dada_exe
+                                        </div>
+                                    </li>
+                                    <li class="timeline-item is-generic-event">
+                                        <div class="timeline-item-header">
+                                            <figure aria-hidden="true">
+                                                <span class="gui-forcefield-green"></span>
+                                            </figure>
+                                            <h4>
+                                                Fin de réduction de la bordure
+                                            </h4>
+                                            <div class="is-clearfix"></div>
+                                        </div>
+                                    </li>
+                                    <li class="timeline-item is-death-event has-details">
+                                        <div class="timeline-item-header">
+                                            <figure class="is-head" aria-hidden="true" >
+                                                <img src="https://api.cassayre.me/minecraft/helmet/2/TB1144" alt="" />
+                                            </figure>
+                                            <h4>
+                                                Mort de TB1144
+                                            </h4>
+                                            <div class="is-clearfix"></div>
+                                        </div>
+                                        <div class="timeline-item-details">
+                                            TB1144 was slain by Jenjeur
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="column">
+                        <article class="chest teams-list">
+                            <h3 class="chest-title">Les équipes</h3>
+
+                            <h4 class="team-red has-text-colored has-outline">Rouges</h4>
+
+                            <ul class="players-list">
+                                <li>
+                                    <a href="" class="player is-large is-red-hover">
+                                        <figure aria-hidden="true">
+                                            <img src="https://api.cassayre.me/minecraft/helmet/6/Jenjeur" alt="" />
+                                        </figure>
+                                        <span>Jenjeur</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="player is-large is-red-hover">
+                                        <figure aria-hidden="true">
+                                            <img src="https://api.cassayre.me/minecraft/helmet/6/Dada_exe" alt="" />
+                                        </figure>
+                                        <span>Dada_exe</span>
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <h4 class="team-dark-green has-text-colored has-outline">Verts</h4>
+
+                            <ul class="players-list">
+                                <li>
+                                    <a href="" class="player is-large is-dark-green-hover">
+                                        <figure aria-hidden="true">
+                                            <img src="https://api.cassayre.me/minecraft/helmet/6/AmauryPi" alt="" />
+                                        </figure>
+                                        <span>AmauryPi</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="player is-large is-dark-green-hover">
+                                        <figure aria-hidden="true">
+                                            <img src="https://api.cassayre.me/minecraft/helmet/6/Morgan_A" alt="" />
+                                        </figure>
+                                        <span>Morgan_A</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="player is-large is-dark-green-hover">
+                                        <figure aria-hidden="true">
+                                            <img src="https://api.cassayre.me/minecraft/helmet/6/Mexknak" alt="" />
+                                        </figure>
+                                        <span>Mexknak</span>
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <h4 class="team-yellow has-text-colored has-outline">Jaunes</h4>
+
+                            <ul class="players-list">
+                                <li>
+                                    <a href="" class="player is-large is-yellow-hover">
+                                        <figure aria-hidden="true">
+                                            <img src="https://api.cassayre.me/minecraft/helmet/6/AmauryPi" alt="" />
+                                        </figure>
+                                        <span>AmauryPi</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="player is-large is-yellow-hover">
+                                        <figure aria-hidden="true">
+                                            <img src="https://api.cassayre.me/minecraft/helmet/6/Morgan_A" alt="" />
+                                        </figure>
+                                        <span>Morgan_A</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="player is-large is-yellow-hover">
+                                        <figure aria-hidden="true">
+                                            <img src="https://api.cassayre.me/minecraft/helmet/6/Mexknak" alt="" />
+                                        </figure>
+                                        <span>Mexknak</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="player is-large is-yellow-hover">
+                                        <figure aria-hidden="true">
+                                            <img src="https://api.cassayre.me/minecraft/helmet/6/Jenjeur" alt="" />
+                                        </figure>
+                                        <span>Jenjeur</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="player is-large is-yellow-hover">
+                                        <figure aria-hidden="true">
+                                            <img src="https://api.cassayre.me/minecraft/helmet/6/Dada_exe" alt="" />
+                                        </figure>
+                                        <span>Dada_exe</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="player is-large is-yellow-hover">
+                                        <figure aria-hidden="true">
+                                            <img src="https://api.cassayre.me/minecraft/helmet/6/AmauryPi" alt="" />
+                                        </figure>
+                                        <span>AmauryPi</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="player is-large is-yellow-hover">
+                                        <figure aria-hidden="true">
+                                            <img src="https://api.cassayre.me/minecraft/helmet/6/Morgan_A" alt="" />
+                                        </figure>
+                                        <span>Morgan_A</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="player is-large is-yellow-hover">
+                                        <figure aria-hidden="true">
+                                            <img src="https://api.cassayre.me/minecraft/helmet/6/Mexknak" alt="" />
+                                        </figure>
+                                        <span>Mexknak</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="player is-large is-yellow-hover">
+                                        <figure aria-hidden="true">
+                                            <img src="https://api.cassayre.me/minecraft/helmet/6/Jenjeur" alt="" />
+                                        </figure>
+                                        <span>Jenjeur</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="player is-large is-yellow-hover">
+                                        <figure aria-hidden="true">
+                                            <img src="https://api.cassayre.me/minecraft/helmet/6/Dada_exe" alt="" />
+                                        </figure>
+                                        <span>Dada_exe</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </article>
+                    </div>
+                </div>
             </div>
         </section>
 

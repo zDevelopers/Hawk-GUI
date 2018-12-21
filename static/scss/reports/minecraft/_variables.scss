@@ -1,0 +1,46 @@
+$family-minecraft: Minecraft, $family-sans-serif;
+
+$minecraft-gray-inactive: #8B8B8B;
+$minecraft-gray-active: #C6C6C6;
+$minecraft-text: #404040;
+
+$minecraft-border-top-left: #EEEEEE;
+$minecraft-border-bottom-right: #555555;
+
+$minecraft-colors-background: (
+        "black": #000000,
+        "dark-blue": #00002A,
+        "dark-green": #002A00,
+        "dark-aqua": #002A2A,
+        "dark-red": #2A0000,
+        "dark-purple": #2A002A,
+        "gold": #2A2A00,
+        "gray": #2A2A2A,
+        "dark-gray": #151515,
+        "blue": #15153F,
+        "green": #153F15,
+        "aqua": #153F3F,
+        "red": #3F1515,
+        "light-purple": #3F153F,
+        "yellow": #3F3F15,
+        "white": #FFFFFF
+);
+
+$minecraft-colors-foreground: (
+        "black": #000000,
+        "dark-blue": #0000AA,
+        "dark-green": #00AA00,
+        "dark-aqua": #00AAAA,
+        "dark-red": #AA0000,
+        "dark-purple": #AA00AA,
+        "gold": #AAAA00,
+        "gray": #AAAAAA,
+        "dark-gray": #555555,
+        "blue": #5555FF,
+        "green": #55FF55,
+        "aqua": #55FFFF,
+        "red": #FF5555,
+        "light-purple": #FF55FF,
+        "yellow": #FFFF55,
+        "white": #FFFFFF
+);

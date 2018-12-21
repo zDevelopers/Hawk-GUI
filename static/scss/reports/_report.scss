@@ -1,0 +1,139 @@
+@import "minecraft/variables";
+
+@import "minecraft/colors";
+@import "minecraft/icons";
+@import "minecraft/chest";
+@import "minecraft/tooltip";
+@import "minecraft/timeline";
+@import "minecraft/teams_list";
+@import "minecraft/players";
+
+
+body {
+  display: flex;
+  flex-direction: column;
+
+  min-height: 100vh;
+
+  text-rendering: optimizeLegibility;
+}
+
+
+header.hero {
+  font-family: $family-minecraft;
+
+  background: url("../images/bg-report-header.png") center bottom;
+
+  .hero-body {
+    padding-top: 3.2rem;
+    padding-bottom: 5.4rem;
+
+    h1.title {
+      font-weight: normal;
+      text-shadow: 1px 1px 0 rgba(black, .6);
+    }
+
+    h2.subtitle {
+      color: $minecraft-text;
+      text-shadow: 1px 1px 0 rgba($minecraft-text, .2);
+    }
+
+    .uhc-winners {
+      .chest {
+        display: inline-block;
+        min-width: 60%;
+
+        text-align: center;
+
+        ul {
+          li {
+            display: inline-block;
+
+            margin-left: .4rem;
+
+            img {
+              width: 80px;
+              height: 80px;
+
+              border-radius: 4px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .hero-foot {
+    nav.tabs {
+      border-bottom: $minecraft-gray-active 7px solid;
+
+      ul {
+        align-items: baseline;
+
+        li {
+          &:not(:last-child) {
+            margin-right: 1rem;
+          }
+
+          a {
+            padding-top: .5em;
+            padding-bottom: .6em;
+
+            background: $minecraft-gray-inactive;
+
+            border-top: $minecraft-border-top-left 7px solid;
+            border-left: $minecraft-border-top-left 7px solid;
+            border-right: $minecraft-border-bottom-right 7px solid;
+
+            border-radius: 4px 4px 0 0;
+
+            font-size: 1.16em;
+            color: lighten($minecraft-text, 1%);
+            text-shadow: 1px 1px 0 rgba(170, 170, 170, .2);
+          }
+
+          &:not(.is-active) a:hover {
+            background: lighten($minecraft-gray-inactive, 6%);
+            border-right-color: lighten($minecraft-border-bottom-right, 6%);
+          }
+
+          &.is-active {
+            a {
+              background: $minecraft-gray-active;
+              color: $minecraft-text;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+section.section {
+  flex-grow: 2;
+
+  background: url("../images/bg-minecraft-dirt.png") repeat;
+  box-shadow: 0 19px 10px 0 rgba(black, .4) inset, 0 -19px 10px 0 rgba(black, .4) inset;
+}
+
+
+footer {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+
+  background: url("../images/bg-minecraft-dirt.png") repeat;
+
+  font-style: $size-small;
+  font-family: $family-minecraft;
+
+  color: lighten($minecraft-text, 32%);
+
+  .content a {
+    color: lighten($minecraft-text, 38%);
+
+    &:hover {
+      color: lighten($minecraft-text, 42%);
+    }
+  }
+}
