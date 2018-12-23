@@ -2,11 +2,10 @@ use std::collections::HashMap;
 use std::io::Read;
 
 use failure::{Error, ResultExt};
+use serde_json;
 use uuid::Uuid;
 
-use serde_json;
 use crate::serde_instant::Instant;
-
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[allow(non_camel_case_types)]
@@ -134,6 +133,8 @@ pub enum DamageCause {
     SUFFOCATION,
     DROWNING,
     STARVATION,
+
+    COMMAND,
     UNKNOWN
 }
 
@@ -174,6 +175,7 @@ pub enum HealCause {
     GOLDEN_APPLE,
     NOTCH_APPLE,
     HEALING_POTION,
+    COMMAND,
     UNKNOWN
 }
 

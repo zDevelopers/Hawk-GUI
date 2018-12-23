@@ -17,6 +17,10 @@ $minecraft-chest-inner-border-bottom-right: #919191;
 
   font-family: $family-minecraft;
 
+  & + .chest {
+    margin-top: 4rem;
+  }
+
   h3.chest-title {
     padding-top: 0;
     padding-bottom: 0;

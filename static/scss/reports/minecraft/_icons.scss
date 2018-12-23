@@ -1299,7 +1299,7 @@ $sprite: (
 }
 
 @each $sprite-name, $sprite-properties in zip(map_keys($sprite), map_values($sprite)) {
-  .#{$sprite-name} {
+  .i-#{$sprite-name} {
     @extend %sprite-base;
 
     background-position: map_get($sprite-properties, "position");

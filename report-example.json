@@ -1,88 +1,226 @@
 {
   "match_uuid": "9be8ef14-a14e-4f96-b61e-b865c27ada8f",
   "title": "§5KTZ §dVII",
-  "date": "2018-12-16T11:08:26",
+  "date": "2018-12-15T22:15:33",
+
+  "settings": {
+    "date": true,
+    "players_count": true,
+    "winners": true,
+    "summary": {
+      "enabled": true,
+      "history": true,
+      "players": true,
+      "teams": true
+    },
+    "damages": {
+      "enabled": true,
+      "damages_per_players": true,
+      "damages_per_teams": true,
+      "damages_from_mobs": true
+    },
+    "players": {
+      "enabled": true,
+      "play_time": true,
+      "movement": true,
+      "actions": true,
+      "used": false,
+      "used_whitelist": [],
+      "mined": true,
+      "mined_whitelist": [],
+      "picked_up": true,
+      "picked_up_whitelist": []
+    }
+  },
+
+  "players": [
+    {
+      "uuid": "55b89885-673c-4458-a8bd-33ad9c6190b4",
+      "name": "Dada_exe",
+      "tag_line": "Allié",
+      "tag_line_details": "Allié avec Jenjeur",
+      "statistics": {
+        "generic": {
+          "minecraft.leave_game": 2,
+          "minecraft.play_one_minute": 8772,
+          "minecraft.time_since_death": 0,
+          "minecraft.sneak_time": 776,
+          "minecraft.walk_one_cm": 470555,
+          "minecraft.crouch_one_cm": 21591,
+          "minecraft.sprint_one_cm": 1860641,
+          "minecraft.swim_one_cm": 50097,
+          "minecraft.fall_one_cm": 1554843,
+          "minecraft.climb_one_cm": 7752,
+          "minecraft.fly_one_cm": 9606272,
+          "minecraft.walk_under_water_one_cm": 37865,
+          "minecraft.minecart_one_cm": 0,
+          "minecraft.boat_one_cm": 0,
+          "minecraft.pig_one_cm": 0,
+          "minecraft.horse_one_cm": 0,
+          "minecraft.aviate_one_cm": 0,
+          "minecraft.jump": 10399,
+          "minecraft.eat": 23,
+          "minecraft.mob_kills": 23,
+          "minecraft.player_kills": 3,
+          "minecraft.drops": 234,
+          "minecraft.enchant_item": 12,
+          "minecraft.animals_bread": 4,
+          "minecraft.fish_caught": 12,
+          "minecraft.talked_to_villager": 4,
+          "minecraft.traded_with_villager": 3,
+          "minecraft.interact_with_crafting_table": 87,
+          "minecraft.interact_with_furnace": 34,
+          "minecraft.interact_with_brewingstand": 4,
+          "minecraft.open_chest": 1,
+          "minecraft.trigger_trapped_chest": 2,
+          "minecraft.pot_flower": 1,
+          "minecraft.play_record": 1
+        },
+        "used": {
+          "stat.useItem.minecraft.apple": 0,
+          "minecraft.apple": 1,
+          "minecraft.banner": 11,
+          "minecraft.barrier": 3,
+          "minecraft.bedrock": 3,
+          "minecraft.beetroot_seeds": 2,
+          "minecraft.bucket": 2,
+          "minecraft.cobblestone": 2,
+          "minecraft.crafting_table": 6,
+          "minecraft.diamond_hoe": 1,
+          "minecraft.diamond_shovel": 136,
+          "minecraft.diamond_sword": 5,
+          "minecraft.dirt": 141,
+          "minecraft.fence": 16,
+          "minecraft.glass": 3,
+          "minecraft.grass_path": 12,
+          "minecraft.gravel": 1,
+          "minecraft.iron_block": 29,
+          "minecraft.lava_bucket": 43,
+          "minecraft.leaves": 1,
+          "minecraft.log": 3,
+          "minecraft.oak_stairs": 11,
+          "minecraft.sand": 1,
+          "minecraft.snow_layer": 47,
+          "minecraft.stone": 19,
+          "minecraft.tallgrass": 2,
+          "minecraft.torch": 22,
+          "minecraft.water_bucket": 11,
+          "minecraft.waterlily": 1,
+          "minecraft.wheat_seeds": 1,
+          "minecraft.wooden_door": 1,
+          "minecraft.wooden_slab": 5,
+          "minecraft.wool": 5
+        },
+        "mined": {
+          "stat.mineBlock.minecraft.dirt": 0,
+          "minecraft.dirt": 29,
+          "minecraft.double_plant": 21,
+          "minecraft.glass": 14,
+          "minecraft.gravel": 2,
+          "minecraft.leaves": 24,
+          "minecraft.log": 3,
+          "minecraft.sand": 7,
+          "minecraft.tallgrass": 530,
+          "minecraft.waterlily": 1
+        },
+        "picked_up": {
+          "stat.pickup.minecraft.apple": 0,
+          "minecraft.apple": 1,
+          "minecraft.arrow": 4,
+          "minecraft.banner": 3,
+          "minecraft.beetroot": 1,
+          "minecraft.beetroot_seeds": 1,
+          "minecraft.bone": 5,
+          "minecraft.brown_mushroom": 2,
+          "minecraft.cobblestone": 8,
+          "minecraft.dirt": 162,
+          "minecraft.double_plant": 3,
+          "minecraft.grass": 1,
+          "minecraft.gravel": 14,
+          "minecraft.gunpowder": 2,
+          "minecraft.lava_bucket": 1,
+          "minecraft.log": 6,
+          "minecraft.mutton": 1,
+          "minecraft.rotten_flesh": 18,
+          "minecraft.sand": 25,
+          "minecraft.sandstone": 7,
+          "minecraft.sapling": 4,
+          "minecraft.stone": 5,
+          "minecraft.string": 6,
+          "minecraft.torch": 2,
+          "minecraft.waterlily": 1,
+          "minecraft.wheat_seeds": 63,
+          "minecraft.wool": 1
+        }
+      }
+    },
+    {
+      "uuid": "0dd34bda-c13b-473b-a887-368027ca05ca",
+      "name": "Jenjeur",
+      "tag_line": "Allié",
+      "tag_line_details": "Allié avec Dada_exe"
+    },
+    {
+      "uuid": "da04cd54-c6c7-4672-97c5-85663f5bccf6",
+      "name": "AmauryPi",
+      "tag_line": "Seul"
+    },
+    {
+      "uuid": "6e84adc0-b6e6-406c-b3da-772a7459ce15",
+      "name": "Morgan_A",
+      "tag_line": "Allié",
+      "tag_line_details": "Allié avec Sashastan"
+    },
+    {
+      "uuid": "7caf2af6-b149-47eb-8b76-7f58c07d8f5a",
+      "name":"Vayan91",
+      "tag_line": "Seul"
+    },
+    {
+      "uuid": "cdda3f1f-19ed-4f92-9cad-bf4ab1f98bc2",
+      "name": "Mexknak",
+      "tag_line": "Seul"
+    },
+    {
+      "uuid": "445718ae-ee31-4e66-8d57-5a10457ab93b",
+      "name": "MrLefr99",
+      "tag_line": "Seul"
+    },
+    {
+      "uuid": "fc0d7b71-34de-460c-a10a-92cf2d202fa9",
+      "name":"Singer49",
+      "tag_line": "Seul"
+    },
+    {
+      "uuid": "f79c6c7f-fe45-4502-8f2a-de9f92dcaade",
+      "name": "Sashastan",
+      "tag_line": "Allié",
+      "tag_line_details": "Allié avec Morgan_A"
+    }
+  ],
+
   "teams": [
     {
       "name": "The team name",
       "color": "DARK_BLUE",
       "players": [
-        {
-          "uuid": "55b89885-673c-4458-a8bd-33ad9c6190b4",
-          "name": "Dada_exe",
-          "statistics": {
-            "play_time": 8772,
-            "sneak_time": 776,
-            "movements": {
-              "walk_one_cm": 470555,
-              "crouch_one_cm": 21591,
-              "sprint_one_cm": 1860641,
-              "swim_one_cm": 50097,
-              "fall_one_cm": 1554843,
-              "climb_one_cm": 7752,
-              "fly_one_cm": 9606272,
-              "walk_under_water_one_cm": 37865,
-              "minecart_one_cm": 0,
-              "boat_one_cm": 0,
-              "pig_one_cm": 0,
-              "horse_one_cm": 0,
-              "aviate_one_cm": 0
-            },
-            "actions": {
-              "jump": 10399,
-              "eat": 23,
-              "mob_kills": 23,
-              "player_kills": 3,
-              "drops": 234,
-              "enchant_item": 12,
-              "animals_bread": 4,
-              "fish_caught": 12,
-              "talked_to_villager": 4,
-              "traded_with_villager": 3,
-              "interact_with_crafting_table": 87,
-              "interact_with_furnace": 34,
-              "interact_with_brewingstand": 4,
-              "open_chest": 1,
-              "trigger_trapped_chest": 2,
-              "pot_flower": 1,
-              "play_record": 1
-            },
-            "mining": {
-              "cobblestone": 366,
-              "diamond_ore": 9,
-              "iron_ore": 12,
-              "gold_ore": 15,
-              "emerald_ore": 2
-            },
-            "pickup": {
-              "string": 3,
-              "gunpowder": 2
-            }
-          }
-        },
-        {
-          "uuid": "0dd34bda-c13b-473b-a887-368027ca05ca",
-          "name": "Jenjeur"
-        }
+        "55b89885-673c-4458-a8bd-33ad9c6190b4",
+        "0dd34bda-c13b-473b-a887-368027ca05ca"
       ]
     },
     {
       "name": "#BananaForScale",
       "color": "YELLOW",
       "players": [
-        {
-          "uuid": "da04cd54-c6c7-4672-97c5-85663f5bccf6",
-          "name": "AmauryPi"
-        },
-        {
-          "uuid": "6e84adc0-b6e6-406c-b3da-772a7459ce15",
-          "name": "Morgan_A"
-        }
+        "da04cd54-c6c7-4672-97c5-85663f5bccf6",
+        "6e84adc0-b6e6-406c-b3da-772a7459ce15"
       ]
     }
   ],
+
   "damages": [
     {
+      "time": "2018-12-15T22:15:33",
       "damage_cause": "PLAYER_SWEEP",
       "weapon": "SWORD_IRON",
       "damager": "55b89885-673c-4458-a8bd-33ad9c6190b4",
@@ -91,11 +229,28 @@
       "lethal": false
     }
   ],
+
   "heals": [
     {
       "heal_cause": "GOLDEN_APPLE",
       "healed": "0dd34bda-c13b-473b-a887-368027ca05ca",
       "heal": 8
+    }
+  ],
+
+  "events": [
+    {
+      "time": "2018-12-15T22:15:33",
+      "type": "GOLD",
+      "title": "Mort de Vayan91",
+      "description": "Vayan91 was slain by Cave Spider",
+      "icon": "player:7caf2af6-b149-47eb-8b76-7f58c07d8f5a",
+
+      "type_": "GOLD|BLUE|GREEN|RED",
+
+      "icon__": "player:Vayan91",
+      "_icon_": "icon:item-diamond",
+      "__icon": "url:https://t.co/i-32×32.png"
     }
   ]
 }

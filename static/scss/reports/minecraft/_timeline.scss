@@ -1,25 +1,45 @@
 @import "variables";
 
 $minecraft-timeline-colors: (
-        generic: (
-                icon-background: #c4c5c6,
-                icon-border-top-left: $minecraft-border-top-left,
-                icon-border-bottom-right: $minecraft-border-bottom-right,
-                title-background: #036a97,
-                title-border-top-left: #0489c1,
-                title-border-bottom-right: #012f42,
-                title-text: #FFFFFF,
-                title-shadow: #3e3f40,
+        "blue": (
+                icon-background:            hsl(210,  2%,  77%),
+                icon-border-top-left:       $minecraft-border-top-left,
+                icon-border-bottom-right:   $minecraft-border-bottom-right,
+                title-background:           hsl(198, 96%,  30%),
+                title-border-top-left:      hsl(198, 96%,  39%),
+                title-border-bottom-right:  hsl(198, 97%,  13%),
+                title-text:                 hsl(198,  0%, 100%),
+                title-shadow:               hsl(210,  2%,  25%),
         ),
-        death: (
-                icon-background: #aa7e0f,
-                icon-border-top-left: #dba213,
-                icon-border-bottom-right: #493606,
-                title-background: #b98f2c,
-                title-border-top-left: #dba213,
-                title-border-bottom-right: #493606,
-                title-text: #FFFFFF,
-                title-shadow: #3f3f3f,
+        "gold": (
+                icon-background:           hsl(43, 84%,  36%),
+                icon-border-top-left:      hsl(43, 84%,  46%),
+                icon-border-bottom-right:  hsl(43, 84%,  15%),
+                title-background:          hsl(43, 62%,  46%),
+                title-border-top-left:     hsl(43, 84%,  46%),
+                title-border-bottom-right: hsl(43, 84%,  15%),
+                title-text:                hsl(43,  0%, 100%),
+                title-shadow:              hsl(43,  2%,  25%),
+        ),
+        "red": (
+                icon-background:           hsl(12, 84%,  35%),
+                icon-border-top-left:      hsl(12, 84%,  46%),
+                icon-border-bottom-right:  hsl(12, 84%,  15%),
+                title-background:          hsl(12, 62%,  46%),
+                title-border-top-left:     hsl(12, 84%,  46%),
+                title-border-bottom-right: hsl(12, 84%,  15%),
+                title-text:                hsl(12,  0%, 100%),
+                title-shadow:              hsl(12,  2%,  25%),
+        ),
+        "green": (
+                icon-background:           hsl(120, 84%,  28%),
+                icon-border-top-left:      hsl(120, 84%,  42%),
+                icon-border-bottom-right:  hsl(120, 84%,  15%),
+                title-background:          hsl(120, 62%,  38%),
+                title-border-top-left:     hsl(120, 84%,  46%),
+                title-border-bottom-right: hsl(120, 84%,  15%),
+                title-text:                hsl(120,  0%, 100%),
+                title-shadow:              hsl(120,  2%,  25%),
         )
 );
 

@@ -12,7 +12,7 @@
       margin-top: 3rem;
     }
 
-    font-size: $size-large;
+    font-size: $size-3;
 
     &:before {
       content: '';
@@ -40,6 +40,10 @@
                         1px -1px 0 $outline-color,
                        -1px  1px 0 $outline-color,
                         1px  1px 0 $outline-color;
+
+          &:before {
+            border: solid 1px $outline-color;
+          }
         }
 
         &:before {

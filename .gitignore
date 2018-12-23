@@ -11,3 +11,5 @@
 .nfs*
 
 .sass-cache
+
+user-generated-content

@@ -31,12 +31,12 @@
                                 <ul>
                                     <li>
                                         <figure class="image minecraft-tooltip" data-tooltip="Dada_exe">
-                                            <img src="https://api.cassayre.me/minecraft/helmet/10/Dada_exe" alt="Dada_exe" />
+                                            <img src="{{ head(uuid="55b89885-673c-4458-a8bd-33ad9c6190b4", size=80) }}" alt="Dada_exe" />
                                         </figure>
                                     </li>
                                     <li>
                                         <figure class="image minecraft-tooltip" data-tooltip="Jenjeur">
-                                            <img src="https://api.cassayre.me/minecraft/helmet/10/Jenjeur" alt="Jenjeur" />
+                                            <img src="{{ head(uuid="0dd34bda-c13b-473b-a887-368027ca05ca", size=80) }}" alt="Jenjeur" />
                                         </figure>
                                     </li>
                                 </ul>
@@ -51,13 +51,13 @@
                     <div class="container">
                         <ul>
                             <li class="is-active">
-                                <a>Récapitulatif</a>
+                                <a class="js-tab-link" href="#summary">Récapitulatif</a>
                             </li>
                             <li>
-                                <a>Dégâts et régénérations</a>
+                                <a class="js-tab-link" href="#damages">Dégâts et régénérations</a>
                             </li>
                             <li>
-                                <a>Joueurs et statistiques</a>
+                                <a class="js-tab-link" href="#players">Joueurs et statistiques</a>
                             </li>
                         </ul>
                     </div>
@@ -65,7 +65,7 @@
             </div>
         </header>
 
-        <section class="section">
+        <section class="section js-tab-section" id="summary">
             <div class="container">
                 <div class="columns">
                     <div class="column">
@@ -74,10 +74,10 @@
 
                             <div class="chest-inner is-sandstone">
                                 <ul class="minecraft-timeline">
-                                    <li class="timeline-item is-generic-event">
+                                    <li class="timeline-item is-blue-event">
                                         <div class="timeline-item-header">
                                             <figure aria-hidden="true">
-                                                <span class="item-clock-midday"></span>
+                                                <span class="i-item-clock-midday"></span>
                                             </figure>
                                             <h4>
                                                 Début de la partie
@@ -86,10 +86,10 @@
                                             <div class="is-clearfix"></div>
                                         </div>
                                     </li>
-                                    <li class="timeline-item is-death-event has-details">
+                                    <li class="timeline-item is-gold-event has-details">
                                         <div class="timeline-item-header">
                                             <figure class="is-head" aria-hidden="true">
-                                                <img src="https://api.cassayre.me/minecraft/helmet/2/Vayan91" alt="" />
+                                                <img src="{{ head(uuid="7caf2af6-b149-47eb-8b76-7f58c07d8f5a", size=32) }}" alt="" />
                                             </figure>
                                             <h4>
                                                 Mort de Vayan91
@@ -101,10 +101,10 @@
                                             Vayan91 was slain by Cave Spider
                                         </div>
                                     </li>
-                                    <li class="timeline-item is-generic-event">
+                                    <li class="timeline-item is-blue-event">
                                         <div class="timeline-item-header">
                                             <figure aria-hidden="true">
-                                                <span class="item-diamond"></span>
+                                                <span class="i-item-diamond"></span>
                                             </figure>
                                             <h4>
                                                 Morgan_A trouve le premier diamant
@@ -113,10 +113,10 @@
                                             <div class="is-clearfix"></div>
                                         </div>
                                     </li>
-                                    <li class="timeline-item is-generic-event">
+                                    <li class="timeline-item is-red-event">
                                         <div class="timeline-item-header">
                                             <figure aria-hidden="true">
-                                                <span class="block-portal"></span>
+                                                <span class="i-block-portal"></span>
                                             </figure>
                                             <h4>
                                                 Mexknak entre premier dans le Nether
@@ -125,10 +125,10 @@
                                             <div class="is-clearfix"></div>
                                         </div>
                                     </li>
-                                    <li class="timeline-item is-generic-event">
+                                    <li class="timeline-item is-blue-event">
                                         <div class="timeline-item-header">
                                             <figure aria-hidden="true">
-                                                <span class="item-book-enchanted"></span>
+                                                <span class="i-item-book-enchanted"></span>
                                             </figure>
                                             <h4>
                                                 Jenjeur enchante le premier objet
@@ -137,10 +137,10 @@
                                             <div class="is-clearfix"></div>
                                         </div>
                                     </li>
-                                    <li class="timeline-item is-death-event has-details">
+                                    <li class="timeline-item is-gold-event has-details">
                                         <div class="timeline-item-header">
                                             <figure class="is-head" aria-hidden="true">
-                                                <img src="https://api.cassayre.me/minecraft/helmet/2/AmauryPi" alt="" />
+                                                <img src="{{ head(uuid="da04cd54-c6c7-4672-97c5-85663f5bccf6", size=32) }}" alt="" />
                                             </figure>
                                             <h4>
                                                 Mort de AmauryPi
@@ -152,10 +152,10 @@
                                             AmauryPi tried to swim into lava
                                         </div>
                                     </li>
-                                    <li class="timeline-item is-death-event has-details">
+                                    <li class="timeline-item is-gold-event has-details">
                                         <div class="timeline-item-header">
                                             <figure class="is-head" aria-hidden="true">
-                                                <img src="https://api.cassayre.me/minecraft/helmet/2/Singer49" alt="" />
+                                                <img src="{{ head(uuid="fc0d7b71-34de-460c-a10a-92cf2d202fa9", size=32) }}" alt="" />
                                             </figure>
                                             <h4>
                                                 Mort de Singer49
@@ -166,10 +166,10 @@
                                             Singer49 was shot by Skeleton
                                         </div>
                                     </li>
-                                    <li class="timeline-item is-generic-event has-details">
+                                    <li class="timeline-item is-green-event has-details">
                                         <div class="timeline-item-header">
                                             <figure aria-hidden="true">
-                                                <span class="gui-forcefield-red"></span>
+                                                <span class="i-gui-forcefield-red"></span>
                                             </figure>
                                             <h4>
                                                 Réduction de la bordure
@@ -180,10 +180,10 @@
                                             Jusqu'à 400×400 en 40 minutes
                                         </div>
                                     </li>
-                                    <li class="timeline-item is-generic-event">
+                                    <li class="timeline-item is-blue-event">
                                         <div class="timeline-item-header">
                                             <figure aria-hidden="true">
-                                                <span class="item-brewing-stand"></span>
+                                                <span class="i-item-brewing-stand"></span>
                                             </figure>
                                             <h4>
                                                 Dada_exe brasse la première potion
@@ -191,10 +191,10 @@
                                             <div class="is-clearfix"></div>
                                         </div>
                                     </li>
-                                    <li class="timeline-item is-death-event has-details">
+                                    <li class="timeline-item is-gold-event has-details">
                                         <div class="timeline-item-header">
                                             <figure class="is-head" aria-hidden="true">
-                                                <img src="https://api.cassayre.me/minecraft/helmet/2/MrLefra99" alt="" />
+                                                <img src="{{ head(uuid="445718ae-ee31-4e66-8d57-5a10457ab93b", size=32) }}" alt="" />
                                             </figure>
                                             <h4>
                                                 Mort de MrLefra99
@@ -205,10 +205,10 @@
                                             MrLefra99 was slain by Dada_exe
                                         </div>
                                     </li>
-                                    <li class="timeline-item is-death-event has-details">
+                                    <li class="timeline-item is-gold-event has-details">
                                         <div class="timeline-item-header">
                                             <figure class="is-head" aria-hidden="true">
-                                                <img src="https://api.cassayre.me/minecraft/helmet/2/Mexknak" alt="" />
+                                                <img src="{{ head(uuid="cdda3f1f-19ed-4f92-9cad-bf4ab1f98bc2", size=32) }}" alt="" />
                                             </figure>
                                             <h4>
                                                 Mort de Mexknak
@@ -219,10 +219,10 @@
                                             Mexknak was shot by Jenjeur
                                         </div>
                                     </li>
-                                    <li class="timeline-item is-death-event has-details">
+                                    <li class="timeline-item is-gold-event has-details">
                                         <div class="timeline-item-header">
                                             <figure class="is-head" aria-hidden="true">
-                                                <img src="https://api.cassayre.me/minecraft/helmet/2/Morgan_A" alt="" />
+                                                <img src="{{ head(uuid="6e84adc0-b6e6-406c-b3da-772a7459ce15", size=32) }}" alt="" />
                                             </figure>
                                             <h4>
                                                 Mort de Morgan_A
@@ -233,10 +233,10 @@
                                             Morgan_A was slain by Dada_exe
                                         </div>
                                     </li>
-                                    <li class="timeline-item is-generic-event">
+                                    <li class="timeline-item is-green-event">
                                         <div class="timeline-item-header">
                                             <figure aria-hidden="true">
-                                                <span class="gui-forcefield-green"></span>
+                                                <span class="i-gui-forcefield-green"></span>
                                             </figure>
                                             <h4>
                                                 Fin de réduction de la bordure
@@ -244,18 +244,18 @@
                                             <div class="is-clearfix"></div>
                                         </div>
                                     </li>
-                                    <li class="timeline-item is-death-event has-details">
+                                    <li class="timeline-item is-gold-event has-details">
                                         <div class="timeline-item-header">
                                             <figure class="is-head" aria-hidden="true" >
-                                                <img src="https://api.cassayre.me/minecraft/helmet/2/TB1144" alt="" />
+                                                <img src="{{ head(uuid="f79c6c7f-fe45-4502-8f2a-de9f92dcaade", size=32) }}" alt="" />
                                             </figure>
                                             <h4>
-                                                Mort de TB1144
+                                                Mort de Sashastan
                                             </h4>
                                             <div class="is-clearfix"></div>
                                         </div>
                                         <div class="timeline-item-details">
-                                            TB1144 was slain by Jenjeur
+                                            Sashastan was slain by Jenjeur
                                         </div>
                                     </li>
                                 </ul>
@@ -267,13 +267,13 @@
                         <article class="chest teams-list">
                             <h3 class="chest-title">Les équipes</h3>
 
-                            <h4 class="team-red has-text-colored has-outline">Rouges</h4>
+                            <h4 class="team-red has-text-colored has-outline">La vigne & le vin</h4>
 
                             <ul class="players-list">
                                 <li>
                                     <a href="" class="player is-large is-red-hover">
                                         <figure aria-hidden="true">
-                                            <img src="https://api.cassayre.me/minecraft/helmet/6/Jenjeur" alt="" />
+                                            <img src="{{ head(uuid="0dd34bda-c13b-473b-a887-368027ca05ca", size=48) }}" alt="" />
                                         </figure>
                                         <span>Jenjeur</span>
                                     </a>
@@ -281,20 +281,20 @@
                                 <li>
                                     <a href="" class="player is-large is-red-hover">
                                         <figure aria-hidden="true">
-                                            <img src="https://api.cassayre.me/minecraft/helmet/6/Dada_exe" alt="" />
+                                            <img src="{{ head(uuid="55b89885-673c-4458-a8bd-33ad9c6190b4", size=48) }}" alt="" />
                                         </figure>
                                         <span>Dada_exe</span>
                                     </a>
                                 </li>
                             </ul>
 
-                            <h4 class="team-dark-green has-text-colored has-outline">Verts</h4>
+                            <h4 class="team-dark-green has-text-colored has-outline">Menthe à l'eau</h4>
 
                             <ul class="players-list">
                                 <li>
                                     <a href="" class="player is-large is-dark-green-hover">
                                         <figure aria-hidden="true">
-                                            <img src="https://api.cassayre.me/minecraft/helmet/6/AmauryPi" alt="" />
+                                            <img src="{{ head(uuid="da04cd54-c6c7-4672-97c5-85663f5bccf6", size=48) }}" alt="" />
                                         </figure>
                                         <span>AmauryPi</span>
                                     </a>
@@ -302,7 +302,7 @@
                                 <li>
                                     <a href="" class="player is-large is-dark-green-hover">
                                         <figure aria-hidden="true">
-                                            <img src="https://api.cassayre.me/minecraft/helmet/6/Morgan_A" alt="" />
+                                            <img src="{{ head(uuid="6e84adc0-b6e6-406c-b3da-772a7459ce15", size=48) }}" alt="" />
                                         </figure>
                                         <span>Morgan_A</span>
                                     </a>
@@ -310,94 +310,70 @@
                                 <li>
                                     <a href="" class="player is-large is-dark-green-hover">
                                         <figure aria-hidden="true">
-                                            <img src="https://api.cassayre.me/minecraft/helmet/6/Mexknak" alt="" />
+                                            <img src="{{ head(uuid="cdda3f1f-19ed-4f92-9cad-bf4ab1f98bc2", size=48) }}" alt="" />
                                         </figure>
                                         <span>Mexknak</span>
                                     </a>
                                 </li>
                             </ul>
 
-                            <h4 class="team-yellow has-text-colored has-outline">Jaunes</h4>
+                            <h4 class="team-yellow has-text-colored has-outline">#BananaForScale</h4>
 
                             <ul class="players-list">
                                 <li>
                                     <a href="" class="player is-large is-yellow-hover">
                                         <figure aria-hidden="true">
-                                            <img src="https://api.cassayre.me/minecraft/helmet/6/AmauryPi" alt="" />
+                                            <img src="{{ head(uuid="7caf2af6-b149-47eb-8b76-7f58c07d8f5a", size=48) }}" alt="" />
                                         </figure>
-                                        <span>AmauryPi</span>
+                                        <span>Vayan91</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="" class="player is-large is-yellow-hover">
                                         <figure aria-hidden="true">
-                                            <img src="https://api.cassayre.me/minecraft/helmet/6/Morgan_A" alt="" />
+                                            <img src="{{ head(uuid="fc0d7b71-34de-460c-a10a-92cf2d202fa9", size=48) }}" alt="" />
                                         </figure>
-                                        <span>Morgan_A</span>
+                                        <span>Singer49</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="" class="player is-large is-yellow-hover">
                                         <figure aria-hidden="true">
-                                            <img src="https://api.cassayre.me/minecraft/helmet/6/Mexknak" alt="" />
+                                            <img src="{{ head(uuid="445718ae-ee31-4e66-8d57-5a10457ab93b", size=48) }}" alt="" />
                                         </figure>
-                                        <span>Mexknak</span>
+                                        <span>MrLefra99</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="" class="player is-large is-yellow-hover">
                                         <figure aria-hidden="true">
-                                            <img src="https://api.cassayre.me/minecraft/helmet/6/Jenjeur" alt="" />
+                                            <img src="{{ head(uuid="f79c6c7f-fe45-4502-8f2a-de9f92dcaade", size=48) }}" alt="" />
                                         </figure>
-                                        <span>Jenjeur</span>
+                                        <span>Sashastan</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="" class="player is-large is-yellow-hover">
                                         <figure aria-hidden="true">
-                                            <img src="https://api.cassayre.me/minecraft/helmet/6/Dada_exe" alt="" />
+                                            <img src="{{ head(uuid="de79b165-a66c-4faf-bdcf-c120487efe78", size=48) }}" alt="" />
                                         </figure>
-                                        <span>Dada_exe</span>
+                                        <span>Tyranouille</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="" class="player is-large is-yellow-hover">
                                         <figure aria-hidden="true">
-                                            <img src="https://api.cassayre.me/minecraft/helmet/6/AmauryPi" alt="" />
+                                            <img src="{{ head(uuid="5e9298d9-5a53-4744-88f2-70f221ff8e66", size=48) }}" alt="" />
                                         </figure>
-                                        <span>AmauryPi</span>
+                                        <span>Black_Lizard</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="" class="player is-large is-yellow-hover">
                                         <figure aria-hidden="true">
-                                            <img src="https://api.cassayre.me/minecraft/helmet/6/Morgan_A" alt="" />
+                                            <img src="{{ head(uuid="454abcd4-4bc3-465e-acef-1687b247cc89", size=48) }}" alt="" />
                                         </figure>
-                                        <span>Morgan_A</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="" class="player is-large is-yellow-hover">
-                                        <figure aria-hidden="true">
-                                            <img src="https://api.cassayre.me/minecraft/helmet/6/Mexknak" alt="" />
-                                        </figure>
-                                        <span>Mexknak</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="" class="player is-large is-yellow-hover">
-                                        <figure aria-hidden="true">
-                                            <img src="https://api.cassayre.me/minecraft/helmet/6/Jenjeur" alt="" />
-                                        </figure>
-                                        <span>Jenjeur</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="" class="player is-large is-yellow-hover">
-                                        <figure aria-hidden="true">
-                                            <img src="https://api.cassayre.me/minecraft/helmet/6/Dada_exe" alt="" />
-                                        </figure>
-                                        <span>Dada_exe</span>
+                                        <span>Brutal_Berserker</span>
                                     </a>
                                 </li>
                             </ul>
@@ -405,6 +381,24 @@
                     </div>
                 </div>
             </div>
+        </section>
+
+        <section class="section js-tab-section is-hidden" id="damages">
+            <div class="container">
+                <div class="chest">
+                    <h3 class="chest-title">Joueurs</h3>
+                </div>
+                <div class="chest">
+                    <h3 class="chest-title">Équipes</h3>
+                </div>
+                <div class="chest">
+                    <h3 class="chest-title">Dégâts engendrés par les créatures</h3>
+                </div>
+            </div>
+        </section>
+
+        <section class="section js-tab-section is-hidden" id="players">
+
         </section>
 
         <footer>
@@ -418,5 +412,33 @@
                 </p>
             </div>
         </footer>
+
+        <script type="application/javascript">
+            document.addEventListener("DOMContentLoaded", function() {
+                const tabs = document.querySelectorAll('.js-tab-section');
+                const tabs_links = document.querySelectorAll('.js-tab-link');
+
+                tabs_links.forEach(function(element) {
+                    element.addEventListener("click", function(e) {
+                        e.preventDefault();
+                        tabs.forEach(function(tab) { tab.classList.add('is-hidden'); });
+
+                        let target = e.target.attributes['href'].value;
+                        let tab = document.querySelector(target);
+
+                        if (tab) {
+                            tab.classList.remove('is-hidden');
+
+                            tabs_links.forEach(function(tab_link) {
+                                tab_link.parentElement.classList.remove('is-active');
+                                if (tab_link.attributes['href'].value === target) {
+                                    tab_link.parentElement.classList.add('is-active');
+                                }
+                            })
+                        }
+                    });
+                });
+            });
+        </script>
     </body>
 </html>

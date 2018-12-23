@@ -17,6 +17,8 @@
   figure {
     display: block;
 
+    min-width: 32px;
+
     img {
       width: 32px;
       height: 32px;
@@ -30,12 +32,18 @@
     padding-left: .4rem;
 
     flex-grow: 2;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &.is-large {
-    figure img {
-      width: 48px;
-      height: 48px;
+    figure {
+      min-width: 48px;
+      img {
+        width: 48px;
+        height: 48px;
+      }
     }
     span {
       padding-left: .8rem;
@@ -76,6 +84,6 @@ ul.players-list {
   max-width: 100%;
 
   li {
-    width: 33%;
+    width: 50%;
   }
 }
