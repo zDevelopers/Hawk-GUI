@@ -1,0 +1,60 @@
+$hearts-max-value: 40;
+$hearts-size: 16px;
+
+.hearts {
+  position: relative;
+  display: inline-block;
+
+  height: $hearts-size;
+
+  background: url('/static/images/heart-background.png') repeat-x;
+
+  @for $i from 0 through $hearts-max-value {
+    @if $i == 0 {
+      &.is-0 {
+        width: $hearts-size;
+      }
+    }
+
+    @if $i % 2 == 1 {
+      &.is-#{$i}, &.is-#{$i + 1} {
+        width: (($i + 1)/2) * $hearts-size;
+      }
+    }
+  }
+
+  &:not(.is-0):before {
+    content: ' ';
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    height: $hearts-size;
+
+    background: url('/static/images/heart-foreground.png') repeat-x;
+  }
+
+  &.is-hardcore:not(.is-0):before {
+    background-image: url('/static/images/heart-foreground-hardcore.png');
+  }
+
+  @for $i from 1 through $hearts-max-value {
+    &.is-#{$i}:before {
+      width: ceil(($hearts-size / 2) * $i);
+    }
+  }
+
+  &.is-lethal:after {
+    content: ' ';
+
+    position: absolute;
+    right: -1 * $hearts-size - 2;
+
+    width: $hearts-size;
+    height: $hearts-size;
+
+    background: url('/static/images/lethal-damage.png');
+  }
+}

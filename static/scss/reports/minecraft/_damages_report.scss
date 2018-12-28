@@ -1,0 +1,186 @@
+@import "variables";
+
+.damages-report {
+  display: flex;
+  flex-direction: column;
+
+  border-radius: 4px;
+
+  &:not(:first-of-type) {
+    margin-top: 2rem;
+  }
+
+  .columns {
+    display: flex;
+    flex: 1;
+
+    .column {
+      flex: none;
+
+      &.damages-report-player-parent {
+        display: flex;
+        align-items: center;
+
+        width: 16%;
+      }
+
+      &.damages-report-alterations-parent {
+        width: 22%;
+
+        &.is-health {
+          width: 19%;
+        }
+      }
+
+      &.damages-report-kills-parent {
+        width: 21%;
+      }
+    }
+  }
+
+  .damages-report-player {
+    padding: 0 1rem;
+    width: 100%;
+
+    text-align: center;
+
+    figure {
+      img {
+        border-radius: 4px;
+      }
+
+      figcaption {
+        padding-top: .4rem;
+
+        .name {
+          display: block;
+          font-size: $size-medium;
+        }
+
+        .tag-line {
+          display: block;
+
+          margin-top: -.4rem;
+
+          font-size: $size-medium;
+          font-variant: all-small-caps;
+
+          color: lighten($minecraft-text, 20%);
+          letter-spacing: .05em;
+        }
+      }
+
+      @each $color-name, $color-hex in zip(map_keys($minecraft-colors-foreground), map_values($minecraft-colors-foreground)) {
+        &.is-#{$color-name} img {
+          border: solid 6px $color-hex;
+        }
+      }
+    }
+  }
+
+  .damages-report-alterations {
+    padding: .6rem 1rem 1.5rem;
+
+    height: 100%;
+
+    overflow-x: hidden;
+
+    text-overflow: "";
+
+    border-left: solid 1px $minecraft-gray-inactive;
+
+    h4 {
+      padding-bottom: 0;
+    }
+
+    > ul {
+      padding: .4rem 0;
+      display: flex;
+      flex-direction: column;
+      align-content: space-around;
+
+      > li {
+        height: 20px;
+        margin: .3rem 0;
+
+        .weapon, .source {
+          display: inline-block;
+          width: 20px;
+        }
+
+        .weapon {
+          position: relative;
+          top: 1px;
+        }
+
+        .hearts {
+          position: relative;
+          top: -2px;
+        }
+      }
+    }
+  }
+
+  .damages-report-kills {
+    padding: .6rem 0 .6rem 1rem;
+
+    height: 100%;
+
+    border-left: solid 1px $minecraft-gray-inactive;
+
+    h4 {
+      margin-bottom: .8rem;
+
+      &:not(:first-of-type) {
+        margin-top: 2.1rem;
+        font-weight: bold;
+      }
+    }
+
+    .player-rank {
+      padding-left: .8rem;
+      font-size: $size-3;
+
+      &.is-winner {
+        font-size: $size-2;
+      }
+    }
+  }
+}
+
+.natural-damages-report {
+  border-radius: 4px;
+
+  .natural-damages-report-line {
+    margin: 1rem 0;
+
+    &:not(:last-child) {
+      margin-bottom: 1.5rem;
+    }
+
+    .natural-damages-report-source {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      padding: 1.5rem 1rem;
+
+      text-align: center;
+
+      figure {
+        width: 100%;
+
+        figcaption {
+          display: block;
+          padding-top: .4rem;
+          font-size: $size-medium;
+        }
+      }
+    }
+
+    .natural-damages-report-damages {
+      padding-left: 1.5rem;
+      border-left: solid 1px $minecraft-gray-inactive;
+    }
+  }
+}

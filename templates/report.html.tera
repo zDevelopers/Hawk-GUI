@@ -50,10 +50,10 @@
                 <nav class="tabs is-boxed is-fullwidth">
                     <div class="container">
                         <ul>
-                            <li class="is-active">
+                            <li>
                                 <a class="js-tab-link" href="#summary">Récapitulatif</a>
                             </li>
-                            <li>
+                            <li class="is-active">
                                 <a class="js-tab-link" href="#damages">Dégâts et régénérations</a>
                             </li>
                             <li>
@@ -65,7 +65,7 @@
             </div>
         </header>
 
-        <section class="section js-tab-section" id="summary">
+        <section class="section js-tab-section is-hidden" id="summary">
             <div class="container">
                 <div class="columns">
                     <div class="column">
@@ -383,17 +383,494 @@
             </div>
         </section>
 
-        <section class="section js-tab-section is-hidden" id="damages">
+        <section class="section js-tab-section" id="damages">
             <div class="container">
-                <div class="chest">
+                <article class="chest">
                     <h3 class="chest-title">Joueurs</h3>
-                </div>
-                <div class="chest">
+
+                    <div class="chest-inner damages-report">
+                        <div class="columns">
+                            <div class="column damages-report-player-parent">
+                                <div class="damages-report-player">
+                                    <figure class="player-head is-red">
+                                        <img src="{{ head(uuid="55b89885-673c-4458-a8bd-33ad9c6190b4", size=90) }}" alt="Dada_exe" />
+                                        <figcaption>
+                                            <span class="name">Dada_exe</span>
+                                            <span class="tag-line">Allié</span>
+                                        </figcaption>
+                                    </figure>
+                                </div>
+                            </div>
+                            <div class="column damages-report-alterations-parent">
+                                <div class="damages-report-alterations">
+                                    <h4><strong>24</strong> dégâts reçus</h4>
+
+                                    <ul>
+                                        <li title="Dégâts de chute : -2 points de vie">
+                                            <span class="weapon"></span>
+                                            <span class="source i-block-stone-small"></span>
+                                            <span class="hearts is-2"></span>
+                                        </li>
+                                        <li title="Araignée : -2 points de vie">
+                                            <span class="weapon"></span>
+                                            <span class="source i-entity-spider-small"></span>
+                                            <span class="hearts is-2"></span>
+                                        </li>
+                                        <li title="Squelette : -2 points de vie">
+                                            <span class="weapon"></span>
+                                            <span class="source i-entity-skeleton-small"></span>
+                                            <span class="hearts is-2"></span>
+                                        </li>
+                                        <li>
+                                            <span class="weapon"></span>
+                                            <span class="source i-entity-skeleton-small"></span>
+                                            <span class="hearts is-0"></span>
+                                        </li>
+                                        <li>
+                                            <span class="weapon"></span>
+                                            <span class="source i-entity-creeper-small"></span>
+                                            <span class="hearts is-0"></span>
+                                        </li>
+                                        <li>
+                                            <span class="weapon"></span>
+                                            <span class="source i-entity-skeleton-small"></span>
+                                            <span class="hearts is-3"></span>
+                                        </li>
+                                        <li>
+                                            <span class="weapon i-item-gold-sword-small"></span>
+                                            <span class="source i-entity-zombie-small"></span>
+                                            <span class="hearts is-4"></span>
+                                        </li>
+                                        <li>
+                                            <span class="weapon"></span>
+                                            <span class="source i-entity-skeleton-small"></span>
+                                            <span class="hearts is-3"></span>
+                                        </li>
+                                        <li>
+                                            <span class="weapon"></span>
+                                            <span class="source i-entity-skeleton-small"></span>
+                                            <span class="hearts is-0"></span>
+                                        </li>
+                                        <li>
+                                            <span class="weapon"></span>
+                                            <span class="source i-block-sand-small"></span>
+                                            <span class="hearts is-6"></span>
+                                        </li>
+                                        <li>
+                                            <span class="weapon i-item-iron-sword-small"></span>
+                                            <span class="source i-entity-blaze-small"></span>
+                                            <span class="hearts is-20 is-lethal"></span>
+                                        </li>
+                                        <li>
+                                            <span class="weapon i-item-iron-sword-small"></span>
+                                            <span class="source"><img src="{{ head(uuid="fc0d7b71-34de-460c-a10a-92cf2d202fa9", size=20) }}" alt="Singer47" /></span>
+                                            <span class="hearts is-3 is-lethal"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="column damages-report-alterations-parent">
+                                <div class="damages-report-alterations">
+                                    <h4><strong>4</strong> dégâts engendrés</h4>
+
+                                    <ul>
+                                        <li title="Épée en fer sur Singer47 : -3 points de vie ; coup létal.">
+                                            <span class="weapon i-item-iron-sword-small"></span>
+                                            <span class="source"><img src="{{ head(uuid="fc0d7b71-34de-460c-a10a-92cf2d202fa9", size=20) }}" alt="Singer47" /></span>
+                                            <span class="hearts is-3 is-lethal"></span>
+                                        </li>
+                                        <li title="Épée en fer sur MrLefra99 : -1 points de vie.">
+                                            <span class="weapon i-item-iron-sword-small"></span>
+                                            <span class="source"><img src="{{ head(uuid="445718ae-ee31-4e66-8d57-5a10457ab93b", size=20) }}" alt="MrLefra99" /></span>
+                                            <span class="hearts is-1"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="column damages-report-alterations-parent is-health">
+                                <div class="damages-report-alterations">
+                                    <h4><strong>8</strong> vie régénérée</h4>
+
+                                    <ul>
+                                        <li title="Une pomme d'or : +4 points de vie">
+                                            <span class="source i-item-apple-golden-small"></span>
+                                            <span class="hearts is-4"></span>
+                                        </li>
+                                        <li title="Une potion de regénération : +6 points de vie">
+                                            <span class="source i-item-potion-bottle-splash-small"></span>
+                                            <span class="hearts is-6"></span>
+                                        </li>
+                                        <li title="Une pomme d'or : +4 points de vie">
+                                            <span class="source i-item-apple-golden-small"></span>
+                                            <span class="hearts is-4"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="column damages-report-kills-parent">
+                                <div class="damages-report-kills">
+                                    <h4><strong>2</strong> joueurs tués</h4>
+
+                                    <ul>
+                                        <li>
+                                            <a href="" class="player is-dark-green-hover">
+                                                <figure aria-hidden="true">
+                                                    <img src="{{ head(uuid="da04cd54-c6c7-4672-97c5-85663f5bccf6", size=32) }}" alt="" />
+                                                </figure>
+                                                <span>AmauryPi</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="" class="player is-yellow-hover">
+                                                <figure aria-hidden="true">
+                                                    <img src="{{ head(uuid="de79b165-a66c-4faf-bdcf-c120487efe78", size=32) }}" alt="" />
+                                                </figure>
+                                                <span>Tyranouille</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                    <h4>Tué par</h4>
+
+                                    <ul>
+                                        <li>
+                                            <a href="" class="player is-yellow-hover">
+                                                <figure aria-hidden="true">
+                                                    <img src="{{ head(uuid="454abcd4-4bc3-465e-acef-1687b247cc89", size=32) }}" alt="" />
+                                                </figure>
+                                                <span>Brutal_Berserker</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                    <h4>Classement</h4>
+
+                                    <p class="player-rank">2</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chest-inner damages-report">
+                        <div class="columns">
+                            <div class="column damages-report-player-parent">
+                                <div class="damages-report-player">
+                                    <figure class="player-head is-dark-green">
+                                        <img src="{{ head(uuid="f79c6c7f-fe45-4502-8f2a-de9f92dcaade", size=90) }}" alt="Sashastan" />
+                                        <figcaption>
+                                            <span class="name">Sashastan</span>
+                                            <span class="tag-line">Allié</span>
+                                        </figcaption>
+                                    </figure>
+                                </div>
+                            </div>
+                            <div class="column damages-report-alterations-parent">
+                                <div class="damages-report-alterations">
+                                    <h4><strong>24</strong> dégâts reçus</h4>
+
+                                    <ul>
+                                        <li title="Dégâts de chute : -2 points de vie">
+                                            <span class="weapon"></span>
+                                            <span class="source i-block-stone-small"></span>
+                                            <span class="hearts is-2"></span>
+                                        </li>
+                                        <li title="Araignée : -2 points de vie">
+                                            <span class="weapon"></span>
+                                            <span class="source i-entity-spider-small"></span>
+                                            <span class="hearts is-2"></span>
+                                        </li>
+                                        <li title="Squelette : -2 points de vie">
+                                            <span class="weapon"></span>
+                                            <span class="source i-entity-skeleton-small"></span>
+                                            <span class="hearts is-2"></span>
+                                        </li>
+                                        <li>
+                                            <span class="weapon"></span>
+                                            <span class="source i-entity-skeleton-small"></span>
+                                            <span class="hearts is-0"></span>
+                                        </li>
+                                        <li>
+                                            <span class="weapon"></span>
+                                            <span class="source i-entity-creeper-small"></span>
+                                            <span class="hearts is-0"></span>
+                                        </li>
+                                        <li>
+                                            <span class="weapon"></span>
+                                            <span class="source i-entity-skeleton-small"></span>
+                                            <span class="hearts is-3"></span>
+                                        </li>
+                                        <li>
+                                            <span class="weapon i-item-gold-sword-small"></span>
+                                            <span class="source i-entity-zombie-small"></span>
+                                            <span class="hearts is-4"></span>
+                                        </li>
+                                        <li>
+                                            <span class="weapon"></span>
+                                            <span class="source i-entity-skeleton-small"></span>
+                                            <span class="hearts is-3"></span>
+                                        </li>
+                                        <li>
+                                            <span class="weapon"></span>
+                                            <span class="source i-entity-skeleton-small"></span>
+                                            <span class="hearts is-0"></span>
+                                        </li>
+                                        <li>
+                                            <span class="weapon"></span>
+                                            <span class="source i-block-sand-small"></span>
+                                            <span class="hearts is-6"></span>
+                                        </li>
+                                        <li>
+                                            <span class="weapon i-item-iron-sword-small"></span>
+                                            <span class="source i-entity-blaze-small"></span>
+                                            <span class="hearts is-20 is-lethal"></span>
+                                        </li>
+                                        <li>
+                                            <span class="weapon i-item-iron-sword-small"></span>
+                                            <span class="source"><img src="{{ head(uuid="fc0d7b71-34de-460c-a10a-92cf2d202fa9", size=20) }}" alt="Singer47" /></span>
+                                            <span class="hearts is-3 is-lethal"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="column damages-report-alterations-parent">
+                                <div class="damages-report-alterations">
+                                    <h4><strong>4</strong> dégâts engendrés</h4>
+
+                                    <ul>
+                                        <li title="Épée en fer sur Singer47 : -3 points de vie ; coup létal.">
+                                            <span class="weapon i-item-iron-sword-small"></span>
+                                            <span class="source"><img src="{{ head(uuid="fc0d7b71-34de-460c-a10a-92cf2d202fa9", size=20) }}" alt="Singer47" /></span>
+                                            <span class="hearts is-3 is-lethal"></span>
+                                        </li>
+                                        <li title="Épée en fer sur MrLefra99 : -1 points de vie.">
+                                            <span class="weapon i-item-iron-sword-small"></span>
+                                            <span class="source"><img src="{{ head(uuid="445718ae-ee31-4e66-8d57-5a10457ab93b", size=20) }}" alt="MrLefra99" /></span>
+                                            <span class="hearts is-1"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="column damages-report-alterations-parent is-health">
+                                <div class="damages-report-alterations">
+                                    <h4><strong>8</strong> vie régénérée</h4>
+
+                                    <ul>
+                                        <li title="Une pomme d'or : +4 points de vie">
+                                            <span class="source i-item-apple-golden-small"></span>
+                                            <span class="hearts is-4"></span>
+                                        </li>
+                                        <li title="Une potion de regénération : +6 points de vie">
+                                            <span class="source i-item-potion-bottle-splash-small"></span>
+                                            <span class="hearts is-6"></span>
+                                        </li>
+                                        <li title="Une pomme d'or : +4 points de vie">
+                                            <span class="source i-item-apple-golden-small"></span>
+                                            <span class="hearts is-4"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="column damages-report-kills-parent">
+                                <div class="damages-report-kills">
+                                    <h4><strong>2</strong> joueurs tués</h4>
+
+                                    <ul>
+                                        <li>
+                                            <a href="" class="player is-dark-green-hover">
+                                                <figure aria-hidden="true">
+                                                    <img src="{{ head(uuid="cdda3f1f-19ed-4f92-9cad-bf4ab1f98bc2", size=32) }}" alt="" />
+                                                </figure>
+                                                <span>Mexknak</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="" class="player is-yellow-hover">
+                                                <figure aria-hidden="true">
+                                                    <img src="{{ head(uuid="6e84adc0-b6e6-406c-b3da-772a7459ce15", size=32) }}" alt="" />
+                                                </figure>
+                                                <span>Morgan_A</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                    <h4>Tué par</h4>
+
+                                    <ul>
+                                        <li>
+                                            <a href="" class="player is-fake-player">
+                                                <figure aria-hidden="true">
+                                                    <span class="i-item-flint-and-steel"></span>
+                                                </figure>
+                                                <span>Briquet</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                    <h4>Classement</h4>
+
+                                    <p class="player-rank">3</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- TODO
+                <article class="chest">
                     <h3 class="chest-title">Équipes</h3>
-                </div>
-                <div class="chest">
-                    <h3 class="chest-title">Dégâts engendrés par les créatures</h3>
-                </div>
+                </article>
+                -->
+
+                <article class="chest">
+                    <h3 class="chest-title">Dégâts engendrés par l'environnement</h3>
+                    <div class="columns">
+                        <div class="column">
+                            <div class="chest-inner natural-damages-report">
+                                <div class="natural-damages-report-line">
+                                    <div class="columns">
+                                        <div class="column is-4 natural-damages-report-source">
+                                            <figure>
+                                                <span class="i-entity-angry-wolf-large"></span>
+                                                <figcaption>Loup énervé</figcaption>
+                                            </figure>
+                                        </div>
+                                        <div class="column is-8 natural-damages-report-damages">
+                                            <h4><strong>5</strong> dégâts engendrés</h4>
+                                            <ul>
+                                                <li><span class="hearts is-5"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="natural-damages-report-line">
+                                    <div class="columns">
+                                        <div class="column is-4 natural-damages-report-source">
+                                            <figure>
+                                                <span class="i-entity-skeleton-large"></span>
+                                                <figcaption>Squelette</figcaption>
+                                            </figure>
+                                        </div>
+                                        <div class="column is-8 natural-damages-report-damages">
+                                            <h4><strong>49</strong> dégâts engendrés</h4>
+                                            <ul>
+                                                <li><span class="hearts is-20"></span></li>
+                                                <li><span class="hearts is-20"></span></li>
+                                                <li><span class="hearts is-9"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="natural-damages-report-line">
+                                    <div class="columns">
+                                        <div class="column is-4 natural-damages-report-source">
+                                            <figure>
+                                                <span class="i-entity-ender-dragon-large"></span>
+                                                <figcaption>Dragon</figcaption>
+                                            </figure>
+                                        </div>
+                                        <div class="column is-8 natural-damages-report-damages">
+                                            <h4><strong>128</strong> dégâts engendrés</h4>
+                                            <ul>
+                                                <li><span class="hearts is-20"></span></li>
+                                                <li><span class="hearts is-20"></span></li>
+                                                <li><span class="hearts is-20"></span></li>
+                                                <li><span class="hearts is-20"></span></li>
+                                                <li><span class="hearts is-20"></span></li>
+                                                <li><span class="hearts is-20"></span></li>
+                                                <li><span class="hearts is-8"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="chest-inner natural-damages-report">
+                                <div class="natural-damages-report-line">
+                                    <div class="columns">
+                                        <div class="column is-4 natural-damages-report-source">
+                                            <figure>
+                                                <span class="i-block-stone-large"></span>
+                                                <figcaption>Chutes</figcaption>
+                                            </figure>
+                                        </div>
+                                        <div class="column is-8 natural-damages-report-damages">
+                                            <h4><strong>12</strong> dégâts engendrés</h4>
+                                            <ul>
+                                                <li><span class="hearts is-12"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="natural-damages-report-line">
+                                    <div class="columns">
+                                        <div class="column is-4 natural-damages-report-source">
+                                            <figure>
+                                                <span class="i-block-sand-large"></span>
+                                                <figcaption>Suffocation</figcaption>
+                                            </figure>
+                                        </div>
+                                        <div class="column is-8 natural-damages-report-damages">
+                                            <h4><strong>3</strong> dégâts engendrés</h4>
+                                            <ul>
+                                                <li><span class="hearts is-3"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="natural-damages-report-line">
+                                    <div class="columns">
+                                        <div class="column is-4 natural-damages-report-source">
+                                            <figure>
+                                                <span class="i-block-cactus-large"></span>
+                                                <figcaption>Contact</figcaption>
+                                            </figure>
+                                        </div>
+                                        <div class="column is-8 natural-damages-report-damages">
+                                            <h4><strong>1</strong> dégât engendré</h4>
+                                            <ul>
+                                                <li><span class="hearts is-1"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="natural-damages-report-line">
+                                    <div class="columns">
+                                        <div class="column is-4 natural-damages-report-source">
+                                            <figure>
+                                                <span class="i-block-tnt-large"></span>
+                                                <figcaption>Trinitroluène</figcaption>
+                                            </figure>
+                                        </div>
+                                        <div class="column is-8 natural-damages-report-damages">
+                                            <h4><strong>37</strong> dégâts engendrés</h4>
+                                            <ul>
+                                                <li><span class="hearts is-20"></span></li>
+                                                <li><span class="hearts is-17"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="natural-damages-report-line">
+                                    <div class="columns">
+                                        <div class="column is-4 natural-damages-report-source">
+                                            <figure>
+                                                <span class="i-entity-lightning-large"></span>
+                                                <figcaption>Éclair</figcaption>
+                                            </figure>
+                                        </div>
+                                        <div class="column is-8 natural-damages-report-damages">
+                                            <h4><strong>4</strong> dégâts engendrés</h4>
+                                            <ul>
+                                                <li><span class="hearts is-4"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
             </div>
         </section>
 
@@ -437,6 +914,16 @@
                             })
                         }
                     });
+                });
+
+                const players_links = document.querySelectorAll('a.player');
+
+                players_links.forEach(function(element) {
+                    element.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        element.blur();
+                        // TODO link to player stats tab if it's a real link
+                    })
                 });
             });
         </script>

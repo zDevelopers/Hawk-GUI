@@ -14,6 +14,10 @@
 
   color: $minecraft-text;
 
+  &.is-fake-player {
+    cursor: default;
+  }
+
   figure {
     display: block;
 
@@ -29,7 +33,7 @@
 
   span {
     display: block;
-    padding-left: .4rem;
+    padding-left: .6rem;
 
     flex-grow: 2;
 
