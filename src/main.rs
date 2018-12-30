@@ -22,7 +22,7 @@ use rocket_contrib::uuid::{Uuid, uuid_crate};
 use serde_json::value::{from_value, to_value, Value};
 
 use lib::minecraft::parse_color_codes;
-use lib::report_raw::Report;
+use lib::report::raw::Report;
 
 static USERS_CONTENT_FOLDER: &'static str = "user-generated-content";
 

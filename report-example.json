@@ -1,7 +1,7 @@
 {
   "match_uuid": "9be8ef14-a14e-4f96-b61e-b865c27ada8f",
   "title": "§5KTZ §dVII",
-  "date": "2018-12-15T22:15:33",
+  "date": "2018-12-15T22:15:33+02:00",
 
   "settings": {
     "date": true,
@@ -22,14 +22,21 @@
     "players": {
       "enabled": true,
       "play_time": true,
-      "movement": true,
-      "actions": true,
+      "statistics_whitelist": [],
+      "statistics_highlight": [],
       "used": false,
       "used_whitelist": [],
+      "used_highlights": [],
       "mined": true,
       "mined_whitelist": [],
+      "mined_highlights": [],
       "picked_up": true,
-      "picked_up_whitelist": []
+      "picked_up_whitelist": [],
+      "picked_up_highlight": []
+    },
+    "generator": {
+      "name": "UHC Reloaded",
+      "link": "https://github.com/zDevelopers/UHPlugin"
     }
   },
 
@@ -220,7 +227,7 @@
 
   "damages": [
     {
-      "time": "2018-12-15T22:15:33",
+      "date": "2018-12-15T22:15:33+02:00",
       "damage_cause": "PLAYER_SWEEP",
       "weapon": "SWORD_IRON",
       "damager": "55b89885-673c-4458-a8bd-33ad9c6190b4",
@@ -232,6 +239,7 @@
 
   "heals": [
     {
+      "date": "2018-12-15T22:15:33+02:00",
       "heal_cause": "GOLDEN_APPLE",
       "healed": "0dd34bda-c13b-473b-a887-368027ca05ca",
       "heal": 8
@@ -240,11 +248,14 @@
 
   "events": [
     {
-      "time": "2018-12-15T22:15:33",
+      "date": "2018-12-15T22:15:33+02:00",
       "type": "GOLD",
       "title": "Mort de Vayan91",
       "description": "Vayan91 was slain by Cave Spider",
-      "icon": "player:7caf2af6-b149-47eb-8b76-7f58c07d8f5a",
+      "icon": {
+        "type": "player",
+        "uuid": "7caf2af6-b149-47eb-8b76-7f58c07d8f5a"
+      },
 
       "type_": "GOLD|BLUE|GREEN|RED",
 
