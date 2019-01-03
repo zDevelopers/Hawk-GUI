@@ -58,7 +58,7 @@ impl Report {
             match_uuid: raw_report.match_uuid.clone(),
             title: raw_report.title.clone(),
             date: raw_report.date.clone(),
-            settings: raw_report.settings.clone().ok_or(errors::InvalidReportError::Unknown)?,
+            settings: raw_report.settings.clone(),
             players: players.iter().map(|(_, player)| (*player.as_ref()).clone()).collect(),
             teams: team::Team::from_raw_vec(&raw_report.teams, &players)?,
             events: event::Event::from_raw_vec(&raw_report.events, &begin),

@@ -3,10 +3,8 @@ use uuid::Uuid;
 
 use crate::report::*;
 
-fn default_false() -> bool { false }
-
-#[inline]
-pub fn default_team_color() -> team::TeamColor { team::TeamColor::None }
+#[inline(always)] fn default_false() -> bool { false }
+#[inline(always)] pub fn default_team_color() -> team::TeamColor { team::TeamColor::None }
 
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -70,7 +68,10 @@ pub struct Report {
     pub match_uuid: Uuid,
     pub title: String,
     pub date: DateTime<FixedOffset>,
-    pub settings: Option<settings::Settings>,
+
+    #[serde(default = "settings::default_settings")]
+    pub settings: settings::Settings,
+
     pub players: Vec<Player>,
     pub teams: Vec<Team>,
     pub damages: Vec<Damage>,

@@ -6,7 +6,7 @@ use uuid::Uuid;
 use crate::report::raw::Event as RawEvent;
 use crate::report::report::since;
 
-pub fn default_event_type() -> EventType { EventType::Blue }
+#[inline(always)] pub fn default_event_type() -> EventType { EventType::Blue }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Event {
