@@ -12,6 +12,7 @@ pub mod heal;
 pub mod event;
 pub mod aggregates;
 pub mod report;
+pub mod errors;
 
 ///
 /// Reads a raw JSON report to the raw Rust structure.

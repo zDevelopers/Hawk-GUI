@@ -4,8 +4,22 @@ use uuid::Uuid;
 use crate::report::*;
 
 fn default_false() -> bool { false }
-fn default_team_color() -> team::TeamColor { team::TeamColor::Black }
 
+#[inline]
+pub fn default_team_color() -> team::TeamColor { team::TeamColor::None }
+
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct Player {
+    pub uuid: Uuid,
+    pub name: String,
+
+    pub tag_line: Option<String>,
+    pub tag_line_secondary: Option<String>,
+    pub tag_line_details: Option<String>,
+
+    pub statistics: Option<player::PlayerStatistics>
+}
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Team {
@@ -19,9 +33,10 @@ pub struct Team {
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Damage {
-    pub damage_cause: damage::DamageCause,
+    pub date: DateTime<FixedOffset>,
+    pub cause: damage::DamageCause,
     pub weapon: Option<damage::Weapon>,
-    pub damager: Uuid,
+    pub damager: Option<Uuid>,
     pub damagee: Uuid,
     pub damage: u16,
 
@@ -31,9 +46,23 @@ pub struct Damage {
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Heal {
-    pub heal_cause: heal::HealCause,
+    pub date: DateTime<FixedOffset>,
+    pub cause: heal::HealCause,
     pub healed: Uuid,
     pub heal: u16,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct Event {
+    pub date: DateTime<FixedOffset>,
+
+    #[serde(default = "event::default_event_type", rename = "type")]
+    pub event_type: event::EventType,
+
+    pub title: String,
+    pub description: Option<String>,
+
+    pub icon: event::EventIcon,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -42,9 +71,9 @@ pub struct Report {
     pub title: String,
     pub date: DateTime<FixedOffset>,
     pub settings: Option<settings::Settings>,
-    pub players: Vec<player::Player>,
+    pub players: Vec<Player>,
     pub teams: Vec<Team>,
     pub damages: Vec<Damage>,
     pub heals: Vec<Heal>,
-    pub events: Vec<event::Event>,
+    pub events: Vec<Event>,
 }

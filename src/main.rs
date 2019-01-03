@@ -14,7 +14,7 @@ use std::path::Path;
 use rocket::http::Status;
 use rocket::response::NamedFile;
 use rocket::response::status;
-use rocket_contrib::json::{Json, JsonValue};
+use rocket_contrib::json::{Json, JsonError, JsonValue};
 use rocket_contrib::serve::StaticFiles;
 use rocket_contrib::templates::Template;
 use rocket_contrib::templates::tera;
@@ -22,7 +22,8 @@ use rocket_contrib::uuid::{Uuid, uuid_crate};
 use serde_json::value::{from_value, to_value, Value};
 
 use lib::minecraft::parse_color_codes;
-use lib::report::raw::Report;
+use lib::report::raw;
+use lib::report::report;
 
 static USERS_CONTENT_FOLDER: &'static str = "user-generated-content";
 
@@ -33,8 +34,33 @@ fn index() -> &'static str {
 }
 
 #[post("/publish",  data = "<match_report>")]
-fn publish(match_report: Json<Report>) -> Json<Report> {
-    match_report
+fn publish(match_report: Result<Json<raw::Report>, JsonError>) -> Result<Json<report::Report>, status::Custom<JsonValue>> {
+    match match_report {
+        Ok(match_report) => {
+            let instant = ::std::time::Instant::now();
+            match report::Report::from_raw(match_report.into_inner()) {
+                Ok(report) => {
+                    println!("    => Processing time: {:?}", instant.elapsed());
+                    Ok(Json(report))
+                },
+                Err(error) => Err(status::Custom(Status::UnprocessableEntity, json!({
+                    "error": "Unprocessable Entity",
+                    "error_code": format!("{}", error.as_ref()),
+                    "description": format!("{}", error)
+                })))
+            }
+        },
+        Err(error) => {
+            Err(status::Custom(Status::UnprocessableEntity, json!({
+                "error": "Unprocessable Entity",
+                "error_code": "JsonSchemaParseError",
+                "description": match error {
+                    JsonError::Io(error) => format!("IO Error: {}", error),
+                    JsonError::Parse(_input, error) => format!("Parse Error: {}", error)
+                }
+            })))
+        }
+    }
 }
 
 #[get("/publish")]
@@ -108,7 +134,7 @@ fn display_match_json(match_id: String) -> Option<JsonValue> {
         "match_url": uri!(display_match: match_id).to_string(),
         "date": "2018-12-16T11:08:26",
         "teams": []
-        }))
+    }))
 }
 
 
@@ -116,7 +142,7 @@ fn display_match_json(match_id: String) -> Option<JsonValue> {
 fn error_unprocessable_entity() -> JsonValue {
     json!({
         "error": "Unprocessable Entity",
-        "error_code": 422,
+        "error_code": "JsonSchemaError",
         "description": "The request was well-formed, but we were unable to process it due to \
         semantic errors in the data provided."
     })
