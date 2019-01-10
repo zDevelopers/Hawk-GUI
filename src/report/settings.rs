@@ -48,7 +48,10 @@ pub struct SettingsDamages {
     pub damages_per_team: bool,  // TODO unimplemented
 
     #[serde(default = "default_true")]
-    pub damages_from_mobs: bool,
+    pub damages_from_environment: bool,
+
+    #[serde(default = "default_true")]
+    pub display_killer: bool,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -58,6 +61,9 @@ pub struct SettingsPlayers {
 
     #[serde(default = "default_true")]
     pub play_time: bool,
+
+    #[serde(default = "default_true")]
+    pub global_statistics: bool,
 
     #[serde(default)]
     pub statistics_whitelist: Vec<String>,
@@ -132,7 +138,8 @@ fn default_damages_settings() -> SettingsDamages {
         enabled: true,
         damages_per_players: true,
         damages_per_team: true,
-        damages_from_mobs: true
+        damages_from_environment: true,
+        display_killer: true
     }
 }
 
@@ -141,6 +148,7 @@ fn default_players_settings() -> SettingsPlayers {
     SettingsPlayers {
         enabled: true,
         play_time: true,
+        global_statistics: true,
         statistics_whitelist: vec![],
         statistics_highlight: vec![],
         used: false,

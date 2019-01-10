@@ -12,7 +12,6 @@ pub struct Aggregate {
     pub global_statistics: PlayerStatistics,
     pub players_damages: HashMap<Uuid, PlayerAlterationsAggregate>,
     pub environmental_damages: HashMap<DamageCause, u32>,
-    pub winners: Vec<SimplePlayer>
 }
 
 impl Aggregate {
@@ -20,8 +19,7 @@ impl Aggregate {
         Aggregate {
             global_statistics: Self::aggregate_global_statistics(&players.iter().filter_map(|(_uuid, player)| (player.as_ref()).statistics.clone()).collect()),
             players_damages: Self::aggregate_alterations(players, damages, heals),
-            environmental_damages: Self::aggregate_environmental_damages(damages),
-            winners: Self::extract_winners(players, damages)
+            environmental_damages: Self::aggregate_environmental_damages(damages)
         }
     }
 
@@ -123,16 +121,6 @@ impl Aggregate {
             });
 
         aggregated
-    }
-
-    fn extract_winners(players: &HashMap<Uuid, Rc<Player>>, damages: &Vec<Damage>) -> Vec<SimplePlayer> {
-        let deads: Vec<Uuid> = damages.iter().filter(|damage| damage.lethal).map(|damage| damage.damagee.uuid).collect();
-
-        players.iter()
-            .map(|(_uuid, player)| player)
-            .filter(|player| !deads.contains(&player.as_ref().uuid))
-            .map(|player| player.as_ref().into())
-            .collect()
     }
 }
 

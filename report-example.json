@@ -17,19 +17,21 @@
       "enabled": true,
       "damages_per_players": true,
       "damages_per_teams": true,
-      "damages_from_mobs": true
+      "damages_from_environment": true,
+      "display_killer": true
     },
     "players": {
       "enabled": true,
       "play_time": true,
+      "global_statistics": true,
       "statistics_whitelist": [],
       "statistics_highlight": [],
       "used": false,
       "used_whitelist": [],
-      "used_highlights": [],
+      "used_highlight": [],
       "mined": true,
       "mined_whitelist": [],
-      "mined_highlights": [],
+      "mined_highlight": [],
       "picked_up": true,
       "picked_up_whitelist": [],
       "picked_up_highlight": []
@@ -795,6 +797,8 @@
     }
   ],
 
+  "winners": [],
+
   "damages": [
     {
       "date": "2018-12-15T22:59:16+02:00",
@@ -843,13 +847,17 @@
       "icon": {
         "type": "player",
         "uuid": "7caf2af6-b149-47eb-8b76-7f58c07d8f5a"
-      },
-
-      "type_": "GOLD|BLUE|GREEN|RED",
-
-      "icon__": "player:Vayan91",
-      "_icon_": "icon:item-diamond",
-      "__icon": "url:https://t.co/i-32×32.png"
+      }
+    },
+    {
+      "date": "2018-12-15T23:22:21+02:00",
+      "type": "GOLD",
+      "title": "Mort de Vayan91",
+      "description": "Vayan91 was slain by Cave Spider",
+      "icon": {
+        "type": "player",
+        "uuid": "7caf2af6-b149-47eb-8b76-7f58c07d8f5a"
+      }
     }
   ]
 }

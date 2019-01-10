@@ -74,6 +74,7 @@ pub struct Report {
 
     pub players: Vec<Player>,
     pub teams: Vec<Team>,
+    pub winners: Option<Vec<Uuid>>,
     pub damages: Vec<Damage>,
     pub heals: Vec<Heal>,
     pub events: Vec<Event>,

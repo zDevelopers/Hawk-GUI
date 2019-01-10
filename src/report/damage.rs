@@ -15,7 +15,7 @@ pub struct Damage {
     pub date: DateTime<FixedOffset>,
     pub since_beginning: Duration,
     pub cause: DamageCause,
-    pub weapon: Weapon,
+    pub weapon: Weapon, // TODO add enchants
     pub damager: Option<SimplePlayer>,
     pub damagee: SimplePlayer,
     pub damage: u16,
@@ -61,13 +61,13 @@ impl Damage {
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, Hash)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum DamageCause {
-    Player,       // TODO: “moved“ cause
-    PlayerSweep,  // TODO: added cause
+    Player,
     Zombie,
     Skeleton,
     Pigman,
+    Witch,
     Spider,
-    CaveSpider,   // TODO: different name in DamagesLogger
+    CaveSpider,
     Creeper,
     Enderman,
     Slime,
@@ -75,7 +75,7 @@ pub enum DamageCause {
     MagmaCube,
     Blaze,
     Wolf,
-    AngryWolf,    // TODO: idem
+    AngryWolf,
     Silverfish,
     IronGolem,
     ZombieVillager,
@@ -117,5 +117,7 @@ pub enum Weapon {
     Bow,
 
     Magic,
-    Thorns
+    Thorns,
+
+    Unknown
 }

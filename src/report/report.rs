@@ -17,6 +17,7 @@ pub struct Report {
     pub settings: settings::Settings,
     pub players: Vec<player::Player>,
     pub teams: Vec<team::Team>,
+    pub winners: Vec<player::SimplePlayer>,
     pub damages: Vec<damage::Damage>,
     pub heals: Vec<heal::Heal>,
     pub events: Vec<event::Event>,
@@ -54,6 +55,25 @@ impl Report {
         let damages = damage::Damage::from_raw_vec(&raw_report.damages, &players, &begin)?;
         let heals = heal::Heal::from_raw_vec(&raw_report.heals, &players, &begin)?;
 
+        let winners = match raw_report.winners {
+            Some(winners) => match winners.is_empty() {
+                true => Self::extract_winners(&players, &damages),
+                false => {
+                    let mut team_players: Vec<player::SimplePlayer> = Vec::new();
+
+                    for player in &winners {
+                        match players.get(&player) {
+                            Some(player) => team_players.push(player.as_ref().into()),
+                            None => return Err(errors::InvalidReportError::MissingPlayerReference { uuid: *player })
+                        }
+                    }
+
+                    team_players
+                }
+            },
+            None => Self::extract_winners(&players, &damages)
+        };
+
         Ok(Report {
             match_uuid: raw_report.match_uuid.clone(),
             title: raw_report.title.clone(),
@@ -63,9 +83,20 @@ impl Report {
             teams: team::Team::from_raw_vec(&raw_report.teams, &players)?,
             events: event::Event::from_raw_vec(&raw_report.events, &begin),
             aggregates: aggregates::Aggregate::from_raw(&players, &damages, &heals),
+            winners,
             damages,
             heals,
         })
+    }
+
+    fn extract_winners(players: &HashMap<Uuid, Rc<player::Player>>, damages: &Vec<damage::Damage>) -> Vec<player::SimplePlayer> {
+        let deads: Vec<Uuid> = damages.iter().filter(|damage| damage.lethal).map(|damage| damage.damagee.uuid).collect();
+
+        players.iter()
+            .map(|(_uuid, player)| player)
+            .filter(|player| !deads.contains(&player.as_ref().uuid))
+            .map(|player| player.as_ref().into())
+            .collect()
     }
 }
 
