@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use chrono::{DateTime, FixedOffset};
 use uuid::Uuid;
 
@@ -34,6 +36,7 @@ pub struct Damage {
     pub date: DateTime<FixedOffset>,
     pub cause: damage::DamageCause,
     pub weapon: Option<damage::Weapon>,
+    pub weapon_enchantments: Option<HashMap<String, u32>>,
     pub damager: Option<Uuid>,
     pub damagee: Uuid,
     pub damage: u16,

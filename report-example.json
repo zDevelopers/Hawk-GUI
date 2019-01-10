@@ -826,6 +826,21 @@
       "damagee": "445718ae-ee31-4e66-8d57-5a10457ab93b",
       "damage": 7,
       "lethal": true
+    },
+    {
+      "date": "2019-01-10T03:34:22.159+01:00",
+      "cause": "PLAYER",
+      "weapon": "BOW",
+      "weapon_enchantments": {
+        "power": 4,
+        "flame": 1,
+        "unbreaking": 3,
+        "infinity": 1
+      },
+      "damager": "da04cd54-c6c7-4672-97c5-85663f5bccf6",
+      "damagee": "da04cd54-c6c7-4672-97c5-85663f5bccf6",
+      "damage": 2,
+      "lethal": false
     }
   ],
 
