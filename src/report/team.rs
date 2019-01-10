@@ -59,6 +59,7 @@ pub enum TeamColor {
     DarkGray,
     DarkGreen,
     DarkPurple,
+    DarkRed,
     Gold,
     Gray,
     Green,
