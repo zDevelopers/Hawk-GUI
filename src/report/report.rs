@@ -46,7 +46,7 @@ impl Report {
         let players: HashMap<Uuid, Rc<player::Player>> = (&raw_report.players).into_iter()
             .map(|player| (
                 player.uuid,
-                Rc::new(player::Player::from_raw(player, &players_colors, &raw::default_team_color()))
+                Rc::new(player::Player::from_raw(player, &players_colors, &raw::default_team_color(), &raw_report.settings.players))
             ))
             .collect();
 

@@ -4,6 +4,7 @@ use std::rc::Rc;
 use uuid::Uuid;
 
 use crate::report::raw::Player as RawPlayer;
+use crate::report::settings::SettingsPlayers;
 use crate::report::team::TeamColor;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -16,11 +17,12 @@ pub struct Player {
     pub tag_line_secondary: String,
     pub tag_line_details: String,
 
-    pub statistics: Option<PlayerStatistics>
+    pub statistics: Option<PlayerStatistics>,
+    pub displayed_statistics: Option<DisplayedPlayerStatistics>
 }
 
 impl Player {
-    pub fn from_raw(raw_player: &RawPlayer, colors: &HashMap<Uuid, TeamColor>, default_color: &TeamColor) -> Self {
+    pub fn from_raw(raw_player: &RawPlayer, colors: &HashMap<Uuid, TeamColor>, default_color: &TeamColor, settings: &SettingsPlayers) -> Self {
         Self {
             uuid: raw_player.uuid.clone(),
             name: raw_player.name.clone(),
@@ -28,7 +30,11 @@ impl Player {
             tag_line: raw_player.tag_line.clone().unwrap_or("".to_string()).clone(),
             tag_line_secondary: raw_player.tag_line_secondary.clone().unwrap_or("".to_string()).clone(),
             tag_line_details: raw_player.tag_line_details.clone().unwrap_or("".to_string()).clone(),
-            statistics: raw_player.statistics.clone()
+            statistics: raw_player.statistics.clone(),
+            displayed_statistics: match &raw_player.statistics {
+                Some(statistics) => Some(DisplayedPlayerStatistics::calculate_displayed_statistics(statistics, settings)),
+                None => None
+            }
         }
     }
 }
@@ -41,6 +47,79 @@ pub struct PlayerStatistics {
     pub picked_up: Option<HashMap<String, u32>>
 }
 
+///
+/// Stores statistics as they will be displayed according
+/// to the settings, separating those visible by default and
+/// those hidden under a link because they are not highlighted.
+///
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct DisplayedPlayerStatistics {
+    pub generic: Option<DisplayedStatistics>,
+    pub used: Option<DisplayedStatistics>,
+    pub mined: Option<DisplayedStatistics>,
+    pub picked_up: Option<DisplayedStatistics>
+}
+
+///
+/// For a single piece of statistics (global, mined, …), stores the visible
+/// ones and the by-default-hidden.
+///
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct DisplayedStatistics {
+    pub visible: HashMap<String, u32>,
+    pub hidden: HashMap<String, u32>
+}
+
+impl DisplayedPlayerStatistics {
+    pub fn calculate_displayed_statistics(statistics: &PlayerStatistics, settings: &SettingsPlayers) -> DisplayedPlayerStatistics {
+        DisplayedPlayerStatistics {
+            generic: match settings.global_statistics {
+                true => match &statistics.generic {
+                    Some(statistic) => Some(Self::calculate_displayed(statistic, &settings.statistics_whitelist, &settings.statistics_highlight)),
+                    None => None
+                }
+                false => None
+            },
+            used: match settings.used {
+                true => match &statistics.used {
+                    Some(statistic) => Some(Self::calculate_displayed(statistic, &settings.used_whitelist, &settings.used_highlight)),
+                    None => None
+                }
+                false => None
+            },
+            mined: match settings.mined {
+                true => match &statistics.mined {
+                    Some(statistic) => Some(Self::calculate_displayed(statistic, &settings.mined_whitelist, &settings.mined_highlight)),
+                    None => None
+                }
+                false => None
+            },
+            picked_up: match settings.picked_up {
+                true => match &statistics.picked_up {
+                    Some(statistic) => Some(Self::calculate_displayed(statistic, &settings.picked_up_whitelist, &settings.picked_up_highlight)),
+                    None => None
+                }
+                false => None
+            }
+        }
+    }
+
+    fn calculate_displayed(statistics: &HashMap<String, u32>, whitelist: &Vec<String>, highlight: &Vec<String>) -> DisplayedStatistics {
+        let mut visible = HashMap::new();
+        let mut hidden = HashMap::new();
+
+        statistics.iter()
+            .filter(|(stat, _val)| whitelist.is_empty() || whitelist.contains(stat))
+            .for_each(|(stat, val)| {
+                match highlight.is_empty() || highlight.contains(stat) {
+                    true => &mut visible,
+                    false => &mut hidden
+                }.insert(stat.clone(), *val);
+            });
+
+        DisplayedStatistics { visible, hidden }
+    }
+}
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct SimplePlayer {
