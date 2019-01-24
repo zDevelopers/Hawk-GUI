@@ -8,7 +8,7 @@
 
         <title>{{ match_title | minecraft | striptags }} – Récapitulatif de partie</title>
 
-        <link rel="stylesheet" href="/static/css/uhcreloaded-reports.min.css" />
+        <link rel="stylesheet" href="/static/css/hawk.min.css" />
         <link rel="icon" href="/static/images/apple-golden.png" />
     </head>
 
@@ -881,10 +881,10 @@
         <footer>
             <div class="content has-text-centered">
                 <p>
-                    Généré grâce au <a href="https://github.com/zDevelopers/UHPlugin">plugin UHCReloaded</a> par
-                    <a href="https://amaury.carrade.eu">Amaury Carrade</a>. Site web de récapitulatifs développé
-                    avec amour <a href="https://github.com/zDevelopers/UHCR-Reports">en Rust</a> grâce à
-                    <a href="https://rocket.rs">Rocket</a>.<br />
+                    Généré par <a href="https://github.com/zDevelopers/UHPlugin">UHCReloaded</a> grâce à
+                    <a href="/">Hawk</a>, un projet développé avec amour
+                    <a href="https://github.com/zDevelopers/Hawk-GUI">en Rust</a> avec
+                    <a href="https://rocket.rs">Rocket</a> par <a href="https://amaury.carrade.eu">Amaury Carrade</a>.<br />
                     Nous ne sommes pas responsables du contenu de ce site (en particulier, des pseudonymes et noms d'équipe).
                 </p>
             </div>
