@@ -11,9 +11,11 @@ use std::fs::{create_dir_all, File};
 use std::io::copy;
 use std::path::Path;
 
+use rocket::fairing::AdHoc;
 use rocket::http::Status;
 use rocket::response::NamedFile;
 use rocket::response::status;
+use rocket::State;
 use rocket_contrib::json::{Json, JsonError, JsonValue};
 use rocket_contrib::serve::StaticFiles;
 use rocket_contrib::templates::Template;
@@ -23,9 +25,20 @@ use serde_json::value::{from_value, to_value, Value};
 
 use lib::minecraft::parse_color_codes;
 use lib::report::raw;
-use lib::report::report;
+use lib::report::save_report;
 
-static USERS_CONTENT_FOLDER: &'static str = "user-generated-content";
+use lib::USERS_CONTENT_FOLDER;
+
+///
+/// Stores the base URI for the current server according to configuration
+/// (e.g. “https://domain.co/”).
+///
+struct BaseURI {
+    ///
+    /// The base URL, including protocol and ending with a slash.
+    ///
+    uri: String
+}
 
 
 #[get("/")]
@@ -34,22 +47,19 @@ fn index() -> &'static str {
 }
 
 #[post("/publish",  data = "<match_report>")]
-fn publish(match_report: Result<Json<raw::Report>, JsonError>) -> Result<Json<report::Report>, status::Custom<JsonValue>> {
+fn publish(match_report: Result<Json<raw::Report>, JsonError>, base_uri: State<BaseURI>) -> Result<status::Custom<JsonValue>, status::Custom<JsonValue>> {
     match match_report {
-        Ok(match_report) => {
-            let instant = ::std::time::Instant::now();
-            match report::Report::from_raw(match_report.into_inner()) {
-                Ok(report) => {
-                    println!("    => Processing time: {:?}", instant.elapsed());
-                    Ok(Json(report))
-                },
-                Err(error) => Err(status::Custom(Status::UnprocessableEntity, json!({
-                    "error": "Unprocessable Entity",
-                    "error_code": format!("{}", error.as_ref()),
-                    "description": format!("{}", error)
-                })))
-            }
+        Ok(match_report) => match save_report(match_report.into_inner()) {
+            Ok(slug) => Ok(status::Custom(Status::Created, json!({
+                "uri": format!("{base_uri}{slug}", base_uri = &base_uri.uri, slug = &slug)
+            }))),
+            Err(error) => Err(status::Custom(Status::UnprocessableEntity, json!({
+                "error": "Unprocessable Entity",
+                "error_code": format!("{}", error.as_ref()),
+                "description": format!("{}", error)
+            })))
         },
+
         Err(error) => {
             Err(status::Custom(Status::UnprocessableEntity, json!({
                 "error": "Unprocessable Entity",
@@ -181,6 +191,24 @@ fn main() {
                 // TODO Ok(to_value(uri!(get_head: uuid, size).to_string()).unwrap())
                 Ok(to_value(format!("/head/{uuid}/{size}", uuid = uuid, size = size)).unwrap())
             }));
+        }))
+        .attach(AdHoc::on_attach("Base URI", |rocket| {
+            let protocol = match rocket.config().get_bool("https").unwrap_or(false) {
+                true => "https",
+                false => "http"
+            };
+
+            let host = rocket.config().address.clone();
+            let port = rocket.config().port;
+
+            println!("Port: {:?}, port in config:: {:?}", &port, rocket.config().get_int("port"));
+
+            Ok(rocket.manage(BaseURI {
+                uri: format!("{protocol}://{host}{port}/", protocol = protocol, host = host, port = match port {
+                    80 => String::new(),
+                    _ => format!(":{}", port)
+                })
+            }))
         }))
         .register(catchers!(error_unprocessable_entity))
         .launch();

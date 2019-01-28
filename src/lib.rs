@@ -13,6 +13,8 @@ use failure::Error;
 pub mod report;
 pub mod minecraft;
 
+pub static USERS_CONTENT_FOLDER: &'static str = "user-generated-content";
+
 pub fn read_report_raw<R: Read>(reader: R) -> Result<report::raw::Report, Error> {
     Ok(report::read_raw_report(reader)?)
 }
