@@ -1,6 +1,5 @@
 #![feature(proc_macro_hygiene, decl_macro)]
 
-#[macro_use] extern crate gettext_macros;
 extern crate lib;
 extern crate reqwest;
 #[macro_use] extern crate rocket;
@@ -9,8 +8,6 @@ extern crate reqwest;
 use std::fs::{create_dir_all, File};
 use std::io::copy;
 use std::path::Path;
-
-use gettext_macros::{compile_i18n, include_i18n, init_i18n, i18n};
 
 use rocket::fairing::AdHoc;
 use rocket::http::Status;
@@ -22,7 +19,6 @@ use rocket_contrib::serve::StaticFiles;
 use rocket_contrib::templates::Template;
 use rocket_contrib::templates::tera::{Context};
 use rocket_contrib::uuid::{Uuid, uuid_crate};
-use rocket_i18n::I18n;
 
 use lib::report::raw;
 use lib::report::report;
@@ -131,7 +127,7 @@ fn get_head(uuid: Uuid, size: u8) -> Option<NamedFile> {
 }
 
 #[get("/<slug>")]
-fn display_match(slug: String, i18n: I18n) -> Option<Template> {
+fn display_match(slug: String) -> Option<Template> {
     match read_processed_report_from_slug(slug.clone()) {
         Ok(report) => {
             let mut context = Context::new();
@@ -169,9 +165,6 @@ fn error_unprocessable_entity() -> JsonValue {
 }
 
 
-init_i18n!("hawk", en_US, fr_FR);
-
-
 fn main() {
     rocket::ignite()
         .mount("/", routes![index, publish, publish_get, get_head, display_match, display_match_json])
@@ -204,8 +197,5 @@ fn main() {
             }))
         }))
         .register(catchers!(error_unprocessable_entity))
-        .manage(include_i18n!())
         .launch();
 }
-
-compile_i18n!();

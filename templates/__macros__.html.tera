@@ -32,7 +32,7 @@
         <span class="hearts is-{{ line_hearts }}{% if line != 0 and not list %} is-multi-line-continuation{% endif %}{% if left_hearts < 0 and lethal %} is-lethal{% endif %}"></span>
         {%- if list -%}</li>{%- endif -%}
 
-        {% if left_hearts < 0 %}{% break %}{% endif %}
+        {% if left_hearts <= 0 %}{% break %}{% endif %}
     {%- endfor -%}
 
     {%- if list -%}</ul>{%- endif -%}

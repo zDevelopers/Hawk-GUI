@@ -48,7 +48,7 @@
                                 <aside class="chest">
                                     <h3 class="chest-title is-all-caps">Les gagnants</h3>
                                     <ul>
-                                        {% for winner in report.winners %}
+                                        {% for winner in report.winners | sort(attribute="name") %}
                                             <li>
                                                 <figure class="image minecraft-tooltip" data-tooltip="{{ winner.name }}">
                                                     <img src="{{ head(uuid=winner.uuid, size=80) }}" alt="{{ winner.name }}" />
