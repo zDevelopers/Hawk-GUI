@@ -68,6 +68,11 @@
           color: lighten($minecraft-text, 20%);
           letter-spacing: .05em;
         }
+
+        .tag-line-secondary {
+          @extend .tag-line;
+          font-size: $size-normal;
+        }
       }
 
       @each $color-name, $color-hex in zip(map_keys($minecraft-colors-foreground), map_values($minecraft-colors-foreground)) {
@@ -114,8 +119,13 @@
         }
 
         .hearts {
-          position: relative;
-          top: -2px;
+          display: inline-block;
+          margin-left: 2px;
+          &.is-multi-line-continuation {
+            display: block;
+            margin-left: 50px;
+            margin-top: .4rem;
+          }
         }
       }
     }
@@ -133,6 +143,9 @@
 
       &:not(:first-of-type) {
         margin-top: 2.1rem;
+      }
+
+      &.is-bold {
         font-weight: bold;
       }
     }

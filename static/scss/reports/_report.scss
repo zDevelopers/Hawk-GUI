@@ -52,10 +52,13 @@ header.hero {
         text-align: center;
 
         ul {
+          margin-top: -.6rem;
+
           li {
             display: inline-block;
 
             margin-left: .4rem;
+            margin-top: .4rem;
 
             img {
               width: 80px;

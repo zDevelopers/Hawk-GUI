@@ -12,6 +12,7 @@ use failure::Error;
 
 pub mod report;
 pub mod minecraft;
+pub mod tera;
 
 pub static USERS_CONTENT_FOLDER: &'static str = "user-generated-content";
 

@@ -22,6 +22,7 @@ pub struct Report {
     pub heals: Vec<heal::Heal>,
     pub events: Vec<event::Event>,
     pub aggregates: aggregates::Aggregate,
+    pub has_players_without_team: bool,
 }
 
 impl Report {
@@ -46,7 +47,7 @@ impl Report {
         let players: HashMap<Uuid, Rc<player::Player>> = (&raw_report.players).into_iter()
             .map(|player| (
                 player.uuid,
-                Rc::new(player::Player::from_raw(player, &players_colors, &raw::default_team_color(), &raw_report.settings.players))
+                Rc::new(player::Player::from_raw(player, &raw_report.teams, &players_colors, &raw::default_team_color(), &raw_report.settings.players))
             ))
             .collect();
 
@@ -86,6 +87,7 @@ impl Report {
             winners,
             damages,
             heals,
+            has_players_without_team: players.iter().any(|(_uuid, player)| !player.as_ref().in_team)
         })
     }
 
@@ -99,6 +101,8 @@ impl Report {
             .collect()
     }
 }
+
+
 
 pub fn since(now: &DateTime<FixedOffset>, before: &DateTime<FixedOffset>) -> Duration {
     (now.clone() - before.clone()).to_std().unwrap_or(Duration::new(0, 0))

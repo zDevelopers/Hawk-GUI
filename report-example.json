@@ -802,7 +802,7 @@
   "damages": [
     {
       "date": "2018-12-15T22:59:16+02:00",
-      "cause": "PLAYER_SWEEP",
+      "cause": "PLAYER",
       "weapon": "SWORD_IRON",
       "damager": "55b89885-673c-4458-a8bd-33ad9c6190b4",
       "damagee": "da04cd54-c6c7-4672-97c5-85663f5bccf6",
@@ -811,7 +811,7 @@
     },
     {
       "date": "2018-12-15T22:58:48+02:00",
-      "cause": "PLAYER_SWEEP",
+      "cause": "PLAYER",
       "weapon": "SWORD_IRON",
       "damager": "55b89885-673c-4458-a8bd-33ad9c6190b4",
       "damagee": "da04cd54-c6c7-4672-97c5-85663f5bccf6",

@@ -4,6 +4,7 @@ use std::rc::Rc;
 use uuid::Uuid;
 
 use crate::report::raw::Player as RawPlayer;
+use crate::report::raw::Team as RawTeam;
 use crate::report::settings::SettingsPlayers;
 use crate::report::team::TeamColor;
 
@@ -12,6 +13,7 @@ pub struct Player {
     pub uuid: Uuid,
     pub name: String,
     pub color: TeamColor,
+    pub in_team: bool,
 
     pub tag_line: String,
     pub tag_line_secondary: String,
@@ -22,7 +24,7 @@ pub struct Player {
 }
 
 impl Player {
-    pub fn from_raw(raw_player: &RawPlayer, colors: &HashMap<Uuid, TeamColor>, default_color: &TeamColor, settings: &SettingsPlayers) -> Self {
+    pub fn from_raw(raw_player: &RawPlayer, teams: &Vec<RawTeam>, colors: &HashMap<Uuid, TeamColor>, default_color: &TeamColor, settings: &SettingsPlayers) -> Self {
         Self {
             uuid: raw_player.uuid.clone(),
             name: raw_player.name.clone(),
@@ -34,7 +36,8 @@ impl Player {
             displayed_statistics: match &raw_player.statistics {
                 Some(statistics) => Some(DisplayedPlayerStatistics::calculate_displayed_statistics(statistics, settings)),
                 None => None
-            }
+            },
+            in_team: teams.iter().any(|team| team.players.contains(&raw_player.uuid))
         }
     }
 }
@@ -126,6 +129,7 @@ pub struct SimplePlayer {
     pub uuid: Uuid,
     pub name: String,
     pub color: TeamColor,
+    pub in_team: bool
 }
 
 impl From<Player> for SimplePlayer {
@@ -133,7 +137,8 @@ impl From<Player> for SimplePlayer {
         SimplePlayer {
             uuid: player.uuid,
             name: player.name,
-            color: player.color
+            color: player.color,
+            in_team: player.in_team
         }
     }
 }
@@ -143,7 +148,8 @@ impl From<&Player> for SimplePlayer {
         SimplePlayer {
             uuid: player.uuid.clone(),
             name: player.name.clone(),
-            color: player.color.clone()
+            color: player.color.clone(),
+            in_team: player.in_team
         }
     }
 }
@@ -153,7 +159,8 @@ impl From<Rc<Player>> for SimplePlayer {
         SimplePlayer {
             uuid: player.uuid.clone(),
             name: player.name.clone(),
-            color: player.color.clone()
+            color: player.color.clone(),
+            in_team: player.in_team
         }
     }
 }
@@ -163,7 +170,8 @@ impl From<&Rc<Player>> for SimplePlayer {
         SimplePlayer {
             uuid: player.uuid.clone(),
             name: player.name.clone(),
-            color: player.color.clone()
+            color: player.color.clone(),
+            in_team: player.in_team
         }
     }
 }

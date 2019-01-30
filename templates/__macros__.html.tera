@@ -1,0 +1,39 @@
+{%- macro player(player, large=false, visible_color=false) -%}
+    {% if large %}{% set size = 48 %}{% else %}{% set size = 32 %}{% endif %}
+    <a href="" class="player
+                      {% if large %}is-large{% endif %}
+                      {% if player.in_team %}
+                          {% if visible_color %}is-{{ player.color | css_class }} has-background
+                          {% else %}is-{{ player.color | css_class }}-hover
+                          {% endif %}
+                      {% endif %}">
+        <figure aria-hidden="true">
+            <img src="{{ head(uuid=player.uuid, size=size) }}" alt="" />
+        </figure>
+        <span>{{ player.name }}</span>
+    </a>
+{%- endmacro player -%}
+
+{%- macro hearts(hearts, lethal=false, list=false) -%}
+    {%- set lines = hearts / 20 | round(method="ceil") -%}
+    {% set left_hearts = hearts %}
+
+    {%- if list -%}<ul>{%- endif -%}
+
+    {%- for line in range(end=hearts, step=20) -%}
+        {%- set i = left_hearts - 20 -%}
+        {%- if i > 0 -%}{%- set line_hearts = 20 -%}
+        {%- else -%}{%- set line_hearts = 20 + i -%}
+        {%- endif -%}
+
+        {%- set_global left_hearts = left_hearts - 20 -%}
+
+        {%- if list -%}<li>{%- endif -%}
+        <span class="hearts is-{{ line_hearts }}{% if line != 0 and not list %} is-multi-line-continuation{% endif %}{% if left_hearts < 0 and lethal %} is-lethal{% endif %}"></span>
+        {%- if list -%}</li>{%- endif -%}
+
+        {% if left_hearts < 0 %}{% break %}{% endif %}
+    {%- endfor -%}
+
+    {%- if list -%}</ul>{%- endif -%}
+{%- endmacro -%}

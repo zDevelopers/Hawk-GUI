@@ -19,6 +19,9 @@ pub mod aggregates;
 pub mod report;
 pub mod errors;
 
+static PROCESSED_REPORT_FILE_NAME: &'static str = "report.json";
+static RAW_REPORT_FILE_NAME: &'static str = "raw-report.json";
+
 ///
 /// Reads a raw JSON report to the raw Rust structure.
 ///
@@ -27,10 +30,20 @@ pub fn read_raw_report<R: Read>(reader: R) -> Result<raw::Report, Error> {
 }
 
 ///
-/// Reads a processed JSON report to the raw Rust structure.
+/// Reads a processed JSON report to the processed Rust structure.
 ///
 pub fn read_processed_report<R: Read>(reader: R) -> Result<report::Report, Error> {
     Ok(serde_json::from_reader(reader).context("Unable to parse processed report JSON")?)
+}
+
+///
+/// Reads a processed report from its slug into the processed Rust structure.
+///
+pub fn read_processed_report_from_slug(slug: String) -> Result<report::Report, Error> {
+    let raw_path = &path_for_slug(slug);
+    let path = Path::new(raw_path);
+    let file = File::open(path.join(PROCESSED_REPORT_FILE_NAME)).with_context(|_| format!("Unable to open report at {}", raw_path))?;
+    Ok(read_processed_report(file)?)
 }
 
 ///
@@ -55,8 +68,8 @@ pub fn save_report(raw_report: raw::Report) -> Result<String, Error> {
 
     let root = path_for_slug(report_slug.clone());
     let root_path = Path::new(&root);
-    let raw_path = root_path.join("report-raw.json");
-    let processed_path = root_path.join("report.json");
+    let raw_path = root_path.join(RAW_REPORT_FILE_NAME);
+    let processed_path = root_path.join(PROCESSED_REPORT_FILE_NAME);
 
     create_dir_all(root).expect("Unable to create directory to store the report");
 

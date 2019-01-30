@@ -5,20 +5,28 @@ authors = ["Amaury Carrade <amaury@carrade.eu>"]
 edition = "2018"
 
 [dependencies]
-chrono = { version = "0.4", features = ["serde"] }
+askama = { version = "0.8.*", features = ["with-rocket"] }
+chrono = { version = "0.4.*", features = ["serde"] }
 error-chain = "0.12.*"
 failure = "0.1.*"
 failure_derive = "0.1.*"
+gettext = "0.3.*"
+gettext-macros = "0.1.*"
 rand = "0.6"
 reqwest = "0.9.*"
 rocket = "0.4.*"
 rocket_contrib = { version = "0.4.*", default-features = false, features = ["json", "serve", "tera_templates", "uuid"]}
+rocket_i18n = "0.4.*"
 serde = "1.0.*"
 serde_json = "1.0.*"
 serde_derive = "1.0.*"
 strum = "0.13.*"
 strum_macros = "0.13.*"
-uuid = { version = "0.7", features = ["serde", "v4"] }
+uuid = { version = "0.7.*", features = ["serde", "v4"] }
+
+# FIXME To be removed when the 0.8 version is published.
+[patch.crates-io]
+askama = { git = "https://github.com/djc/askama", branch = "master" }
 
 [lib]
 name = "lib"

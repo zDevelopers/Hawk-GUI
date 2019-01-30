@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 
+{%- import "__macros__" as hawk -%}
+
+{% if report.settings.summary.enabled %}
+    {% set default_tab = 'summary' %}
+{% elif report.settings.damages.enabled %}
+    {% set default_tab = 'damages' %}
+{% else %}
+    {% set default_tab = 'players' %}
+{% endif %}
+
 <html lang="fr">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, user-scalable=yes" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-        <title>{{ match_title | minecraft | striptags }} – Récapitulatif de partie</title>
+        <title>{{ report.title | minecraft | striptags }} – Récapitulatif de partie</title>
 
         <link rel="stylesheet" href="/static/css/hawk.min.css" />
         <link rel="icon" href="/static/images/apple-golden.png" />
@@ -19,28 +29,35 @@
                     <div class="columns is-vcentered">
                         <div class="column is-7">
                             <h1 class="title">
-                                {{ match_title | minecraft }}
+                                {{ report.title | minecraft }}
                             </h1>
                             <h2 class="subtitle">
-                                9 joueurs - 15 décembre 2018
+                                {% if report.settings.players_count %}
+                                    {{ report.players | length }} joueurs
+                                {% endif %}
+
+                                {% if report.settings.players_count and report.settings.date %} - {% endif %}
+
+                                {% if report.settings.date %}
+                                    {{ report.date | date(format='%d %B %Y') }}
+                                {% endif %}
                             </h2>
                         </div>
                         <div class="column is-5 has-text-right uhc-winners">
-                            <aside class="chest">
-                                <h3 class="chest-title is-all-caps">Les gagnants</h3>
-                                <ul>
-                                    <li>
-                                        <figure class="image minecraft-tooltip" data-tooltip="Dada_exe">
-                                            <img src="{{ head(uuid="55b89885-673c-4458-a8bd-33ad9c6190b4", size=80) }}" alt="Dada_exe" />
-                                        </figure>
-                                    </li>
-                                    <li>
-                                        <figure class="image minecraft-tooltip" data-tooltip="Jenjeur">
-                                            <img src="{{ head(uuid="0dd34bda-c13b-473b-a887-368027ca05ca", size=80) }}" alt="Jenjeur" />
-                                        </figure>
-                                    </li>
-                                </ul>
-                            </aside>
+                            {% if report.settings.winners and report.winners %}
+                                <aside class="chest">
+                                    <h3 class="chest-title is-all-caps">Les gagnants</h3>
+                                    <ul>
+                                        {% for winner in report.winners %}
+                                            <li>
+                                                <figure class="image minecraft-tooltip" data-tooltip="{{ winner.name }}">
+                                                    <img src="{{ head(uuid=winner.uuid, size=80) }}" alt="{{ winner.name }}" />
+                                                </figure>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </aside>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -50,838 +67,352 @@
                 <nav class="tabs is-boxed is-fullwidth">
                     <div class="container">
                         <ul>
-                            <li>
-                                <a class="js-tab-link" href="#summary">Récapitulatif</a>
-                            </li>
-                            <li class="is-active">
-                                <a class="js-tab-link" href="#damages">Dégâts et régénérations</a>
-                            </li>
-                            <li>
-                                <a class="js-tab-link" href="#players">Joueurs et statistiques</a>
-                            </li>
+                            {% if report.settings.summary.enabled %}
+                                <li {% if default_tab == 'summary' %}class="is-active"{% endif %}>
+                                    <a class="js-tab-link" href="#summary">Récapitulatif</a>
+                                </li>
+                            {% endif %}
+
+                            {% if report.settings.damages.enabled %}
+                                <li {% if default_tab == 'damages' %}class="is-active"{% endif %}>
+                                    <a class="js-tab-link" href="#damages">Dégâts et régénérations</a>
+                                </li>
+                            {% endif %}
+
+                            {% if report.settings.players.enabled %}
+                                <li {% if default_tab == 'players' %}class="is-active"{% endif %}>
+                                    <a class="js-tab-link" href="#players">Joueurs et statistiques</a>
+                                </li>
+                            {% endif %}
                         </ul>
                     </div>
                 </nav>
             </div>
         </header>
 
-        <section class="section js-tab-section is-hidden" id="summary">
+        {% if report.settings.summary.enabled %}
+        <section class="section js-tab-section {% if default_tab != 'summary' %}is-hidden{% endif %}" id="summary">
             <div class="container">
                 <div class="columns">
-                    <div class="column">
+                    {% if report.settings.summary.history %}
+                        <div class="column">
                         <article class="chest">
                             <h3 class="chest-title">Déroulement de la partie</h3>
 
                             <div class="chest-inner is-sandstone">
-                                <ul class="minecraft-timeline">
-                                    <li class="timeline-item is-blue-event">
-                                        <div class="timeline-item-header">
-                                            <figure aria-hidden="true">
-                                                <span class="i-item-clock-midday"></span>
-                                            </figure>
-                                            <h4>
-                                                Début de la partie
-                                                <time datetime="2018-12-15T22:15:33" title="22h15">00h00</time>
-                                            </h4>
-                                            <div class="is-clearfix"></div>
-                                        </div>
-                                    </li>
-                                    <li class="timeline-item is-gold-event has-details">
-                                        <div class="timeline-item-header">
-                                            <figure class="is-head" aria-hidden="true">
-                                                <img src="{{ head(uuid="7caf2af6-b149-47eb-8b76-7f58c07d8f5a", size=32) }}" alt="" />
-                                            </figure>
-                                            <h4>
-                                                Mort de Vayan91
-                                                <time datetime="2018-12-15T22:39:58" title="22:39:58">00h24</time>
-                                            </h4>
-                                            <div class="is-clearfix"></div>
-                                        </div>
-                                        <div class="timeline-item-details">
-                                            Vayan91 was slain by Cave Spider
-                                        </div>
-                                    </li>
-                                    <li class="timeline-item is-blue-event">
-                                        <div class="timeline-item-header">
-                                            <figure aria-hidden="true">
-                                                <span class="i-item-diamond"></span>
-                                            </figure>
-                                            <h4>
-                                                Morgan_A trouve le premier diamant
-                                                <time datetime="2018-12-15T22:56:00" title="22:56:34">00h41</time>
-                                            </h4>
-                                            <div class="is-clearfix"></div>
-                                        </div>
-                                    </li>
-                                    <li class="timeline-item is-red-event">
-                                        <div class="timeline-item-header">
-                                            <figure aria-hidden="true">
-                                                <span class="i-block-portal"></span>
-                                            </figure>
-                                            <h4>
-                                                Mexknak entre premier dans le Nether
-                                                <time datetime="2018-12-15T23:14:00" title="23:14:08">00h59</time>
-                                            </h4>
-                                            <div class="is-clearfix"></div>
-                                        </div>
-                                    </li>
-                                    <li class="timeline-item is-blue-event">
-                                        <div class="timeline-item-header">
-                                            <figure aria-hidden="true">
-                                                <span class="i-item-book-enchanted"></span>
-                                            </figure>
-                                            <h4>
-                                                Jenjeur enchante le premier objet
-                                                <time datetime="2018-12-15T23:14:00" title="23:27:12">01h12</time>
-                                            </h4>
-                                            <div class="is-clearfix"></div>
-                                        </div>
-                                    </li>
-                                    <li class="timeline-item is-gold-event has-details">
-                                        <div class="timeline-item-header">
-                                            <figure class="is-head" aria-hidden="true">
-                                                <img src="{{ head(uuid="da04cd54-c6c7-4672-97c5-85663f5bccf6", size=32) }}" alt="" />
-                                            </figure>
-                                            <h4>
-                                                Mort de AmauryPi
-                                                <time datetime="2018-12-15T00:07:19" title="00:07:19">01h53</time>
-                                            </h4>
-                                            <div class="is-clearfix"></div>
-                                        </div>
-                                        <div class="timeline-item-details">
-                                            AmauryPi tried to swim into lava
-                                        </div>
-                                    </li>
-                                    <li class="timeline-item is-gold-event has-details">
-                                        <div class="timeline-item-header">
-                                            <figure class="is-head" aria-hidden="true">
-                                                <img src="{{ head(uuid="fc0d7b71-34de-460c-a10a-92cf2d202fa9", size=32) }}" alt="" />
-                                            </figure>
-                                            <h4>
-                                                Mort de Singer49
-                                            </h4>
-                                            <div class="is-clearfix"></div>
-                                        </div>
-                                        <div class="timeline-item-details">
-                                            Singer49 was shot by Skeleton
-                                        </div>
-                                    </li>
-                                    <li class="timeline-item is-green-event has-details">
-                                        <div class="timeline-item-header">
-                                            <figure aria-hidden="true">
-                                                <span class="i-gui-forcefield-red"></span>
-                                            </figure>
-                                            <h4>
-                                                Réduction de la bordure
-                                            </h4>
-                                            <div class="is-clearfix"></div>
-                                        </div>
-                                        <div class="timeline-item-details">
-                                            Jusqu'à 400×400 en 40 minutes
-                                        </div>
-                                    </li>
-                                    <li class="timeline-item is-blue-event">
-                                        <div class="timeline-item-header">
-                                            <figure aria-hidden="true">
-                                                <span class="i-item-brewing-stand"></span>
-                                            </figure>
-                                            <h4>
-                                                Dada_exe brasse la première potion
-                                            </h4>
-                                            <div class="is-clearfix"></div>
-                                        </div>
-                                    </li>
-                                    <li class="timeline-item is-gold-event has-details">
-                                        <div class="timeline-item-header">
-                                            <figure class="is-head" aria-hidden="true">
-                                                <img src="{{ head(uuid="445718ae-ee31-4e66-8d57-5a10457ab93b", size=32) }}" alt="" />
-                                            </figure>
-                                            <h4>
-                                                Mort de MrLefra99
-                                            </h4>
-                                            <div class="is-clearfix"></div>
-                                        </div>
-                                        <div class="timeline-item-details">
-                                            MrLefra99 was slain by Dada_exe
-                                        </div>
-                                    </li>
-                                    <li class="timeline-item is-gold-event has-details">
-                                        <div class="timeline-item-header">
-                                            <figure class="is-head" aria-hidden="true">
-                                                <img src="{{ head(uuid="cdda3f1f-19ed-4f92-9cad-bf4ab1f98bc2", size=32) }}" alt="" />
-                                            </figure>
-                                            <h4>
-                                                Mort de Mexknak
-                                            </h4>
-                                            <div class="is-clearfix"></div>
-                                        </div>
-                                        <div class="timeline-item-details">
-                                            Mexknak was shot by Jenjeur
-                                        </div>
-                                    </li>
-                                    <li class="timeline-item is-gold-event has-details">
-                                        <div class="timeline-item-header">
-                                            <figure class="is-head" aria-hidden="true">
-                                                <img src="{{ head(uuid="6e84adc0-b6e6-406c-b3da-772a7459ce15", size=32) }}" alt="" />
-                                            </figure>
-                                            <h4>
-                                                Mort de Morgan_A
-                                            </h4>
-                                            <div class="is-clearfix"></div>
-                                        </div>
-                                        <div class="timeline-item-details">
-                                            Morgan_A was slain by Dada_exe
-                                        </div>
-                                    </li>
-                                    <li class="timeline-item is-green-event">
-                                        <div class="timeline-item-header">
-                                            <figure aria-hidden="true">
-                                                <span class="i-gui-forcefield-green"></span>
-                                            </figure>
-                                            <h4>
-                                                Fin de réduction de la bordure
-                                            </h4>
-                                            <div class="is-clearfix"></div>
-                                        </div>
-                                    </li>
-                                    <li class="timeline-item is-gold-event has-details">
-                                        <div class="timeline-item-header">
-                                            <figure class="is-head" aria-hidden="true" >
-                                                <img src="{{ head(uuid="f79c6c7f-fe45-4502-8f2a-de9f92dcaade", size=32) }}" alt="" />
-                                            </figure>
-                                            <h4>
-                                                Mort de Sashastan
-                                            </h4>
-                                            <div class="is-clearfix"></div>
-                                        </div>
-                                        <div class="timeline-item-details">
-                                            Sashastan was slain by Jenjeur
-                                        </div>
-                                    </li>
-                                </ul>
+                                {% if report.events %}
+                                    <ul class="minecraft-timeline">
+                                        {% for event in report.events %}
+                                        <li class="timeline-item is-{{ event['type'] | slugify | replace(from='_', to='-') }}-event">
+                                            <div class="timeline-item-header">
+                                                <figure aria-hidden="true">
+                                                    {% if event.icon.uuid is defined %}
+                                                        <img src="{{ head(uuid=event.icon.uuid, size=32) }}" alt="" class="is-head" />
+                                                    {% elif event.icon.icon_id is defined %}
+                                                        <span class="i-{{ event.icon.icon_id }}"></span>
+                                                    {% elif event.icon.url is defined %}
+                                                        <img src="{{ event.icon.url }}" alt="" />
+                                                    {% endif %}
+                                                </figure>
+                                                <h4>
+                                                    {{ event.title }}
+                                                    <time datetime="{{ event.date }}" title="{{ event.date | date(format='%Hh%M') }}">{{ event.since_beginning }}</time>
+                                                </h4>
+                                                <div class="is-clearfix"></div>
+                                            </div>
+                                            {% if event.description is defined %}
+                                                <div class="timeline-item-details">
+                                                    {{ event.description | minecraft | striptags }}
+                                                </div>
+                                            {% endif %}
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
                             </div>
                         </article>
                     </div>
+                    {% endif %}
 
-                    <div class="column">
-                        <article class="chest teams-list">
-                            <h3 class="chest-title">Les équipes</h3>
+                    {% if report.settings.summary.players %}
+                        <div class="column">
+                            <article class="chest teams-list">
+                                <h3 class="chest-title">
+                                    {%- if not report.settings.summary.teams or not report.teams -%}
+                                        Les joueurs
+                                    {%- else -%}
+                                        Les équipes
+                                    {%- endif -%}
+                                </h3>
 
-                            <h4 class="team-red has-text-colored has-outline">La vigne & le vin</h4>
+                                {% if not report.settings.summary.teams or not report.teams %}
+                                    <ul class="players-list">
+                                        {% for player in report.players %}
+                                            <li>
+                                                {{ hawk::player(player=player, large=true) }}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    {% for team in report.teams %}
+                                        <h4 class="team-{{ team.color | css_class }} has-text-colored has-outline">{{ team.name }}</h4>
 
-                            <ul class="players-list">
-                                <li>
-                                    <a href="" class="player is-large is-red-hover">
-                                        <figure aria-hidden="true">
-                                            <img src="{{ head(uuid="0dd34bda-c13b-473b-a887-368027ca05ca", size=48) }}" alt="" />
-                                        </figure>
-                                        <span>Jenjeur</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="" class="player is-large is-red-hover">
-                                        <figure aria-hidden="true">
-                                            <img src="{{ head(uuid="55b89885-673c-4458-a8bd-33ad9c6190b4", size=48) }}" alt="" />
-                                        </figure>
-                                        <span>Dada_exe</span>
-                                    </a>
-                                </li>
-                            </ul>
+                                        <ul class="players-list">
+                                        {% for player in team.players %}
+                                            <li>
+                                                {{ hawk::player(player=player, large=true) }}
+                                            </li>
+                                        {% endfor %}
+                                        </ul>
+                                    {% endfor %}
 
-                            <h4 class="team-dark-green has-text-colored has-outline">Menthe à l'eau</h4>
+                                    {% if report.has_players_without_team %}
+                                        <h4 class="team-dark-gray has-text-colored has-outline">Joueurs sans équipe</h4>
 
-                            <ul class="players-list">
-                                <li>
-                                    <a href="" class="player is-large is-dark-green-hover">
-                                        <figure aria-hidden="true">
-                                            <img src="{{ head(uuid="da04cd54-c6c7-4672-97c5-85663f5bccf6", size=48) }}" alt="" />
-                                        </figure>
-                                        <span>AmauryPi</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="" class="player is-large is-dark-green-hover">
-                                        <figure aria-hidden="true">
-                                            <img src="{{ head(uuid="6e84adc0-b6e6-406c-b3da-772a7459ce15", size=48) }}" alt="" />
-                                        </figure>
-                                        <span>Morgan_A</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="" class="player is-large is-dark-green-hover">
-                                        <figure aria-hidden="true">
-                                            <img src="{{ head(uuid="cdda3f1f-19ed-4f92-9cad-bf4ab1f98bc2", size=48) }}" alt="" />
-                                        </figure>
-                                        <span>Mexknak</span>
-                                    </a>
-                                </li>
-                            </ul>
-
-                            <h4 class="team-yellow has-text-colored has-outline">#BananaForScale</h4>
-
-                            <ul class="players-list">
-                                <li>
-                                    <a href="" class="player is-large is-yellow-hover">
-                                        <figure aria-hidden="true">
-                                            <img src="{{ head(uuid="7caf2af6-b149-47eb-8b76-7f58c07d8f5a", size=48) }}" alt="" />
-                                        </figure>
-                                        <span>Vayan91</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="" class="player is-large is-yellow-hover">
-                                        <figure aria-hidden="true">
-                                            <img src="{{ head(uuid="fc0d7b71-34de-460c-a10a-92cf2d202fa9", size=48) }}" alt="" />
-                                        </figure>
-                                        <span>Singer49</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="" class="player is-large is-yellow-hover">
-                                        <figure aria-hidden="true">
-                                            <img src="{{ head(uuid="445718ae-ee31-4e66-8d57-5a10457ab93b", size=48) }}" alt="" />
-                                        </figure>
-                                        <span>MrLefra99</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="" class="player is-large is-yellow-hover">
-                                        <figure aria-hidden="true">
-                                            <img src="{{ head(uuid="f79c6c7f-fe45-4502-8f2a-de9f92dcaade", size=48) }}" alt="" />
-                                        </figure>
-                                        <span>Sashastan</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="" class="player is-large is-yellow-hover">
-                                        <figure aria-hidden="true">
-                                            <img src="{{ head(uuid="de79b165-a66c-4faf-bdcf-c120487efe78", size=48) }}" alt="" />
-                                        </figure>
-                                        <span>Tyranouille</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="" class="player is-large is-yellow-hover">
-                                        <figure aria-hidden="true">
-                                            <img src="{{ head(uuid="5e9298d9-5a53-4744-88f2-70f221ff8e66", size=48) }}" alt="" />
-                                        </figure>
-                                        <span>Black_Lizard</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="" class="player is-large is-yellow-hover">
-                                        <figure aria-hidden="true">
-                                            <img src="{{ head(uuid="454abcd4-4bc3-465e-acef-1687b247cc89", size=48) }}" alt="" />
-                                        </figure>
-                                        <span>Brutal_Berserker</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </article>
-                    </div>
+                                        <ul class="players-list">
+                                            {% for player in report.players %}
+                                                {% if not player.in_team %}
+                                                    <li>
+                                                        {{ hawk::player(player=player, large=true) }}
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                {% endif %}
+                            </article>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </section>
+        {% endif %}
 
-        <section class="section js-tab-section" id="damages">
+        {% if report.settings.damages.enabled %}
+        <section class="section js-tab-section {% if default_tab != 'damages' %}is-hidden{% endif %}" id="damages">
             <div class="container">
+
+                {% if report.settings.damages.damages_per_players %}
                 <article class="chest">
                     <h3 class="chest-title">Joueurs</h3>
 
-                    <div class="chest-inner damages-report">
-                        <div class="columns">
-                            <div class="column damages-report-player-parent">
-                                <div class="damages-report-player">
-                                    <figure class="player-head is-red">
-                                        <img src="{{ head(uuid="55b89885-673c-4458-a8bd-33ad9c6190b4", size=90) }}" alt="Dada_exe" />
-                                        <figcaption>
-                                            <span class="name">Dada_exe</span>
-                                            <span class="tag-line">Allié</span>
-                                        </figcaption>
-                                    </figure>
+                    {% for player in report.players | sort(attribute="name") %}
+                        {% set aggreg = report.aggregates.players_damages[player.uuid] %}
+                        <div class="chest-inner damages-report">
+                            <div class="columns">
+                                <div class="column damages-report-player-parent">
+                                    <div class="damages-report-player">
+                                        <figure class="player-head{% if player.in_team and report.settings.summary.teams %} is-{{ player.color | css_class }}{% endif %}">
+                                            <img src="{{ head(uuid=player.uuid, size=90) }}" alt="{{ player.name }}" />
+                                            <figcaption>
+                                                <span class="name">{{ player.name }}</span>
+
+                                                {% if player.tag_line %}
+                                                    <span class="tag-line" title="{{ player.tag_line_details }}">{{ player.tag_line }}</span>
+                                                {% endif %}
+
+                                                {% if player.tag_line_secondary %}
+                                                    <span class="tag-line-secondary" title="{{ player.tag_line_details }}">{{ player.tag_line_secondary }}</span>
+                                                {% endif %}
+                                            </figcaption>
+                                        </figure>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="column damages-report-alterations-parent">
-                                <div class="damages-report-alterations">
-                                    <h4><strong>24</strong> dégâts reçus</h4>
 
-                                    <ul>
-                                        <li title="Dégâts de chute : -2 points de vie">
-                                            <span class="weapon"></span>
-                                            <span class="source i-block-stone-small"></span>
-                                            <span class="hearts is-2"></span>
-                                        </li>
-                                        <li title="Araignée : -2 points de vie">
-                                            <span class="weapon"></span>
-                                            <span class="source i-entity-spider-small"></span>
-                                            <span class="hearts is-2"></span>
-                                        </li>
-                                        <li title="Squelette : -2 points de vie">
-                                            <span class="weapon"></span>
-                                            <span class="source i-entity-skeleton-small"></span>
-                                            <span class="hearts is-2"></span>
-                                        </li>
-                                        <li>
-                                            <span class="weapon"></span>
-                                            <span class="source i-entity-skeleton-small"></span>
-                                            <span class="hearts is-0"></span>
-                                        </li>
-                                        <li>
-                                            <span class="weapon"></span>
-                                            <span class="source i-entity-creeper-small"></span>
-                                            <span class="hearts is-0"></span>
-                                        </li>
-                                        <li>
-                                            <span class="weapon"></span>
-                                            <span class="source i-entity-skeleton-small"></span>
-                                            <span class="hearts is-3"></span>
-                                        </li>
-                                        <li>
-                                            <span class="weapon i-item-gold-sword-small"></span>
-                                            <span class="source i-entity-zombie-small"></span>
-                                            <span class="hearts is-4"></span>
-                                        </li>
-                                        <li>
-                                            <span class="weapon"></span>
-                                            <span class="source i-entity-skeleton-small"></span>
-                                            <span class="hearts is-3"></span>
-                                        </li>
-                                        <li>
-                                            <span class="weapon"></span>
-                                            <span class="source i-entity-skeleton-small"></span>
-                                            <span class="hearts is-0"></span>
-                                        </li>
-                                        <li>
-                                            <span class="weapon"></span>
-                                            <span class="source i-block-sand-small"></span>
-                                            <span class="hearts is-6"></span>
-                                        </li>
-                                        <li>
-                                            <span class="weapon i-item-iron-sword-small"></span>
-                                            <span class="source i-entity-blaze-small"></span>
-                                            <span class="hearts is-20 is-lethal"></span>
-                                        </li>
-                                        <li>
-                                            <span class="weapon i-item-iron-sword-small"></span>
-                                            <span class="source"><img src="{{ head(uuid="fc0d7b71-34de-460c-a10a-92cf2d202fa9", size=20) }}" alt="Singer47" /></span>
-                                            <span class="hearts is-3 is-lethal"></span>
-                                        </li>
-                                    </ul>
+                                <div class="column damages-report-alterations-parent">
+                                    <div class="damages-report-alterations">
+                                        <h4><strong>{{ aggreg.damages_taken_total }}</strong> dégâts reçus</h4>
+
+                                        <ul>
+                                            {% for damage in aggreg.damages_taken %}
+                                                <li title="
+                                                        {%- if damage.cause == 'PLAYER' %}{{ damage.damager.name }}{% else %}{{ damage.cause }} {% endif -%}
+                                                        {%- if damage.weapon != 'FISTS' and damage.weapon != 'UNKNOWN' %} avec {{ damage.weapon }} {% endif -%}
+                                                        : -{{ damage.damage }} point(s) de vie{% if damage.lethal %} (mortel){% endif %}">
+                                                    <span class="weapon {% if damage.weapon != 'UNKNOWN' and damage.weapon != 'FISTS' %}i-{{ damage.weapon | icon }}{% endif %}"></span>
+                                                    {% if damage.cause == 'PLAYER' and damage.damager %}
+                                                        <span class="source">
+                                                            <img src="{{ head(uuid=damage.damager.uuid, size=20) }}" alt="{{ damage.damager.name }}" />
+                                                        </span>
+                                                    {% else %}
+                                                        <span class="source i-{{ damage.cause | icon }}"></span>
+                                                    {% endif %}
+                                                    {{ hawk::hearts(hearts=damage.damage, lethal=damage.lethal) }}
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="column damages-report-alterations-parent">
-                                <div class="damages-report-alterations">
-                                    <h4><strong>4</strong> dégâts engendrés</h4>
 
-                                    <ul>
-                                        <li title="Épée en fer sur Singer47 : -3 points de vie ; coup létal.">
-                                            <span class="weapon i-item-iron-sword-small"></span>
-                                            <span class="source"><img src="{{ head(uuid="fc0d7b71-34de-460c-a10a-92cf2d202fa9", size=20) }}" alt="Singer47" /></span>
-                                            <span class="hearts is-3 is-lethal"></span>
-                                        </li>
-                                        <li title="Épée en fer sur MrLefra99 : -1 points de vie.">
-                                            <span class="weapon i-item-iron-sword-small"></span>
-                                            <span class="source"><img src="{{ head(uuid="445718ae-ee31-4e66-8d57-5a10457ab93b", size=20) }}" alt="MrLefra99" /></span>
-                                            <span class="hearts is-1"></span>
-                                        </li>
-                                    </ul>
+                                <div class="column damages-report-alterations-parent">
+                                    <div class="damages-report-alterations">
+                                        <h4><strong>{{ aggreg.damages_caused_total }}</strong> dégâts engendrés</h4>
+
+                                        <ul>
+                                            {% for damage in aggreg.damages_caused %}
+                                                <li title="
+                                                        {%- if damage.cause == 'PLAYER' %}{{ damage.damager.name }}{% else %}{{ damage.cause }}{% endif -%}
+                                                        {%- if damage.weapon != 'FISTS' and damage.weapon != 'UNKNOWN' %} avec {{ damage.weapon }} {% endif -%}
+                                                        : -{{ damage.damage }} point(s) de vie{% if damage.lethal %} (mortel){% endif %}">
+                                                    <span class="weapon {% if damage.weapon != 'UNKNOWN' and damage.weapon != 'FISTS' %}i-{{ damage.weapon | icon }}{% endif %}"></span>
+                                                    <span class="source">
+                                                        <img src="{{ head(uuid=damage.damagee.uuid, size=20) }}" alt="{{ damage.damagee.name }}" />
+                                                    </span>
+                                                    {{ hawk::hearts(hearts=damage.damage, lethal=damage.lethal) }}
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="column damages-report-alterations-parent is-health">
-                                <div class="damages-report-alterations">
-                                    <h4><strong>8</strong> vie régénérée</h4>
 
-                                    <ul>
-                                        <li title="Une pomme d'or : +4 points de vie">
-                                            <span class="source i-item-apple-golden-small"></span>
-                                            <span class="hearts is-4"></span>
-                                        </li>
-                                        <li title="Une potion de regénération : +6 points de vie">
-                                            <span class="source i-item-potion-bottle-splash-small"></span>
-                                            <span class="hearts is-6"></span>
-                                        </li>
-                                        <li title="Une pomme d'or : +4 points de vie">
-                                            <span class="source i-item-apple-golden-small"></span>
-                                            <span class="hearts is-4"></span>
-                                        </li>
-                                    </ul>
+                                <div class="column damages-report-alterations-parent is-health">
+                                    <div class="damages-report-alterations">
+                                        <h4><strong>{{ aggreg.heals_total }}</strong> vie régénérée</h4>
+
+                                        <ul>
+                                            {% for heal in aggreg.heals %}
+                                                <li title="{{ heal.cause }} : +{{ heal.heal }} point(s) de vie">
+                                                    <span class="source i-{{ heal.cause | icon }}"></span>
+                                                    {{ hawk::hearts(hearts=heal.heal) }}
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="column damages-report-kills-parent">
-                                <div class="damages-report-kills">
-                                    <h4><strong>2</strong> joueurs tués</h4>
 
-                                    <ul>
-                                        <li>
-                                            <a href="" class="player is-dark-green-hover">
-                                                <figure aria-hidden="true">
-                                                    <img src="{{ head(uuid="da04cd54-c6c7-4672-97c5-85663f5bccf6", size=32) }}" alt="" />
-                                                </figure>
-                                                <span>AmauryPi</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="" class="player is-yellow-hover">
-                                                <figure aria-hidden="true">
-                                                    <img src="{{ head(uuid="de79b165-a66c-4faf-bdcf-c120487efe78", size=32) }}" alt="" />
-                                                </figure>
-                                                <span>Tyranouille</span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                <div class="column damages-report-kills-parent">
+                                    <div class="damages-report-kills">
+                                        {% if aggreg.kills %}
+                                            <h4><strong>{{ aggreg.kills | length }}</strong> joueur{{ aggreg.kills | length | pluralize }} tué{{ aggreg.kills | length | pluralize }}</h4>
 
-                                    <h4>Tué par</h4>
+                                            <ul>
+                                                {% for kill in aggreg.kills %}
+                                                    <li>
+                                                        {{ hawk::player(player=kill) }}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
 
-                                    <ul>
-                                        <li>
-                                            <a href="" class="player is-yellow-hover">
-                                                <figure aria-hidden="true">
-                                                    <img src="{{ head(uuid="454abcd4-4bc3-465e-acef-1687b247cc89", size=32) }}" alt="" />
-                                                </figure>
-                                                <span>Brutal_Berserker</span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                        {% if report.settings.damages.display_killer and aggreg.killed_by %}
+                                            <h4 class="is-bold">Tué par</h4>
 
-                                    <h4>Classement</h4>
+                                            <ul>
+                                                <li>
+                                                    {% if aggreg.killed_by.type == 'player' %}
+                                                        {{ hawk::player(player=aggreg.killed_by.player) }}
+                                                    {% else %}
+                                                        <a href="" class="player is-fake-player">
+                                                            <figure aria-hidden="true">
+                                                                <span class="i-{{ aggreg.killed_by.cause | icon | replace(from='-small', to='') }}"></span>
+                                                            </figure>
+                                                            <span>{{ aggreg.killed_by.cause }}</span>
+                                                        </a>
+                                                    {% endif %}
+                                                </li>
+                                            </ul>
+                                        {% endif %}
 
-                                    <p class="player-rank">2</p>
+                                        <h4 class="is-bold">Classement</h4>
+
+                                        <p class="player-rank{% if aggreg.rank == 1 %} is-winner{% endif %}">{{ aggreg.rank }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="chest-inner damages-report">
-                        <div class="columns">
-                            <div class="column damages-report-player-parent">
-                                <div class="damages-report-player">
-                                    <figure class="player-head is-dark-green">
-                                        <img src="{{ head(uuid="f79c6c7f-fe45-4502-8f2a-de9f92dcaade", size=90) }}" alt="Sashastan" />
-                                        <figcaption>
-                                            <span class="name">Sashastan</span>
-                                            <span class="tag-line">Allié</span>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                            </div>
-                            <div class="column damages-report-alterations-parent">
-                                <div class="damages-report-alterations">
-                                    <h4><strong>24</strong> dégâts reçus</h4>
-
-                                    <ul>
-                                        <li title="Dégâts de chute : -2 points de vie">
-                                            <span class="weapon"></span>
-                                            <span class="source i-block-stone-small"></span>
-                                            <span class="hearts is-2"></span>
-                                        </li>
-                                        <li title="Araignée : -2 points de vie">
-                                            <span class="weapon"></span>
-                                            <span class="source i-entity-spider-small"></span>
-                                            <span class="hearts is-2"></span>
-                                        </li>
-                                        <li title="Squelette : -2 points de vie">
-                                            <span class="weapon"></span>
-                                            <span class="source i-entity-skeleton-small"></span>
-                                            <span class="hearts is-2"></span>
-                                        </li>
-                                        <li>
-                                            <span class="weapon"></span>
-                                            <span class="source i-entity-skeleton-small"></span>
-                                            <span class="hearts is-0"></span>
-                                        </li>
-                                        <li>
-                                            <span class="weapon"></span>
-                                            <span class="source i-entity-creeper-small"></span>
-                                            <span class="hearts is-0"></span>
-                                        </li>
-                                        <li>
-                                            <span class="weapon"></span>
-                                            <span class="source i-entity-skeleton-small"></span>
-                                            <span class="hearts is-3"></span>
-                                        </li>
-                                        <li>
-                                            <span class="weapon i-item-gold-sword-small"></span>
-                                            <span class="source i-entity-zombie-small"></span>
-                                            <span class="hearts is-4"></span>
-                                        </li>
-                                        <li>
-                                            <span class="weapon"></span>
-                                            <span class="source i-entity-skeleton-small"></span>
-                                            <span class="hearts is-3"></span>
-                                        </li>
-                                        <li>
-                                            <span class="weapon"></span>
-                                            <span class="source i-entity-skeleton-small"></span>
-                                            <span class="hearts is-0"></span>
-                                        </li>
-                                        <li>
-                                            <span class="weapon"></span>
-                                            <span class="source i-block-sand-small"></span>
-                                            <span class="hearts is-6"></span>
-                                        </li>
-                                        <li>
-                                            <span class="weapon i-item-iron-sword-small"></span>
-                                            <span class="source i-entity-blaze-small"></span>
-                                            <span class="hearts is-20 is-lethal"></span>
-                                        </li>
-                                        <li>
-                                            <span class="weapon i-item-iron-sword-small"></span>
-                                            <span class="source"><img src="{{ head(uuid="fc0d7b71-34de-460c-a10a-92cf2d202fa9", size=20) }}" alt="Singer47" /></span>
-                                            <span class="hearts is-3 is-lethal"></span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="column damages-report-alterations-parent">
-                                <div class="damages-report-alterations">
-                                    <h4><strong>4</strong> dégâts engendrés</h4>
-
-                                    <ul>
-                                        <li title="Épée en fer sur Singer47 : -3 points de vie ; coup létal.">
-                                            <span class="weapon i-item-iron-sword-small"></span>
-                                            <span class="source"><img src="{{ head(uuid="fc0d7b71-34de-460c-a10a-92cf2d202fa9", size=20) }}" alt="Singer47" /></span>
-                                            <span class="hearts is-3 is-lethal"></span>
-                                        </li>
-                                        <li title="Épée en fer sur MrLefra99 : -1 points de vie.">
-                                            <span class="weapon i-item-iron-sword-small"></span>
-                                            <span class="source"><img src="{{ head(uuid="445718ae-ee31-4e66-8d57-5a10457ab93b", size=20) }}" alt="MrLefra99" /></span>
-                                            <span class="hearts is-1"></span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="column damages-report-alterations-parent is-health">
-                                <div class="damages-report-alterations">
-                                    <h4><strong>8</strong> vie régénérée</h4>
-
-                                    <ul>
-                                        <li title="Une pomme d'or : +4 points de vie">
-                                            <span class="source i-item-apple-golden-small"></span>
-                                            <span class="hearts is-4"></span>
-                                        </li>
-                                        <li title="Une potion de regénération : +6 points de vie">
-                                            <span class="source i-item-potion-bottle-splash-small"></span>
-                                            <span class="hearts is-6"></span>
-                                        </li>
-                                        <li title="Une pomme d'or : +4 points de vie">
-                                            <span class="source i-item-apple-golden-small"></span>
-                                            <span class="hearts is-4"></span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="column damages-report-kills-parent">
-                                <div class="damages-report-kills">
-                                    <h4><strong>2</strong> joueurs tués</h4>
-
-                                    <ul>
-                                        <li>
-                                            <a href="" class="player is-dark-green-hover">
-                                                <figure aria-hidden="true">
-                                                    <img src="{{ head(uuid="cdda3f1f-19ed-4f92-9cad-bf4ab1f98bc2", size=32) }}" alt="" />
-                                                </figure>
-                                                <span>Mexknak</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="" class="player is-yellow-hover">
-                                                <figure aria-hidden="true">
-                                                    <img src="{{ head(uuid="6e84adc0-b6e6-406c-b3da-772a7459ce15", size=32) }}" alt="" />
-                                                </figure>
-                                                <span>Morgan_A</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-
-                                    <h4>Tué par</h4>
-
-                                    <ul>
-                                        <li>
-                                            <a href="" class="player is-fake-player">
-                                                <figure aria-hidden="true">
-                                                    <span class="i-item-flint-and-steel"></span>
-                                                </figure>
-                                                <span>Briquet</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-
-                                    <h4>Classement</h4>
-
-                                    <p class="player-rank">3</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </article>
+                {% endif %}
 
+                {% if report.settings.damages.damages_per_team %}
                 <!-- TODO
                 <article class="chest">
                     <h3 class="chest-title">Équipes</h3>
                 </article>
                 -->
+                {% endif %}
 
+                {% if report.settings.damages.damages_from_environment %}
                 <article class="chest">
                     <h3 class="chest-title">Dégâts engendrés par l'environnement</h3>
+
                     <div class="columns">
                         <div class="column">
                             <div class="chest-inner natural-damages-report">
-                                <div class="natural-damages-report-line">
-                                    <div class="columns">
-                                        <div class="column is-4 natural-damages-report-source">
-                                            <figure>
-                                                <span class="i-entity-angry-wolf-large"></span>
-                                                <figcaption>Loup énervé</figcaption>
-                                            </figure>
+                                {% for cause, damage in report.aggregates.environmental_damages %}
+                                    {% if cause is creature %}
+                                        {% set_global had_env_creatures = true %}
+                                        <div class="natural-damages-report-line">
+                                            <div class="columns">
+                                                <div class="column is-4 natural-damages-report-source">
+                                                    <figure>
+                                                        <span class="i-{{ cause | icon | replace(from='-small', to='-large') }}"></span>
+                                                        <figcaption>{{ cause }}</figcaption>
+                                                    </figure>
+                                                </div>
+                                                <div class="column is-8 natural-damages-report-damages">
+                                                    <h4><strong>{{ damage }}</strong> dégât{{ damage | pluralize }} engendré{{ damage| pluralize }}</h4>
+                                                    {{ hawk::hearts(hearts=damage, list=true) }}
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="column is-8 natural-damages-report-damages">
-                                            <h4><strong>5</strong> dégâts engendrés</h4>
-                                            <ul>
-                                                <li><span class="hearts is-5"></span></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="natural-damages-report-line">
-                                    <div class="columns">
-                                        <div class="column is-4 natural-damages-report-source">
-                                            <figure>
-                                                <span class="i-entity-skeleton-large"></span>
-                                                <figcaption>Squelette</figcaption>
-                                            </figure>
-                                        </div>
-                                        <div class="column is-8 natural-damages-report-damages">
-                                            <h4><strong>49</strong> dégâts engendrés</h4>
-                                            <ul>
-                                                <li><span class="hearts is-20"></span></li>
-                                                <li><span class="hearts is-20"></span></li>
-                                                <li><span class="hearts is-9"></span></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="natural-damages-report-line">
-                                    <div class="columns">
-                                        <div class="column is-4 natural-damages-report-source">
-                                            <figure>
-                                                <span class="i-entity-ender-dragon-large"></span>
-                                                <figcaption>Dragon</figcaption>
-                                            </figure>
-                                        </div>
-                                        <div class="column is-8 natural-damages-report-damages">
-                                            <h4><strong>128</strong> dégâts engendrés</h4>
-                                            <ul>
-                                                <li><span class="hearts is-20"></span></li>
-                                                <li><span class="hearts is-20"></span></li>
-                                                <li><span class="hearts is-20"></span></li>
-                                                <li><span class="hearts is-20"></span></li>
-                                                <li><span class="hearts is-20"></span></li>
-                                                <li><span class="hearts is-20"></span></li>
-                                                <li><span class="hearts is-8"></span></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if not had_env_creatures is defined %}
+                                    <p class="chest-inner-empty">
+                                        Les créatures n'ont causé aucun dégât.
+                                    </p>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="column">
                             <div class="chest-inner natural-damages-report">
-                                <div class="natural-damages-report-line">
-                                    <div class="columns">
-                                        <div class="column is-4 natural-damages-report-source">
-                                            <figure>
-                                                <span class="i-block-stone-large"></span>
-                                                <figcaption>Chutes</figcaption>
-                                            </figure>
+                                {% for cause, damage in report.aggregates.environmental_damages %}
+                                    {% if not cause is creature %}
+                                        {% set_global had_env_env = true %}
+                                        <div class="natural-damages-report-line">
+                                            <div class="columns">
+                                                <div class="column is-4 natural-damages-report-source">
+                                                    <figure>
+                                                        <span class="i-{{ cause | icon | replace(from='-small', to='-large') }}"></span>
+                                                        <figcaption>{{ cause }}</figcaption>
+                                                    </figure>
+                                                </div>
+                                                <div class="column is-8 natural-damages-report-damages">
+                                                    <h4><strong>{{ damage }}</strong> dégât{{ damage | pluralize }} engendré{{ damage| pluralize }}</h4>
+                                                    {{ hawk::hearts(hearts=damage, list=true) }}
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="column is-8 natural-damages-report-damages">
-                                            <h4><strong>12</strong> dégâts engendrés</h4>
-                                            <ul>
-                                                <li><span class="hearts is-12"></span></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="natural-damages-report-line">
-                                    <div class="columns">
-                                        <div class="column is-4 natural-damages-report-source">
-                                            <figure>
-                                                <span class="i-block-sand-large"></span>
-                                                <figcaption>Suffocation</figcaption>
-                                            </figure>
-                                        </div>
-                                        <div class="column is-8 natural-damages-report-damages">
-                                            <h4><strong>3</strong> dégâts engendrés</h4>
-                                            <ul>
-                                                <li><span class="hearts is-3"></span></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="natural-damages-report-line">
-                                    <div class="columns">
-                                        <div class="column is-4 natural-damages-report-source">
-                                            <figure>
-                                                <span class="i-block-cactus-large"></span>
-                                                <figcaption>Contact</figcaption>
-                                            </figure>
-                                        </div>
-                                        <div class="column is-8 natural-damages-report-damages">
-                                            <h4><strong>1</strong> dégât engendré</h4>
-                                            <ul>
-                                                <li><span class="hearts is-1"></span></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="natural-damages-report-line">
-                                    <div class="columns">
-                                        <div class="column is-4 natural-damages-report-source">
-                                            <figure>
-                                                <span class="i-block-tnt-large"></span>
-                                                <figcaption>Trinitroluène</figcaption>
-                                            </figure>
-                                        </div>
-                                        <div class="column is-8 natural-damages-report-damages">
-                                            <h4><strong>37</strong> dégâts engendrés</h4>
-                                            <ul>
-                                                <li><span class="hearts is-20"></span></li>
-                                                <li><span class="hearts is-17"></span></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="natural-damages-report-line">
-                                    <div class="columns">
-                                        <div class="column is-4 natural-damages-report-source">
-                                            <figure>
-                                                <span class="i-entity-lightning-large"></span>
-                                                <figcaption>Éclair</figcaption>
-                                            </figure>
-                                        </div>
-                                        <div class="column is-8 natural-damages-report-damages">
-                                            <h4><strong>4</strong> dégâts engendrés</h4>
-                                            <ul>
-                                                <li><span class="hearts is-4"></span></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if not had_env_env is defined %}
+                                    <p class="chest-inner-empty">
+                                        Aucun dégât n'a été causé par l'environnment inanimé.
+                                    </p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                 </article>
+                {% endif %}
             </div>
         </section>
+        {% endif %}
 
-        <section class="section js-tab-section is-hidden" id="players">
+        {% if report.settings.players.enabled %}
+        <section class="section js-tab-section {% if default_tab != 'players' %}is-hidden{% endif %}" id="players">
+        {% endif %}
 
         </section>
 
         <footer>
             <div class="content has-text-centered">
                 <p>
-                    Généré par <a href="https://github.com/zDevelopers/UHPlugin">UHCReloaded</a> grâce à
+                    Généré {% if report.settings.generator -%}
+                        par <a href="{{ report.settings.generator.link }}">{{ report.settings.generator.name }}</a>
+                    {%- endif %}
+                    grâce à
                     <a href="/">Hawk</a>, un projet développé avec amour
                     <a href="https://github.com/zDevelopers/Hawk-GUI">en Rust</a> avec
                     <a href="https://rocket.rs">Rocket</a> par <a href="https://amaury.carrade.eu">Amaury Carrade</a>.<br />

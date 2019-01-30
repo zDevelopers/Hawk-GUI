@@ -10,5 +10,5 @@ pub enum InvalidReportError {
     MissingPlayerReference { uuid: Uuid },
 
     #[fail(display = "An unknown error happened")]
-    Unknown
+    Unknown,
 }

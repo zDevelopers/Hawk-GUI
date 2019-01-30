@@ -126,3 +126,43 @@ pub enum Weapon {
 
     Unknown
 }
+
+impl DamageCause {
+    pub fn is_creature(&self) -> bool {
+        match self {
+            DamageCause::Player => true,
+            DamageCause::Zombie => true,
+            DamageCause::Skeleton => true,
+            DamageCause::Pigman => true,
+            DamageCause::Witch => true,
+            DamageCause::Spider => true,
+            DamageCause::CaveSpider => true,
+            DamageCause::Creeper => true,
+            DamageCause::Enderman => true,
+            DamageCause::Slime => true,
+            DamageCause::Ghast => true,
+            DamageCause::MagmaCube => true,
+            DamageCause::Blaze => true,
+            DamageCause::Wolf => true,
+            DamageCause::AngryWolf => true,
+            DamageCause::Silverfish => true,
+            DamageCause::IronGolem => true,
+            DamageCause::ZombieVillager => true,
+            DamageCause::EnderDragon => true,
+            DamageCause::Wither => true,
+            DamageCause::WitherSkeleton => true,
+
+            DamageCause::Fire => false,
+            DamageCause::Lava => false,
+            DamageCause::Thunderbolt => false,
+            DamageCause::Cactus => false,
+            DamageCause::TNT => false,
+            DamageCause::Fall => false,
+            DamageCause::Suffocation => false,
+            DamageCause::Drowning => false,
+            DamageCause::Starvation => false,
+            DamageCause::Command => false,
+            DamageCause::Unknown => false,
+        }
+    }
+}

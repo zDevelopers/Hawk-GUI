@@ -1,15 +1,16 @@
 #![feature(proc_macro_hygiene, decl_macro)]
 
-#[macro_use] extern crate error_chain;
+#[macro_use] extern crate gettext_macros;
 extern crate lib;
 extern crate reqwest;
 #[macro_use] extern crate rocket;
 #[macro_use] extern crate rocket_contrib;
 
-use std::collections::HashMap;
 use std::fs::{create_dir_all, File};
 use std::io::copy;
 use std::path::Path;
+
+use gettext_macros::{compile_i18n, include_i18n, init_i18n, i18n};
 
 use rocket::fairing::AdHoc;
 use rocket::http::Status;
@@ -19,13 +20,14 @@ use rocket::State;
 use rocket_contrib::json::{Json, JsonError, JsonValue};
 use rocket_contrib::serve::StaticFiles;
 use rocket_contrib::templates::Template;
-use rocket_contrib::templates::tera;
+use rocket_contrib::templates::tera::{Context};
 use rocket_contrib::uuid::{Uuid, uuid_crate};
-use serde_json::value::{from_value, to_value, Value};
+use rocket_i18n::I18n;
 
-use lib::minecraft::parse_color_codes;
 use lib::report::raw;
-use lib::report::save_report;
+use lib::report::report;
+use lib::report::{save_report, read_processed_report_from_slug};
+use lib::tera as hawk_tera;
 
 use lib::USERS_CONTENT_FOLDER;
 
@@ -128,23 +130,31 @@ fn get_head(uuid: Uuid, size: u8) -> Option<NamedFile> {
     }
 }
 
-#[get("/<match_id>")]
-fn display_match(match_id: String) -> Template {
-    let mut context = HashMap::new();
-    context.insert("match_id", match_id);
-    context.insert("match_title", String::from("§5§lKTZ §d§lVII"));
+#[get("/<slug>")]
+fn display_match(slug: String, i18n: I18n) -> Option<Template> {
+    match read_processed_report_from_slug(slug.clone()) {
+        Ok(report) => {
+            let mut context = Context::new();
+            context.insert("report", &report);
+            context.insert("slug", &slug);
 
-    Template::render("report", context)
+            Some(Template::render("report", context))
+        },
+        Err(_) => None
+    }
 }
 
 #[get("/<match_id>/as_json")]
-fn display_match_json(match_id: String) -> Option<JsonValue> {
-    Some(json!({
-        "match_uuid": "9be8ef14-a14e-4f96-b61e-b865c27ada8f",
-        "match_url": uri!(display_match: match_id).to_string(),
-        "date": "2018-12-16T11:08:26",
-        "teams": []
-    }))
+fn display_match_json(match_id: String) -> Option<Json<report::Report>> {
+    match read_processed_report_from_slug(match_id) {
+        Ok(report) => {
+            let mut report = report;
+            report.match_uuid = uuid_crate::Uuid::nil();
+
+            Some(Json(report))
+        },
+        Err(_) => None
+    }
 }
 
 
@@ -159,38 +169,23 @@ fn error_unprocessable_entity() -> JsonValue {
 }
 
 
+init_i18n!("hawk", en_US, fr_FR);
+
+
 fn main() {
     rocket::ignite()
         .mount("/", routes![index, publish, publish_get, get_head, display_match, display_match_json])
         .mount("/static", StaticFiles::from("static/dist"))
         .attach(Template::custom(|engines| {
-            engines.tera.register_filter("minecraft", |input, _args| Ok(to_value(parse_color_codes(input.as_str().unwrap_or("").to_string())).unwrap()));
-            engines.tera.register_function("head", Box::new(move |args| -> tera::Result<Value> {
-                let uuid = match args.get("uuid") {
-                    Some(uuid_str) => match from_value::<uuid_crate::Uuid>(uuid_str.clone()) {
-                        Ok(uuid) => uuid,
-                        Err(_) => bail!(
-                            "Function `head` received uuid={} but `uuid` can only be a valid UUID",
-                            uuid_str
-                        )
-                    },
-                    None => bail!("Function `head` was called without a `uuid` argument")
-                };
+            engines.tera.add_template_file(Path::new("templates/__macros__.html.tera"), Some("__macros__")).unwrap_or_else(|err| panic!(err));
 
-                let size = match args.get("size") {
-                    Some(size) => match from_value::<u8>(size.clone()) {
-                        Ok(size) => size,
-                        Err(_) => bail!(
-                            "Function `head` received size={} but `size` can only be an integer",
-                            size
-                        )
-                    },
-                    None => 16
-                };
+            engines.tera.register_filter("css_class", hawk_tera::make_css_class_filter());
+            engines.tera.register_filter("minecraft", hawk_tera::make_minecraft_filter());
+            engines.tera.register_filter("icon", hawk_tera::make_icon_filter());
 
-                // TODO Ok(to_value(uri!(get_head: uuid, size).to_string()).unwrap())
-                Ok(to_value(format!("/head/{uuid}/{size}", uuid = uuid, size = size)).unwrap())
-            }));
+            engines.tera.register_tester("creature", hawk_tera::is_creature_test);
+
+            engines.tera.register_function("head", hawk_tera::make_head_function());
         }))
         .attach(AdHoc::on_attach("Base URI", |rocket| {
             let protocol = match rocket.config().get_bool("https").unwrap_or(false) {
@@ -201,8 +196,6 @@ fn main() {
             let host = rocket.config().address.clone();
             let port = rocket.config().port;
 
-            println!("Port: {:?}, port in config:: {:?}", &port, rocket.config().get_int("port"));
-
             Ok(rocket.manage(BaseURI {
                 uri: format!("{protocol}://{host}{port}/", protocol = protocol, host = host, port = match port {
                     80 => String::new(),
@@ -211,5 +204,8 @@ fn main() {
             }))
         }))
         .register(catchers!(error_unprocessable_entity))
+        .manage(include_i18n!())
         .launch();
 }
+
+compile_i18n!();
