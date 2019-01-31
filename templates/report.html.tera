@@ -120,7 +120,7 @@
                                                 </h4>
                                                 <div class="is-clearfix"></div>
                                             </div>
-                                            {% if event.description is defined %}
+                                            {% if event.description %}
                                                 <div class="timeline-item-details">
                                                     {{ event.description | minecraft | striptags }}
                                                 </div>
@@ -205,7 +205,7 @@
                                         <figure class="player-head{% if player.team and report.settings.summary.teams %} is-{{ player.color | css_class }}{% endif %}">
                                             <img src="{{ head(uuid=player.uuid, size=90) }}" alt="{{ player.name }}"{% if player.tag_line_details %} aria-describedby="hawk-tooltip-player-tags-{{ player.uuid }}"{% endif %} />
                                             <figcaption>
-                                                <span class="name"{% if player.tag_line_details %} aria-describedby="hawk-tooltip-player-tags-{{ player.uuid }}"{% endif %}>{{ player.name }}</span>
+                                                <span class="name"{% if player.tag_line_details %} aria-describedby="hawk-tooltip-player-{{ player.uuid }}"{% endif %}>{{ player.name }}</span>
 
                                                 {% if player.tag_line %}
                                                     <span class="tag-line"{% if player.tag_line_details %} title="{{ player.tag_line_details }}" aria-describedby="hawk-tooltip-player-tags-{{ player.uuid }}" data-replace-title{% endif %}>{{ player.tag_line }}</span>
@@ -217,11 +217,9 @@
                                             </figcaption>
                                         </figure>
 
-                                        {% if player.tag_line_details %}
-                                            <div class="hawk-tooltip" id="hawk-tooltip-player-tags-{{ player.uuid }}">
-                                                {{ hawk::player_tooltip(player=player) }}
-                                            </div>
-                                        {% endif %}
+                                        <div class="hawk-tooltip" id="hawk-tooltip-player-{{ player.uuid }}">
+                                            {{ hawk::player_tooltip(player=player) }}
+                                        </div>
                                     </div>
                                 </div>
 
@@ -237,16 +235,15 @@
                                                         : -{{ damage.damage }} point(s) de vie{% if damage.lethal %} (mortel){% endif %}" data-replace-title>
                                                     <span class="weapon {% if damage.weapon != 'UNKNOWN' and damage.weapon != 'FISTS' %}i-{{ damage.weapon | icon }}{% endif %}" aria-describedby="hawk-tooltip-weapon-damages-received-{{ player.uuid }}-{{ loop.index0 }}"></span>
 
-                                                    <span aria-describedby="hawk-tooltip-source-damages-received-{{ player.uuid }}-{{ loop.index0 }}">
-                                                        {% if damage.cause == 'PLAYER' and damage.damager %}
-                                                            <span class="source">
-                                                                <img src="{{ head(uuid=damage.damager.uuid, size=20) }}" alt="{{ damage.damager.name }}" />
-                                                            </span>
-                                                        {% else %}
-                                                            <span class="source i-{{ damage.cause | icon }}"></span>
-                                                        {% endif %}
-                                                        {{ hawk::hearts(hearts=damage.damage, lethal=damage.lethal) }}
-                                                    </span>
+                                                    {% if damage.cause == 'PLAYER' and damage.damager %}
+                                                        <span class="source" aria-describedby="hawk-tooltip-source-damages-received-{{ player.uuid }}-{{ loop.index0 }}">
+                                                            <img src="{{ head(uuid=damage.damager.uuid, size=20) }}" alt="{{ damage.damager.name }}" />
+                                                        </span>
+                                                    {% else %}
+                                                        <span class="source i-{{ damage.cause | icon }}" aria-describedby="hawk-tooltip-source-damages-received-{{ player.uuid }}-{{ loop.index0 }}"></span>
+                                                    {% endif %}
+
+                                                    {{ hawk::hearts(hearts=damage.damage, lethal=damage.lethal) }}
 
                                                     <div class="hawk-tooltip" id="hawk-tooltip-weapon-damages-received-{{ player.uuid }}-{{ loop.index0 }}">
                                                         {{ hawk::weapon_tooltip(weapon=damage.weapon, weapon_name=damage.weapon_name, weapon_enchantments=damage.weapon_enchantments) }}
@@ -275,6 +272,7 @@
                                                     <span class="source" aria-describedby="hawk-tooltip-source-damages-caused-{{ player.uuid }}-{{ loop.index0 }}">
                                                         <img src="{{ head(uuid=damage.damagee.uuid, size=20) }}" alt="{{ damage.damagee.name }}" />
                                                     </span>
+
                                                     {{ hawk::hearts(hearts=damage.damage, lethal=damage.lethal) }}
                                                 </li>
 
@@ -444,6 +442,7 @@
                     Généré {% if report.settings.generator -%}
                         par <a href="{{ report.settings.generator.link }}">{{ report.settings.generator.name }}</a>
                     {%- endif %}
+                    {% if report.minecraft %} sous Minecraft {{ report.minecraft }}{% endif %}
                     grâce à
                     <a href="/">Hawk</a>, un projet développé avec amour
                     <a href="https://github.com/zDevelopers/Hawk-GUI">en Rust</a> avec

@@ -180,6 +180,7 @@ fn main() {
             engines.tera.register_filter("enchantment", hawk_tera::make_enchantment_filter());
 
             engines.tera.register_tester("creature", hawk_tera::is_creature_test);
+            engines.tera.register_tester("curse", hawk_tera::is_curse_test);
 
             engines.tera.register_function("head", hawk_tera::make_head_function());
         }))

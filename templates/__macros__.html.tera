@@ -88,7 +88,7 @@
         {%- endif -%}
     </span>
     {% for enchantment, level in weapon_enchantments %}
-        <br /><span class="has-minecraft-gray-color">{{ enchantment | enchantment(level=level) }}</span>
+        <br /><span class="has-minecraft-{% if enchantment is curse %}red{% else %}gray{% endif %}-color">{{ enchantment | enchantment(level=level) }}</span>
     {% endfor %}
 {% endmacro %}
 

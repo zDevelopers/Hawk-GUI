@@ -193,12 +193,16 @@ pub fn make_enchantment_filter() -> FilterFn {
         },
         level = match args.get("level") {
             Some(level) => match from_value::<u32>(level.clone()) {
-                Ok(level) => match level {
-                    1 => "".to_string(),
-                    _ => match roman::to(level as i32) {
-                        Some(roman_level) => format!(" {}", roman_level),
-                        None => format!("{}", level),
-                    }
+                Ok(level) => match roman::to(level as i32) {
+                    Some(roman_level) => match level {
+                        1 => match input.as_str().unwrap_or("") {
+                            // These enchants are level-1 only: the level is not displayed at all.
+                            "aqua_affinity" | "silk_touch" | "flame" | "infinity" | "mending" | "binding_curse" | "vanishing_curse" | "channeling" | "multishot" => "".to_string(),
+                            _ => format!(" {}", roman_level)
+                        },
+                        _ => format!(" {}", roman_level)
+                    },
+                    None => format!(" {}", level),
                 },
                 Err(_) => format!(" {}", level.to_string()),
             },
@@ -232,4 +236,10 @@ pub fn is_creature_test(value: Option<Value>, _params: Vec<Value>) -> Result<boo
     Ok(value.map(|value| from_value::<DamageCause>(value).unwrap_or(DamageCause::Unknown))
          .map(|cause| cause.is_creature())
          .unwrap_or(false))
+}
+
+pub fn is_curse_test(value: Option<Value>, _params: Vec<Value>) -> Result<bool> {
+    Ok(value.map(|value| value.as_str().unwrap_or("").to_string())
+        .map(|enchantment| enchantment.contains("_curse"))
+        .unwrap_or(false))
 }
