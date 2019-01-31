@@ -173,8 +173,11 @@ fn main() {
             engines.tera.add_template_file(Path::new("templates/__macros__.html.tera"), Some("__macros__")).unwrap_or_else(|err| panic!(err));
 
             engines.tera.register_filter("css_class", hawk_tera::make_css_class_filter());
+            engines.tera.register_filter("duration", hawk_tera::make_duration_filter());
             engines.tera.register_filter("minecraft", hawk_tera::make_minecraft_filter());
             engines.tera.register_filter("icon", hawk_tera::make_icon_filter());
+            engines.tera.register_filter("name", hawk_tera::make_name_filter());
+            engines.tera.register_filter("enchantment", hawk_tera::make_enchantment_filter());
 
             engines.tera.register_tester("creature", hawk_tera::is_creature_test);
 

@@ -116,7 +116,7 @@
                                                 </figure>
                                                 <h4>
                                                     {{ event.title }}
-                                                    <time datetime="{{ event.date }}" title="{{ event.date | date(format='%Hh%M') }}">{{ event.since_beginning }}</time>
+                                                    <time datetime="{{ event.date }}" title="{{ event.date | date(format='%Hh%M') }}">{{ event.since_beginning | duration }}</time>
                                                 </h4>
                                                 <div class="is-clearfix"></div>
                                             </div>
@@ -171,7 +171,7 @@
 
                                         <ul class="players-list">
                                             {% for player in report.players %}
-                                                {% if not player.in_team %}
+                                                {% if not player.team %}
                                                     <li>
                                                         {{ hawk::player(player=player, large=true) }}
                                                     </li>
@@ -202,20 +202,26 @@
                             <div class="columns">
                                 <div class="column damages-report-player-parent">
                                     <div class="damages-report-player">
-                                        <figure class="player-head{% if player.in_team and report.settings.summary.teams %} is-{{ player.color | css_class }}{% endif %}">
-                                            <img src="{{ head(uuid=player.uuid, size=90) }}" alt="{{ player.name }}" />
+                                        <figure class="player-head{% if player.team and report.settings.summary.teams %} is-{{ player.color | css_class }}{% endif %}">
+                                            <img src="{{ head(uuid=player.uuid, size=90) }}" alt="{{ player.name }}"{% if player.tag_line_details %} aria-describedby="hawk-tooltip-player-tags-{{ player.uuid }}"{% endif %} />
                                             <figcaption>
-                                                <span class="name">{{ player.name }}</span>
+                                                <span class="name"{% if player.tag_line_details %} aria-describedby="hawk-tooltip-player-tags-{{ player.uuid }}"{% endif %}>{{ player.name }}</span>
 
                                                 {% if player.tag_line %}
-                                                    <span class="tag-line" title="{{ player.tag_line_details }}">{{ player.tag_line }}</span>
+                                                    <span class="tag-line"{% if player.tag_line_details %} title="{{ player.tag_line_details }}" aria-describedby="hawk-tooltip-player-tags-{{ player.uuid }}" data-replace-title{% endif %}>{{ player.tag_line }}</span>
                                                 {% endif %}
 
                                                 {% if player.tag_line_secondary %}
-                                                    <span class="tag-line-secondary" title="{{ player.tag_line_details }}">{{ player.tag_line_secondary }}</span>
+                                                    <span class="tag-line-secondary"{% if player.tag_line_details %} title="{{ player.tag_line_details }}" aria-describedby="hawk-tooltip-player-tags-{{ player.uuid }}" data-replace-title{% endif %}>{{ player.tag_line_secondary }}</span>
                                                 {% endif %}
                                             </figcaption>
                                         </figure>
+
+                                        {% if player.tag_line_details %}
+                                            <div class="hawk-tooltip" id="hawk-tooltip-player-tags-{{ player.uuid }}">
+                                                {{ hawk::player_tooltip(player=player) }}
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 </div>
 
@@ -226,18 +232,29 @@
                                         <ul>
                                             {% for damage in aggreg.damages_taken %}
                                                 <li title="
-                                                        {%- if damage.cause == 'PLAYER' %}{{ damage.damager.name }}{% else %}{{ damage.cause }} {% endif -%}
-                                                        {%- if damage.weapon != 'FISTS' and damage.weapon != 'UNKNOWN' %} avec {{ damage.weapon }} {% endif -%}
-                                                        : -{{ damage.damage }} point(s) de vie{% if damage.lethal %} (mortel){% endif %}">
-                                                    <span class="weapon {% if damage.weapon != 'UNKNOWN' and damage.weapon != 'FISTS' %}i-{{ damage.weapon | icon }}{% endif %}"></span>
-                                                    {% if damage.cause == 'PLAYER' and damage.damager %}
-                                                        <span class="source">
-                                                            <img src="{{ head(uuid=damage.damager.uuid, size=20) }}" alt="{{ damage.damager.name }}" />
-                                                        </span>
-                                                    {% else %}
-                                                        <span class="source i-{{ damage.cause | icon }}"></span>
-                                                    {% endif %}
-                                                    {{ hawk::hearts(hearts=damage.damage, lethal=damage.lethal) }}
+                                                        {%- if damage.cause == 'PLAYER' %}{{ damage.damager.name }}{% else %}{{ damage.cause | name }} {% endif -%}
+                                                        {%- if damage.weapon != 'FISTS' and damage.weapon != 'UNKNOWN' %} avec {{ damage.weapon | name | lower }} {% endif -%}
+                                                        : -{{ damage.damage }} point(s) de vie{% if damage.lethal %} (mortel){% endif %}" data-replace-title>
+                                                    <span class="weapon {% if damage.weapon != 'UNKNOWN' and damage.weapon != 'FISTS' %}i-{{ damage.weapon | icon }}{% endif %}" aria-describedby="hawk-tooltip-weapon-damages-received-{{ player.uuid }}-{{ loop.index0 }}"></span>
+
+                                                    <span aria-describedby="hawk-tooltip-source-damages-received-{{ player.uuid }}-{{ loop.index0 }}">
+                                                        {% if damage.cause == 'PLAYER' and damage.damager %}
+                                                            <span class="source">
+                                                                <img src="{{ head(uuid=damage.damager.uuid, size=20) }}" alt="{{ damage.damager.name }}" />
+                                                            </span>
+                                                        {% else %}
+                                                            <span class="source i-{{ damage.cause | icon }}"></span>
+                                                        {% endif %}
+                                                        {{ hawk::hearts(hearts=damage.damage, lethal=damage.lethal) }}
+                                                    </span>
+
+                                                    <div class="hawk-tooltip" id="hawk-tooltip-weapon-damages-received-{{ player.uuid }}-{{ loop.index0 }}">
+                                                        {{ hawk::weapon_tooltip(weapon=damage.weapon, weapon_name=damage.weapon_name, weapon_enchantments=damage.weapon_enchantments) }}
+                                                    </div>
+
+                                                    <div class="hawk-tooltip" id="hawk-tooltip-source-damages-received-{{ player.uuid }}-{{ loop.index0 }}">
+                                                        {{ hawk::damage_tooltip(damage=damage) }}
+                                                    </div>
                                                 </li>
                                             {% endfor %}
                                         </ul>
@@ -251,15 +268,23 @@
                                         <ul>
                                             {% for damage in aggreg.damages_caused %}
                                                 <li title="
-                                                        {%- if damage.cause == 'PLAYER' %}{{ damage.damager.name }}{% else %}{{ damage.cause }}{% endif -%}
-                                                        {%- if damage.weapon != 'FISTS' and damage.weapon != 'UNKNOWN' %} avec {{ damage.weapon }} {% endif -%}
-                                                        : -{{ damage.damage }} point(s) de vie{% if damage.lethal %} (mortel){% endif %}">
-                                                    <span class="weapon {% if damage.weapon != 'UNKNOWN' and damage.weapon != 'FISTS' %}i-{{ damage.weapon | icon }}{% endif %}"></span>
-                                                    <span class="source">
+                                                        {%- if damage.cause == 'PLAYER' %}{{ damage.damager.name }}{% else %}{{ damage.cause | name }}{% endif -%}
+                                                        {%- if damage.weapon != 'FISTS' and damage.weapon != 'UNKNOWN' %} avec {{ damage.weapon | name | lower }} {% endif -%}
+                                                        : -{{ damage.damage }} point(s) de vie{% if damage.lethal %} (mortel){% endif %}" data-replace-title>
+                                                    <span class="weapon {% if damage.weapon != 'UNKNOWN' and damage.weapon != 'FISTS' %}i-{{ damage.weapon | icon }}{% endif %}"  aria-describedby="hawk-tooltip-weapon-damages-caused-{{ player.uuid }}-{{ loop.index0 }}"></span>
+                                                    <span class="source" aria-describedby="hawk-tooltip-source-damages-caused-{{ player.uuid }}-{{ loop.index0 }}">
                                                         <img src="{{ head(uuid=damage.damagee.uuid, size=20) }}" alt="{{ damage.damagee.name }}" />
                                                     </span>
                                                     {{ hawk::hearts(hearts=damage.damage, lethal=damage.lethal) }}
                                                 </li>
+
+                                                <div class="hawk-tooltip" id="hawk-tooltip-weapon-damages-caused-{{ player.uuid }}-{{ loop.index0 }}">
+                                                    {{ hawk::weapon_tooltip(weapon=damage.weapon, weapon_name=damage.weapon_name, weapon_enchantments=damage.weapon_enchantments) }}
+                                                </div>
+
+                                                <div class="hawk-tooltip" id="hawk-tooltip-source-damages-caused-{{ player.uuid }}-{{ loop.index0 }}">
+                                                    {{ hawk::damage_tooltip(damage=damage) }}
+                                                </div>
                                             {% endfor %}
                                         </ul>
                                     </div>
@@ -271,9 +296,13 @@
 
                                         <ul>
                                             {% for heal in aggreg.heals %}
-                                                <li title="{{ heal.cause }} : +{{ heal.heal }} point(s) de vie">
-                                                    <span class="source i-{{ heal.cause | icon }}"></span>
+                                                <li title="{{ heal.cause | name }} : +{{ heal.heal }} point(s) de vie" data-replace-title>
+                                                    <span class="source i-{{ heal.cause | icon }}" aria-describedby="hawk-tooltip-heal-{{ player.uuid }}-{{ loop.index0 }}"></span>
                                                     {{ hawk::hearts(hearts=heal.heal) }}
+
+                                                    <div class="hawk-tooltip" id="hawk-tooltip-heal-{{ player.uuid }}-{{ loop.index0 }}">
+                                                        {{ hawk::heal_tooltip(heal=heal) }}
+                                                    </div>
                                                 </li>
                                             {% endfor %}
                                         </ul>
@@ -304,9 +333,9 @@
                                                     {% else %}
                                                         <a href="" class="player is-fake-player">
                                                             <figure aria-hidden="true">
-                                                                <span class="i-{{ aggreg.killed_by.cause | icon | replace(from='-small', to='') }}"></span>
+                                                                <span class="i-{{ aggreg.killed_by.cause | icon | replace(from='-small', to='') }} is-rounded"></span>
                                                             </figure>
-                                                            <span>{{ aggreg.killed_by.cause }}</span>
+                                                            <span>{{ aggreg.killed_by.cause | name }}</span>
                                                         </a>
                                                     {% endif %}
                                                 </li>
@@ -346,8 +375,8 @@
                                             <div class="columns">
                                                 <div class="column is-4 natural-damages-report-source">
                                                     <figure>
-                                                        <span class="i-{{ cause | icon | replace(from='-small', to='-large') }}"></span>
-                                                        <figcaption>{{ cause }}</figcaption>
+                                                        <span class="i-{{ cause | icon | replace(from='-small', to='-large') }} is-rounded"></span>
+                                                        <figcaption>{{ cause | name }}</figcaption>
                                                     </figure>
                                                 </div>
                                                 <div class="column is-8 natural-damages-report-damages">
@@ -374,8 +403,8 @@
                                             <div class="columns">
                                                 <div class="column is-4 natural-damages-report-source">
                                                     <figure>
-                                                        <span class="i-{{ cause | icon | replace(from='-small', to='-large') }}"></span>
-                                                        <figcaption>{{ cause }}</figcaption>
+                                                        <span class="i-{{ cause | icon | replace(from='-small', to='-large') }} is-rounded"></span>
+                                                        <figcaption>{{ cause | name }}</figcaption>
                                                     </figure>
                                                 </div>
                                                 <div class="column is-8 natural-damages-report-damages">
@@ -456,7 +485,66 @@
                         // TODO link to player stats tab if it's a real link
                     })
                 });
+
+                // Replaces marked titles with aria-label, because they interfere with tooltips
+                document.querySelectorAll("[data-replace-title]").forEach(function(element) {
+                    element.setAttribute("aria-label", element.getAttribute("title"));
+                    element.setAttribute("title", "");
+                });
+
+                const real_tooltip = document.createElement("div");
+                real_tooltip.classList.add("minecraft-rich-tooltip");
+
+                document.body.appendChild(real_tooltip);
+
+                document.querySelectorAll("[aria-describedby]").forEach(function(element) {
+                    const tooltip = document.getElementById(element.getAttribute("aria-describedby"));
+
+                    element.addEventListener('mouseover', function(e) {
+                        tooltip.setAttribute("aria-hidden", "false");
+                        show_tooltip(real_tooltip, tooltip);
+                    });
+
+                    element.addEventListener('mouseout', function(e) {
+                        tooltip.setAttribute("aria-hidden", "true");
+                        hide_tooltip(real_tooltip, tooltip);
+                    });
+
+                    element.addEventListener('mousemove', function(e) {
+                        if (e.movementX && e.movementX > 20 || e.movementY && e.movementY > 20)
+                            return;
+
+                        let mouseX, mouseY;
+
+                        if (e.offsetX) {
+                            mouseX = e.offsetX;
+                            mouseY = e.offsetY;
+                        } else if (e.layerX) {
+                            mouseX = e.layerX;
+                            mouseY = e.layerY;
+                        }
+
+                        let body_bouncing_box    = document.body.getBoundingClientRect(),
+                            element_bouncing_box = element.getBoundingClientRect(),
+                            offset_top           = element_bouncing_box.top - body_bouncing_box.top,
+                            offset_left          = element_bouncing_box.left - body_bouncing_box.left;
+
+                        real_tooltip.style.top = (offset_top + mouseY - 4) + "px";
+                        real_tooltip.style.left = (offset_left + mouseX + 8) + "px";
+
+                    });
+                });
             });
+
+            function show_tooltip(real_tooltip, element) {
+                real_tooltip.innerHTML = element.innerHTML;
+                real_tooltip.classList.add("is-active");
+            }
+
+            function hide_tooltip(real_tooltip) {
+                real_tooltip.innerHTML = "";
+                real_tooltip.classList.remove("is-active");
+            }
         </script>
     </body>
 </html>

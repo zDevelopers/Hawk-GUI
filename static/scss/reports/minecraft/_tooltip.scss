@@ -1,37 +1,68 @@
 @import "variables";
 
+%hawk-tooltip {
+  position: absolute;
+
+  padding: .1em .5em;
+
+  border: solid 3px #26035d;
+  border-radius: 5px;
+
+  background: rgba(0,0,20,.9);
+
+  font-family: $family-minecraft;
+
+  color: white;
+  white-space: nowrap;
+
+  z-index: 9001;
+}
+
 .minecraft-tooltip[data-tooltip] {
   position: relative;
 
   &:hover:before {
     content: attr(data-tooltip);
 
-    position: absolute;
+    @extend %hawk-tooltip;
+
     top: 108%;
     left: 50%;
     bottom: auto;
     right: auto;
 
-    transform: translate(-50%, -1rem);
-
-    padding: .1em .5em;
     height: 2.1em;
-
-    border: solid 3px #26035d;
-    border-radius: 5px;
-
-    background: rgba(0,0,20,.9);
-
-    font-family: $family-minecraft;
-
-    color: white;
-    white-space: nowrap;
-
-    z-index: 9001;
+    transform: translate(-50%, -1rem);
   }
 
   &.is-text-tooltip:hover:before {
     left: 0;
     top: 85%;
   }
+}
+
+.minecraft-rich-tooltip {
+  @extend %hawk-tooltip;
+
+  display: none;
+  max-width: 369px;
+
+  font-size: $size-normal;
+
+  &.is-active {
+    display: block;
+  }
+
+  time:first-child {
+    float: right;
+    padding-left: .8rem;
+  }
+}
+
+.hawk-tooltip {
+  display: none;
+}
+
+[aria-describedby] {
+  position: relative;
 }

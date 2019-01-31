@@ -813,6 +813,7 @@
       "date": "2018-12-15T22:58:48+02:00",
       "cause": "PLAYER",
       "weapon": "SWORD_IRON",
+      "weapon_name": "Épée de l'Apocalypse",
       "damager": "55b89885-673c-4458-a8bd-33ad9c6190b4",
       "damagee": "da04cd54-c6c7-4672-97c5-85663f5bccf6",
       "damage": 4,
@@ -837,6 +838,7 @@
         "unbreaking": 3,
         "infinity": 1
       },
+      "weapon_name": "Arc de l'Apocalyspe",
       "damager": "da04cd54-c6c7-4672-97c5-85663f5bccf6",
       "damagee": "da04cd54-c6c7-4672-97c5-85663f5bccf6",
       "damage": 2,

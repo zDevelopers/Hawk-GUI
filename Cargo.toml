@@ -9,10 +9,12 @@ chrono = { version = "0.4.*", features = ["serde"] }
 error-chain = "0.12.*"
 failure = "0.1.*"
 failure_derive = "0.1.*"
+Inflector = "0.11.*"
 rand = "0.6"
 reqwest = "0.9.*"
 rocket = "0.4.*"
 rocket_contrib = { version = "0.4.*", default-features = false, features = ["json", "serve", "tera_templates", "uuid"]}
+roman = "0.1.*"
 serde = "1.0.*"
 serde_json = "1.0.*"
 serde_derive = "1.0.*"

@@ -1315,3 +1315,7 @@ $sprite: (
     height: map_get($sprite-properties, "width");
   }
 }
+
+.is-rounded {
+  border-radius: 4px;
+}

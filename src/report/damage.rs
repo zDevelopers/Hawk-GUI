@@ -16,6 +16,7 @@ pub struct Damage {
     pub since_beginning: Duration,
     pub cause: DamageCause,
     pub weapon: Weapon,
+    pub weapon_name: Option<String>,
     pub weapon_enchantments: HashMap<String, u32>, // As silly as this could sound, the maximal enchantment level (for 1.14+) is 2,147,483,647‌
     pub damager: Option<SimplePlayer>,
     pub damagee: SimplePlayer,
@@ -31,6 +32,7 @@ impl Damage {
                 since_beginning: since(&raw_damage.date, begin),
                 cause: raw_damage.cause.clone(),
                 weapon: raw_damage.weapon.clone().unwrap_or(Weapon::Fists).clone(),
+                weapon_name: raw_damage.weapon_name.clone(),
                 weapon_enchantments: match &raw_damage.weapon_enchantments {
                     Some(enchantments) => enchantments.clone(),
                     None => HashMap::new()

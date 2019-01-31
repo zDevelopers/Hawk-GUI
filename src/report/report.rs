@@ -87,7 +87,7 @@ impl Report {
             winners,
             damages,
             heals,
-            has_players_without_team: players.iter().any(|(_uuid, player)| !player.as_ref().in_team)
+            has_players_without_team: players.iter().any(|(_uuid, player)| player.as_ref().team.is_none())
         })
     }
 

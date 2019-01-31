@@ -13,7 +13,7 @@ pub struct Player {
     pub uuid: Uuid,
     pub name: String,
     pub color: TeamColor,
-    pub in_team: bool,
+    pub team: Option<String>,
 
     pub tag_line: String,
     pub tag_line_secondary: String,
@@ -37,7 +37,7 @@ impl Player {
                 Some(statistics) => Some(DisplayedPlayerStatistics::calculate_displayed_statistics(statistics, settings)),
                 None => None
             },
-            in_team: teams.iter().any(|team| team.players.contains(&raw_player.uuid))
+            team: teams.iter().find(|team| team.players.contains(&raw_player.uuid)).map(|team| team.name.clone())
         }
     }
 }
@@ -129,7 +129,7 @@ pub struct SimplePlayer {
     pub uuid: Uuid,
     pub name: String,
     pub color: TeamColor,
-    pub in_team: bool
+    pub team: Option<String>
 }
 
 impl From<Player> for SimplePlayer {
@@ -138,7 +138,7 @@ impl From<Player> for SimplePlayer {
             uuid: player.uuid,
             name: player.name,
             color: player.color,
-            in_team: player.in_team
+            team: player.team.clone()
         }
     }
 }
@@ -149,7 +149,7 @@ impl From<&Player> for SimplePlayer {
             uuid: player.uuid.clone(),
             name: player.name.clone(),
             color: player.color.clone(),
-            in_team: player.in_team
+            team: player.team.clone()
         }
     }
 }
@@ -160,7 +160,7 @@ impl From<Rc<Player>> for SimplePlayer {
             uuid: player.uuid.clone(),
             name: player.name.clone(),
             color: player.color.clone(),
-            in_team: player.in_team
+            team: player.team.clone()
         }
     }
 }
@@ -171,7 +171,7 @@ impl From<&Rc<Player>> for SimplePlayer {
             uuid: player.uuid.clone(),
             name: player.name.clone(),
             color: player.color.clone(),
-            in_team: player.in_team
+            team: player.team.clone()
         }
     }
 }

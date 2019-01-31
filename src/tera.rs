@@ -1,4 +1,8 @@
+use std::time::Duration;
+
+use inflector::Inflector;
 use rocket_contrib::templates::tera::{self, GlobalFn, FilterFn, Result};
+use roman;
 use serde_json::value::{from_value, to_value, Value};
 use uuid;
 
@@ -104,6 +108,123 @@ pub fn make_icon_filter() -> FilterFn {
                 Err(_) => ""
             }
         }
+    }).unwrap())
+}
+
+// FIXME I18N
+pub fn make_name_filter() -> FilterFn {
+    |input, _args| Ok(to_value(match from_value::<DamageCause>(input.clone()) {
+        Ok(damage_cause) => match damage_cause {
+            DamageCause::Player => "Joueur",
+            DamageCause::Zombie => "Zombie",
+            DamageCause::Skeleton => "Squelette",
+            DamageCause::Pigman => "Cochon Zombie",
+            DamageCause::Witch => "Sorcière",
+            DamageCause::Spider => "Araignée",
+            DamageCause::CaveSpider => "Araignée des cavernes",
+            DamageCause::Creeper => "Creeper",
+            DamageCause::Enderman => "Enderman",
+            DamageCause::Slime => "Slime",
+            DamageCause::Ghast => "Ghast",
+            DamageCause::MagmaCube => "Cube de Magma",
+            DamageCause::Blaze => "Blaze",
+            DamageCause::Wolf => "Chien",
+            DamageCause::AngryWolf => "Loup énervé",
+            DamageCause::Silverfish => "Poisson d'argent",
+            DamageCause::IronGolem => "Golem de Fer",
+            DamageCause::ZombieVillager => "Villageois zombie",
+            DamageCause::EnderDragon => "Dragon",
+            DamageCause::Wither => "Wither",
+            DamageCause::WitherSkeleton => "Wither Squelette",
+            DamageCause::Fire => "Feu",
+            DamageCause::Lava => "Lave",
+            DamageCause::Thunderbolt => "Foudre",
+            DamageCause::Cactus => "Cactus",
+            DamageCause::TNT => "Trinitroluène",
+            DamageCause::Fall => "Chute",
+            DamageCause::Suffocation => "Suffocation",
+            DamageCause::Drowning => "Noyade",
+            DamageCause::Starvation => "Faim",
+            DamageCause::Command => "Commande",
+            DamageCause::Unknown => "Inconnu",
+        },
+        Err(_) => match from_value::<Weapon>(input.clone()) {
+            Ok(weapon) => match weapon {
+                Weapon::Fists => "Poings",
+                Weapon::SwordWood => "Épée en bois",
+                Weapon::SwordStone => "Épée en pierre",
+                Weapon::SwordIron => "Épée en fer",
+                Weapon::SwordGold => "Épée en or",
+                Weapon::SwordDiamond => "Épée de diamant",
+                Weapon::AxeWood => "Hache en bois",
+                Weapon::AxeStone => "Hache en pierre",
+                Weapon::AxeIron => "Hache en fer",
+                Weapon::AxeGold => "Hache en or",
+                Weapon::AxeDiamond => "Hache de diamant",
+                Weapon::Bow => "Arc",
+                Weapon::Magic => "Magie",
+                Weapon::Thorns => "Épines d'armure",
+                Weapon::Unknown => "Inconnu",
+            },
+            Err(_) => match from_value::<HealCause>(input.clone()) {
+                Ok(heal_cause) => match heal_cause {
+                    HealCause::Natural => "Régénération naturelle",
+                    HealCause::GoldenApple => "Pomme d'or",
+                    HealCause::NotchApple => "Pomme d'or enchantée",
+                    HealCause::HealingPotion => "Potion de soin",
+                    HealCause::Command => "Commande",
+                    HealCause::Unknown => "Inconnu",
+                },
+                Err(_) => input.as_str().unwrap_or("")
+            }
+        }
+    }).unwrap())
+}
+
+pub fn make_enchantment_filter() -> FilterFn {
+    |input, args| Ok(to_value(format!(
+        "{enchantment}{level}",
+        enchantment = match input.as_str() {
+            Some(input) => match input {
+                "sweeping" => "Sweeping Edge".to_string(),
+                _ => input.to_title_case()
+            },
+            None => input.to_string(),
+        },
+        level = match args.get("level") {
+            Some(level) => match from_value::<u32>(level.clone()) {
+                Ok(level) => match level {
+                    1 => "".to_string(),
+                    _ => match roman::to(level as i32) {
+                        Some(roman_level) => format!(" {}", roman_level),
+                        None => format!("{}", level),
+                    }
+                },
+                Err(_) => format!(" {}", level.to_string()),
+            },
+            None => "".to_string(),
+        }
+    )).unwrap())
+}
+
+pub fn make_duration_filter() -> FilterFn {
+    |input, _args| Ok(to_value(match from_value::<Duration>(input) {
+        Ok(duration) => {
+            let total_secs = duration.as_secs();
+            let days = total_secs / 86400;
+            let hours = (total_secs - days * 86400) / 3600;
+            let minutes = (total_secs - (days * 86400) - (hours * 3600)) / 60;
+            let seconds = total_secs - (days * 86400) - (hours * 3600) - (minutes * 60);
+
+            format!(
+                "{days}{hours}{minutes}{seconds}",
+                days = if days != 0 { format!("{}j\u{00A0}", days) } else { "".to_string() },  // FIXME i18n
+                hours = if hours != 0 { format!("{:02}:", hours) } else { "".to_string() },
+                minutes = format!("{:02}:", minutes),
+                seconds = format!("{:02}", seconds)
+            )
+        },
+        Err(_) => "00:00".to_string(),
     }).unwrap())
 }
 
