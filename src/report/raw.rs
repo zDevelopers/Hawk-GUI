@@ -72,6 +72,7 @@ pub struct Report {
     pub match_uuid: Uuid,
     pub title: String,
     pub date: DateTime<FixedOffset>,
+    pub minecraft: Option<String>,
 
     #[serde(default = "settings::default_settings")]
     pub settings: settings::Settings,
