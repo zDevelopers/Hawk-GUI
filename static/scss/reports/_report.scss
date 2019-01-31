@@ -124,6 +124,23 @@ section.section {
 
   background: url("../images/bg-minecraft-dirt.png") repeat;
   box-shadow: 0 19px 10px 0 rgba(black, .4) inset, 0 -19px 10px 0 rgba(black, .4) inset;
+
+  .empty-section {
+    margin-top: 10vh;
+
+    font-family: $family-minecraft;
+
+    color: #ccc;
+    text-align: center;
+
+    h3 {
+      font-size: $size-large;
+    }
+
+    p {
+      font-size: $size-medium;
+    }
+  }
 }
 
 

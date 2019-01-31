@@ -431,9 +431,12 @@
 
         {% if report.settings.players.enabled %}
         <section class="section js-tab-section {% if default_tab != 'players' %}is-hidden{% endif %}" id="players">
-        {% endif %}
-
+            <article class="empty-section container">
+                <h3>Cette section n'est pas encore disponible.</h3>
+                <p>Quand elle sera ajoutée, prochainement, vos statistiques par joueur apparaîtront ici (pour tous vos rapports, incluant celui-ci).</p>
+            </article>
         </section>
+        {% endif %}
 
         <footer>
             <div class="content has-text-centered">
