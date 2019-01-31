@@ -33,7 +33,7 @@
                             </h1>
                             <h2 class="subtitle">
                                 {% if report.settings.players_count %}
-                                    {{ report.players | length }} joueurs
+                                    {{ report.players | length }} joueur{{ report.players | length | pluralize }}
                                 {% endif %}
 
                                 {% if report.settings.players_count and report.settings.date %} - {% endif %}
@@ -446,7 +446,8 @@
                     grâce à
                     <a href="/">Hawk</a>, un projet développé avec amour
                     <a href="https://github.com/zDevelopers/Hawk-GUI">en Rust</a> avec
-                    <a href="https://rocket.rs">Rocket</a> par <a href="https://amaury.carrade.eu">Amaury Carrade</a>.<br />
+                    <a href="https://rocket.rs">Rocket</a> par <a href="https://amaury.carrade.eu">Amaury Carrade</a>
+                    (avec l'aide de <a href="https://florian.cassayre.me">Florian Cassayre</a>).<br />
                     Nous ne sommes pas responsables du contenu de ce site (en particulier, des pseudonymes et noms d'équipe).
                 </p>
             </div>
