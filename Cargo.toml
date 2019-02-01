@@ -22,10 +22,6 @@ strum = "0.13.*"
 strum_macros = "0.13.*"
 uuid = { version = "0.7.*", features = ["serde", "v4"] }
 
-# FIXME To be removed when the 0.8 version is published.
-[patch.crates-io]
-askama = { git = "https://github.com/djc/askama", branch = "master" }
-
 [lib]
 name = "lib"
 path = "src/lib.rs"
