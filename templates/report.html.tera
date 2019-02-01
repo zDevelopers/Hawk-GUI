@@ -194,6 +194,7 @@
 
                 {% if report.settings.damages.damages_per_players %}
                 <article class="chest">
+                    <aside class="is-hidden-tablet-only is-hidden-mobile">Survolez les icônes pour les détails</aside>
                     <h3 class="chest-title">Joueurs</h3>
 
                     {% for player in report.players | sort(attribute="name") %}
@@ -448,7 +449,8 @@
                     <a href="https://github.com/zDevelopers/Hawk-GUI">en Rust</a> avec
                     <a href="https://rocket.rs">Rocket</a> par <a href="https://amaury.carrade.eu">Amaury Carrade</a>
                     (avec l'aide de <a href="https://florian.cassayre.me">Florian Cassayre</a>).<br />
-                    Nous ne sommes pas responsables du contenu de ce site (en particulier, des pseudonymes et noms d'équipe).
+                    Nous ne sommes pas responsables du contenu de ce site (en particulier, des pseudonymes et noms d'équipe).<br /><br />
+                    <a href="/{{ slug }}/as_json" title="Consulter ce rapport au format JSON (exploitable par une machine)">&lt;/&gt;</a>
                 </p>
             </div>
         </footer>

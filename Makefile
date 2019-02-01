@@ -1,8 +1,8 @@
 styles:
-	sass --scss -t compressed --sourcemap=auto --unix-newlines static/scss/hawk.scss > static/dist/css/hawk.min.css
+	sass -s compressed static/scss/hawk.scss:static/dist/css/hawk.min.css
 
 watch:
-	sass --scss -t compressed --watch static/scss/hawk.scss:static/dist/css/hawk.min.css
+	sass -s compressed --watch static/scss/hawk.scss:static/dist/css/hawk.min.css
 
 build:
 	cargo build --release

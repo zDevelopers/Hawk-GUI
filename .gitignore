@@ -10,6 +10,8 @@
 .Trash-*
 .nfs*
 
+secret.rocket.env
+
 .sass-cache
 
 user-generated-content

@@ -3,5 +3,5 @@ address = "0.0.0.0"
 port = 8000
 
 [production]
-port = 80
-https = true
+# No trailing slash
+public-base-uri = "https://hawk.carrade.eu"

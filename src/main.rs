@@ -49,7 +49,7 @@ fn publish(match_report: Result<Json<raw::Report>, JsonError>, base_uri: State<B
     match match_report {
         Ok(match_report) => match save_report(match_report.into_inner()) {
             Ok(slug) => Ok(status::Custom(Status::Created, json!({
-                "uri": format!("{base_uri}{slug}", base_uri = &base_uri.uri, slug = &slug)
+                "uri": format!("{base_uri}/{slug}", base_uri = &base_uri.uri, slug = &slug)
             }))),
             Err(error) => Err(status::Custom(Status::UnprocessableEntity, json!({
                 "error": "Unprocessable Entity",
@@ -185,20 +185,8 @@ fn main() {
             engines.tera.register_function("head", hawk_tera::make_head_function());
         }))
         .attach(AdHoc::on_attach("Base URI", |rocket| {
-            let protocol = match rocket.config().get_bool("https").unwrap_or(false) {
-                true => "https",
-                false => "http"
-            };
-
-            let host = rocket.config().address.clone();
-            let port = rocket.config().port;
-
-            Ok(rocket.manage(BaseURI {
-                uri: format!("{protocol}://{host}{port}/", protocol = protocol, host = host, port = match port {
-                    80 => String::new(),
-                    _ => format!(":{}", port)
-                })
-            }))
+            let uri = rocket.config().get_string("public-base-uri").unwrap_or("http://127.0.0.1:8000".to_string()).clone();
+            Ok(rocket.manage(BaseURI { uri }))
         }))
         .register(catchers!(error_unprocessable_entity))
         .launch();
