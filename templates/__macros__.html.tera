@@ -60,7 +60,8 @@
         <br /><span class="has-minecraft-gray-color">{{ player.tag_line_secondary }}</span>
     {% endif %}
     {% if player.tag_line_details %}
-        <br />{% if not player.team or player.tag_line_secondary %}<br />{% endif %}<span class="has-minecraft-gray-color">{{ player.tag_line_details | replace(from='\n', to='<br />') }}</span>
+        <br />{% if not player.team or player.tag_line_secondary %}<br />{% endif %}<span class="has-minecraft-gray-color">{{ player.tag_line_details | replace(from='
+', to='<br />') }}</span>
     {% endif %}
 {% endmacro %}
 

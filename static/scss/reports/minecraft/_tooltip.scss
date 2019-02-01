@@ -45,9 +45,10 @@
   @extend %hawk-tooltip;
 
   display: none;
-  max-width: 369px;
+  max-width: 400px;
 
   font-size: $size-normal;
+  white-space: normal;
 
   &.is-active {
     display: block;
@@ -61,8 +62,4 @@
 
 .hawk-tooltip {
   display: none;
-}
-
-[aria-describedby] {
-  position: relative;
 }

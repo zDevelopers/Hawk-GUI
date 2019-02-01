@@ -209,11 +209,11 @@
                                                 <span class="name"{% if player.tag_line_details %} aria-describedby="hawk-tooltip-player-{{ player.uuid }}"{% endif %}>{{ player.name }}</span>
 
                                                 {% if player.tag_line %}
-                                                    <span class="tag-line"{% if player.tag_line_details %} title="{{ player.tag_line_details }}" aria-describedby="hawk-tooltip-player-tags-{{ player.uuid }}" data-replace-title{% endif %}>{{ player.tag_line }}</span>
+                                                    <span class="tag-line"{% if player.tag_line_details %} title="{{ player.tag_line_details }}" aria-describedby="hawk-tooltip-player-{{ player.uuid }}" data-replace-title{% endif %}>{{ player.tag_line }}</span>
                                                 {% endif %}
 
                                                 {% if player.tag_line_secondary %}
-                                                    <span class="tag-line-secondary"{% if player.tag_line_details %} title="{{ player.tag_line_details }}" aria-describedby="hawk-tooltip-player-tags-{{ player.uuid }}" data-replace-title{% endif %}>{{ player.tag_line_secondary }}</span>
+                                                    <span class="tag-line-secondary"{% if player.tag_line_details %} title="{{ player.tag_line_details }}" aria-describedby="hawk-tooltip-player-{{ player.uuid }}" data-replace-title{% endif %}>{{ player.tag_line_secondary }}</span>
                                                 {% endif %}
                                             </figcaption>
                                         </figure>
