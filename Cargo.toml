@@ -1,6 +1,6 @@
 [package]
 name = "hawk"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Amaury Carrade <amaury@carrade.eu>"]
 edition = "2018"
 
@@ -9,11 +9,7 @@ chrono = { version = "0.4.*", features = ["serde"] }
 error-chain = "0.12.*"
 failure = "0.1.*"
 failure_derive = "0.1.*"
-Inflector = "0.11.*"
-rand = "0.6"
-reqwest = "0.9.*"
-rocket = "0.4.*"
-rocket_contrib = { version = "0.4.*", default-features = false, features = ["json", "serve", "tera_templates", "uuid"]}
+pyo3 = { version = "0.7.0", features = ["extension-module"] }
 roman = "0.1.*"
 serde = "1.0.*"
 serde_json = "1.0.*"
@@ -23,9 +19,6 @@ strum_macros = "0.13.*"
 uuid = { version = "0.7.*", features = ["serde", "v4"] }
 
 [lib]
-name = "lib"
-path = "src/lib.rs"
-
-[[bin]]
-name = "hawk"
-path = "src/main.rs"
+name = "hawk_processing"
+path = "hawk_processing/lib.rs"
+crate-type = ["cdylib"]

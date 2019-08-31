@@ -12,3 +12,7 @@ run:
 
 dev:
 	cargo run
+
+link-dev:
+	cargo build
+	mv target/debug/libhawk_processing.so target/debug/hawk_processing.so
