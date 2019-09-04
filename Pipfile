@@ -9,6 +9,7 @@ verify_ssl = true
 django = "*"
 pyo3-pack = "*"
 requests = "*"
+django-ipware = "*"
 
 [requires]
 python_version = "3.7"

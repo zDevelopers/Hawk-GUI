@@ -26,7 +26,10 @@ pub mod minecraft;
 /// This method takes a raw JSON report as string, and returns a dict containing the following keys:
 /// - "processed_report": the processed JSON report (with everything pre-calculated and ready to be
 ///   displayed) as a string, so it is ready to be stored without parsing and loading the big JSON;
-/// - "uuid": the report UUID extracted from the received report.
+/// - "match_uuid": the report UUID extracted from the received report;
+/// - "minecraft_version": the Minecraft version extracted from the received report (may be absent);
+/// - "generator_name": the generator name extracted from the received report (may be absent);
+/// - "generator_link": the generator link extracted from the received report (may be absent).
 ///
 /// If the JSON is invalid or does not complies to the report format, a ValueError will be raised.
 /// If for some reason the processed report cannot be converted back to a JSON string, a
@@ -41,7 +44,24 @@ fn process_report(raw_json_report: String) -> PyResult<HashMap<String, String>> 
                     let mut report_return = HashMap::new();
 
                     report_return.insert("processed_report".to_string(), json_report);
-                    report_return.insert("uuid".to_string(), report.match_uuid.to_hyphenated().to_string());
+                    report_return.insert("match_uuid".to_string(), report.match_uuid.to_hyphenated().to_string());
+
+                    match report.minecraft {
+                        Some(minecraft) => { report_return.insert("minecraft_version".to_string(), minecraft); },
+                        None => {}
+                    };
+
+                    match report.settings.generator {
+                        Some(generator) => {
+                            report_return.insert("generator_name".to_string(), generator.name);
+
+                            match generator.link {
+                                Some(link) => { report_return.insert("generator_link".to_string(), link); },
+                                None => {},
+                            }
+                        },
+                        None => {},
+                    }
 
                     Ok(report_return)
                 },

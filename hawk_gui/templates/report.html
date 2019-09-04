@@ -579,7 +579,7 @@
                 <br /><br />
 
                 {# TODO url #}
-                <a href="/{{ slug }}/as_json" title="{% trans "View this report in JSON format (machine readable)" %}">&lt;/&gt;</a>
+                <a href="{% url "report-json" db_report.slug %}" title="{% trans "View this report in JSON format (machine readable)" %}">&lt;/&gt;</a>
             </p>
         </div>
     </footer>

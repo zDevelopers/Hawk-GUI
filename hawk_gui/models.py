@@ -1,3 +1,6 @@
+import random
+import string
+
 from django.conf import settings
 from django.db import models
 from django.urls import reverse_lazy
@@ -44,7 +47,7 @@ class Report(models.Model):
     """
     The slug of the report, used in the URL.
     """
-    slug = models.SlugField(_("Slug"))
+    slug = models.SlugField(_("Slug"), max_length=8)
 
     """
     The report's UUID, used for updates.
@@ -122,6 +125,25 @@ class Report(models.Model):
         )
 
         return f"Report at {self.slug}{generator}{minecraft}"
+
+    def save(self, **kwargs):
+        """
+        Generates a random unique slug on the fly if needed.
+        """
+        if not self.slug:
+            slug = None
+            while slug is None:
+                slug = "".join(
+                    random.choices(
+                        string.ascii_lowercase + string.digits,
+                        k=self._meta.get_field("slug").max_length,
+                    )
+                )
+                # We said unique slug
+                if Report.objects.filter(slug=slug).exists():
+                    slug = None
+            self.slug = slug
+        return super(Report, self).save(**kwargs)
 
     def get_absolute_url(self):
         return reverse_lazy("report", args=(self.slug,))

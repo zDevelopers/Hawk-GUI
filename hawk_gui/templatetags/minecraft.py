@@ -231,6 +231,8 @@ ICONS = {
     "PLAYER": "",
     "ZOMBIE": "entity-zombie-small",
     "PIGMAN": "entity-zombie-pigman-small",
+    "FIRE": "block-fire-small",
+    "LAVA": "block-lava-small",
     "THUNDERBOLT": "entity-lightning-small",
     "CACTUS": "block-cactus-small",
     "TNT": "block-tnt-small",
