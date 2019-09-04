@@ -1,0 +1,14 @@
+{% load minecraft %}
+
+<a href="" class="player
+                  {% if large %}is-large{% endif %}
+                  {% if player.team %}
+                      {% if visible_color %}is-{{ player.color | color_to_css }} has-background
+                      {% else %}is-{{ player.color | color_to_css }}-hover
+                      {% endif %}
+                  {% endif %}">
+    <figure aria-hidden="true">
+        <img src="{{ player | head:size }}" alt="" />
+    </figure>
+    <span>{{ player.name }}</span>
+</a>

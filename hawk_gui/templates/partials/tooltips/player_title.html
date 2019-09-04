@@ -1,0 +1,18 @@
+{% load i18n minecraft %}
+
+{% if player.color == 'DARK_BLUE' or player.color == 'BLACK' %}
+    <span class="has-minecraft-white-color">{{ player.name }}</span>
+    <span class="has-minecraft-dark-gray-color">
+        {% if player.color == 'DARK_BLUE' %}
+            {% trans "(dark blue)" %}
+        {% else %}
+            {% trans "(black)" %}
+        {% endif %}
+    </span>
+{% else %}
+    <span class="has-minecraft-{{ player.color | color_to_css }}-color">{{ player.name }}</span>
+{% endif %}
+
+{% if player.team %}
+    <br /><span class="has-minecraft-gray-color">{{ player.team }}</span><br />
+{% endif %}

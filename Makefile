@@ -4,15 +4,13 @@ styles:
 watch:
 	sass -s compressed --watch static/scss/hawk.scss:static/dist/css/hawk.min.css
 
-build:
-	cargo build --release
-
-run:
-	cargo run --release
-
-dev:
-	cargo run
+install-dev:
+	pipenv install --dev
+	pyo3-pack develop
 
 link-dev:
-	cargo build
-	mv target/debug/libhawk_processing.so target/debug/hawk_processing.so
+	pyo3-pack develop
+
+install-release:
+	pipenv install
+	pyo3-pack develop --release

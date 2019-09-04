@@ -1,0 +1,27 @@
+{% load i18n minecraft hawk_ui %}
+
+<time class="has-minecraft-dark-gray-color" datetime="{{ damage.date }}"> {{ damage.since_beginning | duration }}</time>
+
+{% if damage.cause == 'PLAYER' and damage.damager %}
+    {% player_tooltip_title damage.damager %}
+{% else %}
+    <span class="has-minecraft-white-color">{{ damage.cause | name }}</span>
+{% endif %}
+
+<br />
+<span class="has-minecraft-gray-color">{{ hearts_count_for_display }}</span>
+
+{% if damage.cause|is_creature %}
+    <br />
+    <span class="has-minecraft-gray-color">
+        {% if damage.weapon_enchantments %}
+            {% blocktrans with weapon=damage.weapon|name %}
+                {{ weapon }} with enchants
+            {% endblocktrans %}
+        {% else %}
+            {{ damage.weapon | name }}
+        {% endif %}
+    </span>
+{% endif %}
+
+{% if damage.lethal %}<br /><br /><span class="has-minecraft-red-color">{% trans "Lethal attack" %}</span>{% endif %}

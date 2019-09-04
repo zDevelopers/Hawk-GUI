@@ -1,0 +1,9 @@
+{% if display_in_list %}<ul>{% endif %}
+
+{% for line in lines %}
+    {% if display_in_list %}<li>{% endif %}
+    <span class="hearts is-{{ line }}{% if not forloop.first and not display_in_list %} is-multi-line-continuation{% endif %}{% if forloop.last and lethal %} is-lethal{% endif %}"></span>
+    {% if display_in_list %}</li>{% endif %}
+{% endfor %}
+
+{% if display_in_list %}</ul>{% endif %}

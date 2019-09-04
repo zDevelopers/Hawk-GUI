@@ -1,0 +1,5 @@
+{% load minecraft hawk_ui %}
+
+<time class="has-minecraft-dark-gray-color" datetime="{{ heal.date }}">{{ heal.since_beginning | duration }}</time>
+<span class="has-minecraft-{% if heal.cause == 'GOLDEN_APPLE' %}aqua{% elif heal.cause == 'NOTCH_APPLE' %}light-purple{% else %}white{% endif %}-color">{{ heal.cause | name }}</span>
+<br /><span class="has-minecraft-gray-color">{{ hearts_count_for_display }}</span>

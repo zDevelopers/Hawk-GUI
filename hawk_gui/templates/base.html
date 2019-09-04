@@ -1,0 +1,23 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, user-scalable=yes" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+        <title>{% block main_title %}Hawk{% endblock %}</title>
+
+        <link rel="stylesheet" href="{% static "css/hawk.min.css" %}" />
+        <link rel="icon" href="{% static "images/apple-golden.png" %}" />
+
+        {% block stylesheets %}{% endblock %}
+    </head>
+
+    <body>
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

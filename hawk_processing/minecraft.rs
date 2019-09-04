@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use regex::Regex;
 
 
 /// Parses Minecraft color codes into HTML formatting.
@@ -116,6 +117,23 @@ pub fn parse_color_codes(raw_string: String) -> String {
 }
 
 
+/// Strips every Minecraft color code from a string.
+///
+/// # Example
+///
+/// ```
+/// use lib::minecraft::strip_color_codes;
+/// assert_eq!(strip_color_codes(String::from("§2Dark green")), String::from("Dark green"));
+/// ```
+pub fn strip_color_codes(raw_string: String) -> String {
+    lazy_static! {
+        static ref STRIP_COLOR_CODES_REGEX: Regex = Regex::new(r"(?i)§[0-9A-FK-OR]").unwrap();
+    }
+
+    STRIP_COLOR_CODES_REGEX.replace_all(raw_string.as_ref(), "").to_string()
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -179,5 +197,31 @@ mod tests {
         assert_pcc("§2Dark §r§green", "<span style=\"color: #00AA00;\">Dark </span>§green");
         assert_pcc("§i", "§i");
         assert_pcc("§", "§");
+    }
+
+    fn assert_scc(raw: &'static str, should_be: &'static str) {
+        assert_eq!(strip_color_codes(String::from(raw)), String::from(should_be));
+    }
+
+    #[test]
+    fn existing_color_codes() {
+        assert_scc("§2Dark green", "Dark green");
+        assert_scc("Inherit and §dpi§rnk", "Inherit and pink");
+        assert_scc("§l§m§n§oEVERYTHING", "EVERYTHING");
+        assert_scc("§2Dark §Lgreen", "Dark green");
+    }
+
+    #[test]
+    fn non_existing_color_codes() {
+        assert_scc("§gGold", "§gGold");
+        assert_scc("§W9876", "§W9876");
+    }
+
+    #[test]
+    fn existing_and_non_existing_color_codes() {
+        assert_scc("§2Dark §green", "Dark §green");
+        assert_scc("Inheri§t and §dpi§rnk", "Inheri§t and pink");
+        assert_scc("§l§m§n§oEVER§YTHING", "EVER§YTHING");
+        assert_scc("§2Dark §Lgreen lam§p", "Dark green lam§p");
     }
 }

@@ -1,5 +1,7 @@
 extern crate chrono;
 #[macro_use] extern crate failure;
+#[macro_use] extern crate lazy_static;
+extern crate regex;
 extern crate roman;
 extern crate serde;
 #[macro_use] extern crate serde_derive;
@@ -13,7 +15,7 @@ use pyo3::prelude::*;
 use pyo3::exceptions::{RuntimeError, ValueError};
 use pyo3::wrap_pyfunction;
 
-use minecraft::parse_color_codes;
+use minecraft::{parse_color_codes, strip_color_codes};
 
 pub mod report;
 pub mod minecraft;
@@ -64,6 +66,21 @@ fn parse_minecraft_color_codes(raw_string: String) -> PyResult<String> {
     Ok(parse_color_codes(raw_string))
 }
 
+/// strip_minecraft_color_codes(raw_string, /)
+/// --
+///
+/// This method takes a raw string containing Minecraft formatting codes (e.g. "§2§lMy §6word!")
+/// and returns the same string without the color codes.
+///
+/// It will keep invalid formatting codes (e.g. “§W” will not be removed).
+///
+/// >>> hawk_processing.parse_minecraft_color_codes("§2§lMy §6word!")
+/// 'My word!'
+#[pyfunction]
+fn strip_minecraft_color_codes(raw_string: String) -> PyResult<String> {
+    Ok(strip_color_codes(raw_string))
+}
+
 /// to_roman(number, /)
 /// --
 ///
@@ -82,6 +99,7 @@ fn to_roman(number: i32) -> PyResult<String> {
 fn hawk_processing(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_wrapped(wrap_pyfunction!(process_report))?;
     m.add_wrapped(wrap_pyfunction!(parse_minecraft_color_codes))?;
+    m.add_wrapped(wrap_pyfunction!(strip_minecraft_color_codes))?;
     m.add_wrapped(wrap_pyfunction!(to_roman))?;
 
     Ok(())

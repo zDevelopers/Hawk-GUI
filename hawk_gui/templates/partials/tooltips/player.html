@@ -1,0 +1,15 @@
+{% load hawk_ui %}
+
+{% player_tooltip_title player %}
+
+{% if player.tag_line %}
+    <br /><span class="has-minecraft-{% if player.team %}white{% else %}gray{% endif %}-color">{{ player.tag_line }}</span>
+{% endif %}
+
+{% if player.tag_line_secondary %}
+    <br /><span class="has-minecraft-gray-color">{{ player.tag_line_secondary }}</span>
+{% endif %}
+
+{% if player.tag_line_details %}
+    <br />{% if not player.team or player.tag_line_secondary %}<br />{% endif %}<span class="has-minecraft-gray-color">{{ player.tag_line_details | linebreaksbr }}</span>
+{% endif %}
