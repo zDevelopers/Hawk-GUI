@@ -74,6 +74,10 @@ $minecraft-chest-inner-border-bottom-right: #919191;
       background-image: url("../images/sandstone.png");
     }
 
+    &.is-dirt {
+      background-image: url("../images/bg-minecraft-dirt.png");
+    }
+
     &.is-scrollable {
       overflow: auto;
       max-height: 60vh;
@@ -92,4 +96,8 @@ $minecraft-chest-inner-border-bottom-right: #919191;
 
 .column > .chest {
   margin: auto .5rem;
+}
+
+.modal > .modal-content .chest > h3 {
+  top: 0;
 }

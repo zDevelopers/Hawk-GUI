@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 
 from django import template
 from django.utils.safestring import mark_safe
+from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _, ngettext_lazy
 
 
@@ -39,11 +40,24 @@ def duration(duration):
     seconds = total_seconds - (days * 86400) - (hours * 3600) - (minutes * 60)
 
     if days != 0:
-        return _("%dd %02d:%02d:%02d") % (days, hours, minutes, seconds)
+        return format_lazy(
+            _("{days:d}d {hours:02d}:{minutes:02d}:{seconds:02d}"),
+            days=days,
+            hours=hours,
+            minutes=minutes,
+            seconds=seconds,
+        )
     elif hours != 0:
-        return _("%02d:%02d:%02d") % (hours, minutes, seconds)
+        return format_lazy(
+            _("{hours:02d}:{minutes:02d}:{seconds:02d}"),
+            hours=hours,
+            minutes=minutes,
+            seconds=seconds,
+        )
     else:
-        return _("%02d:%02d") % (minutes, seconds)
+        return format_lazy(
+            _("{minutes:02d}:{seconds:02d}"), minutes=minutes, seconds=seconds
+        )
 
 
 @register.filter
@@ -95,19 +109,29 @@ def damage_tooltip(damage):
     hearts_count = damage["damage"] // 2
 
     if damage["damage"] % 2 == 0:
-        hearts_count_for_display = ngettext_lazy(
-            "%d heart against %s", "%d hearts against %s", number=hearts_count
-        ) % (damage["damage"] // 2, damage["damagee"]["name"])
+        hearts_count_for_display = format_lazy(
+            ngettext_lazy(
+                "{damage} heart against {damagee}",
+                "{damage} hearts against {damagee}",
+                number=hearts_count,
+            ),
+            damage=damage["damage"] // 2,
+            damagee=damage["damagee"]["name"],
+        )
     elif damage["damage"] == 1:
         hearts_count_for_display = _("Half a heart against %s") % (
             damage["damagee"]["name"]
         )
     else:
-        hearts_count_for_display = ngettext_lazy(
-            "%d heart and a half against %s",
-            "%d hearts and a half against %s",
-            number=hearts_count,
-        ) % (damage["damage"] // 2, damage["damagee"]["name"])
+        hearts_count_for_display = format_lazy(
+            ngettext_lazy(
+                "{damage} heart and a half against {damagee}",
+                "{damage} hearts and a half against {damagee}",
+                number=hearts_count,
+            ),
+            damage=damage["damage"] // 2,
+            damagee=damage["damagee"]["name"],
+        )
 
     return {
         "damage": damage,
@@ -136,11 +160,14 @@ def heal_tooltip(heal):
     elif heal["heal"] == 1:
         hearts_count_for_display = _("Half a heart regenerated")
     else:
-        hearts_count_for_display = ngettext_lazy(
-            "%d heart and a half regenerated",
-            "%d hearts and a half regenerated",
-            number=hearts_count,
-        ) % (heal["heal"] // 2)
+        hearts_count_for_display = format_lazy(
+            ngettext_lazy(
+                "{heal} heart and a half regenerated",
+                "{heal} hearts and a half regenerated",
+                number=hearts_count,
+            ),
+            heal=heal["heal"] // 2,
+        )
 
     return {
         "heal": heal,

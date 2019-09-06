@@ -571,13 +571,13 @@
                     Hawk is a project developed with <a href="{{ hawk_url }}">love, Rust and Python</a>
                     by <a href="{{ amaury_url }}">Amaury Carrade</a> and <a href="{{ florian_url }}">Florian Cassayre</a>.
                 {% endblocktrans %}
+            </p>
 
-                <br /><br />
+            {% include "partials/language_selector.html" %}
 
-                {% trans "We are not responsible of the reports content (in particular, pseudonyms and team names)." %}
+            <p>{% trans "We are not responsible of the reports content (in particular, pseudonyms and team names)." %}</p>
 
-                <br /><br />
-
+            <p>
                 {# TODO url #}
                 <a href="{% url "report-json" db_report.slug %}" title="{% trans "View this report in JSON format (machine readable)" %}">&lt;/&gt;</a>
             </p>

@@ -76,9 +76,6 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 
-# Translations
-*.mo
-
 # Django stuff:
 db.sqlite3-journal
 

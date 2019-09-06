@@ -1,0 +1,33 @@
+{% load i18n %}
+
+<aside class="language-selector">
+    <form action="{% url 'set_language' %}" method="post">
+        {% csrf_token %}
+        <input name="next" type="hidden" value="{{ request.get_full_path }}" />
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+        {% get_language_info_list for LANGUAGES as languages %}
+
+        <button class="button is-transparent-minecraft has-minecraft-gray-color is-modal-trigger" aria-haspopup="true" aria-controls="modal-i18n">
+            <strong>{{ LANGUAGE_CODE | language_name_local | title }}</strong>&nbsp;&nbsp;&middot;&nbsp;&nbsp;{% trans "Change language" %}
+        </button>
+
+        <div class="modal" id="modal-i18n">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+                <div class="chest">
+                    <div class="chest-inner is-dirt">
+                        <h3 class="chest-title">{% trans "Select your language…" %}</h3>
+
+                        {% for language in languages %}
+                            <button type="submit" name="language" value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %}class="is-active"{% endif %}>
+                                {{ language.name_local | title }}
+                            </button>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <button class="modal-close is-large" aria-label="close"></button>
+        </div>
+    </form>
+</aside>

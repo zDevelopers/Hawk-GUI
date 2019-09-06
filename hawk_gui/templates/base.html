@@ -18,6 +18,44 @@
 
     <body>
         {% block body %}{% endblock %}
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                'use strict';
+
+                let modal_triggers = document.querySelectorAll(".is-modal-trigger[aria-controls]");
+                let modal_closers = document.querySelectorAll(".modal-background, .modal-close");
+
+                if (modal_triggers) {
+                    modal_triggers.forEach(function(modal_trigger) {
+                        modal_trigger.addEventListener("click", function (e) {
+                            e.preventDefault();
+
+                            let target = modal_trigger.getAttribute("aria-controls");
+                            let modal = document.getElementById(target);
+
+                            if (modal) {
+                                modal.classList.add("is-active");
+                            } else {
+                                console.warn("Invalid modal target " + target + ".", modal_trigger)
+                            }
+
+                            return false;
+                        });
+                    });
+                }
+
+                if (modal_closers) {
+                    modal_closers.forEach(function(modal_closer) {
+                        modal_closer.addEventListener("click", function(e) {
+                            e.preventDefault();
+                            modal_closer.parentNode.classList.remove("is-active");
+                        })
+                    });
+                }
+            });
+        </script>
+
         {% block javascripts %}{% endblock %}
     </body>
 </html>

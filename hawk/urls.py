@@ -19,5 +19,6 @@ from django.urls import path, include
 # fmt: off
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path('i18n/', include('django.conf.urls.i18n')),
     path("", include("hawk_gui.urls"), name="gui")
 ]

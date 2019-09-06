@@ -1,0 +1,20 @@
+.button.is-transparent-minecraft {
+    background: transparent;
+    border: none;
+
+    font-family: $family-minecraft;
+
+    &:hover, &:active, &:focus, &.is-active {
+        color: currentColor;
+    }
+}
+
+.button .is-dropdown-arrow-up {
+    display: inline-block;
+    margin-left: .6rem;
+
+    position: relative;
+    top: -2px;
+
+    transform: rotate(-90deg);
+}
