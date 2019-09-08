@@ -143,14 +143,14 @@
 
                             {% if not report.settings.summary.teams or not report.teams %}
                                 <ul class="players-list">
-                                    {% for player in report.players %}
+                                    {% for player in report.players|dictsort:"name" %}
                                         <li>
                                             {% player player large=True %}
                                         </li>
                                     {% endfor %}
                                 </ul>
                             {% else %}
-                                {% for team in report.teams %}
+                                {% for team in report.teams|dictsort:"name" %}
                                     <h4 class="team-{{ team.color | color_to_css }} has-text-colored has-outline">{{ team.name }}</h4>
 
                                     <ul class="players-list">
@@ -460,7 +460,7 @@
                 <div class="columns">
                     <div class="column">
                         <div class="chest-inner natural-damages-report">
-                            {% for cause, damage in report.aggregates.environmental_damages|only_creatures %}
+                            {% for cause, damage in report.aggregates.environmental_damages|only_creatures|dictsort:0 %}
                                 <div class="natural-damages-report-line">
                                     <div class="columns">
                                         <div class="column is-4 natural-damages-report-source">
@@ -491,7 +491,7 @@
                     </div>
                     <div class="column">
                         <div class="chest-inner natural-damages-report">
-                            {% for cause, damage in report.aggregates.environmental_damages|only_environment %}
+                            {% for cause, damage in report.aggregates.environmental_damages|only_environment|dictsort:0 %}
                                 <div class="natural-damages-report-line">
                                     <div class="columns">
                                         <div class="column is-4 natural-damages-report-source">
