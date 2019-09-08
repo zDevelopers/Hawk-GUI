@@ -102,23 +102,20 @@
                                 <ul class="minecraft-timeline">
                                     {% for event in report.events %}
                                     <li class="timeline-item is-{{ event.type | slugify }}-event">
-                                        <div class="timeline-item-header">
-                                            <figure aria-hidden="true">
-                                                {% if event.icon.uuid %}
-                                                    <img src="{{ event.icon.uuid | head:32 }}" alt="" class="is-head" />
-                                                {% elif event.icon.icon_id %}
-                                                    <span class="i-{{ event.icon.icon_id }}"></span>
-                                                {% elif event.icon.url %}
-                                                    {# TODO proxy external resources #}
-                                                    <img src="{{ event.icon.url }}" alt="" />
-                                                {% endif %}
-                                            </figure>
-                                            <h4>
-                                                {{ event.title }}
-                                                <time datetime="{{ event.date }}" title="{{ event.date | iso_to_datetime | date:"H:i" }}">{{ event.since_beginning | duration }}</time>
-                                            </h4>
-                                            <div class="is-clearfix"></div>
-                                        </div>
+                                        <figure aria-hidden="true">
+                                            {% if event.icon.uuid %}
+                                                <img src="{{ event.icon.uuid | head:32 }}" alt="" class="is-head" />
+                                            {% elif event.icon.icon_id %}
+                                                <span class="i-{{ event.icon.icon_id }}"></span>
+                                            {% elif event.icon.url %}
+                                                {# TODO proxy external resources #}
+                                                <img src="{{ event.icon.url }}" alt="" />
+                                            {% endif %}
+                                        </figure>
+                                        <h4>
+                                            {{ event.title }}
+                                            <time datetime="{{ event.date }}" title="{{ event.date | iso_to_datetime | date:"H:i" }}">{{ event.since_beginning | duration }}</time>
+                                        </h4>
                                         {% if event.description %}
                                             <div class="timeline-item-details">
                                                 {{ event.description | strip_minecraft }}
