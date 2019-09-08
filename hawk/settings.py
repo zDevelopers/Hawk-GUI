@@ -115,9 +115,7 @@ USE_THOUSAND_SEPARATOR = True
 USE_TZ = True
 
 LANGUAGES = [("en", _("English")), ("fr", _("French"))]
-LOCALE_PATHS = [
-    os.path.join(BASE_DIR, "locale")
-]
+LOCALE_PATHS = [os.path.join(BASE_DIR, "locale")]
 
 
 # Static files (CSS, JavaScript, Images)

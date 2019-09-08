@@ -228,21 +228,19 @@ NAMES = {
 
 ICONS = {
     # Damage causes
-    "PLAYER": "",
     "ZOMBIE": "entity-zombie-small",
     "PIGMAN": "entity-zombie-pigman-small",
     "FIRE": "block-fire-small",
     "LAVA": "block-lava-small",
     "THUNDERBOLT": "entity-lightning-small",
-    "CACTUS": "block-cactus-small",
-    "TNT": "block-tnt-small",
+    "CACTUS": "block-cactus-side-small",
+    "TNT": "block-tnt-side-small",
     "FALL": "block-stone-small",
     "SUFFOCATION": "block-sand-small",
     "DROWNING": "block-water-small",
     "STARVATION": "item-rotten-flesh-small",
-    "COMMAND": "entity-command-block-small",
+    "COMMAND": "block-command-block-back-small",
     # Weapons
-    "FISTS": "",
     "SWORD_WOOD": "item-wood-sword-small",
     "SWORD_STONE": "item-stone-sword-small",
     "SWORD_IRON": "item-iron-sword-small",
@@ -269,13 +267,13 @@ ICONS = {
     "SHOVEL_GOLD": "item-gold-shovel-small",
     "SHOVEL_DIAMOND": "item-diamond-shovel-small",
     "BOW": "item-bow-pulling-small",
-    "MAGIC": "item-potion-bottle-splash-small",
+    "MAGIC": "item-potion-small",
     "THORNS": "item-diamond-chestplate-small",
     # Healing causes
-    "NATURAL": "item-potato-baked-small",
-    "GOLDEN_APPLE": "item-apple-golden-small",
-    "NOTCH_APPLE": "item-apple-golden-small",
-    "HEALING_POTION": "item-potion-bottle-splash-small",
+    "NATURAL": "item-baked-potato-small",
+    "GOLDEN_APPLE": "item-golden-apple-small",
+    "NOTCH_APPLE": "item-golden-apple-small",
+    "HEALING_POTION": "item-potion-small",
     # Others
     "UNKNOWN": "entity-unknown-small",
 }
