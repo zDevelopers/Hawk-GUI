@@ -1,23 +1,20 @@
 import json
-
 from pathlib import Path
 
 import requests
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
-from ipware import get_client_ip
-
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.db.models import F
 from django.http import FileResponse, Http404, JsonResponse, HttpRequest
 from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.utils.functional import cached_property
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View, DetailView
 from django.views.generic.detail import SingleObjectMixin
+from ipware import get_client_ip
 
 from hawk_processing import process_report
-
 from . import __version__ as hawk_version
 from .models import Report
 
@@ -43,6 +40,9 @@ class ReportView(DetailView):
             context["default_tab"] = "damages"
         else:
             context["default_tab"] = "players"
+
+        # temp
+        context["default_tab"] = "players"
 
         return context
 
@@ -82,11 +82,15 @@ class PublicationView(View):
 
             report = Report(
                 uuid=processed_report["match_uuid"],
+                title=processed_report["title"],
                 published_by=ip,
                 minecraft_version=processed_report.get("minecraft_version"),
                 generator_name=processed_report.get("generator_name"),
                 generator_link=processed_report.get("generator_link"),
             )
+
+            # Generates the slug, required to store the report files
+            report.save()
 
             report.raw_report.save("raw_report", ContentFile(raw_report), save=False)
             report.processed_report.save(

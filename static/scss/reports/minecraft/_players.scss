@@ -91,3 +91,11 @@ ul.players-list {
     width: 50%;
   }
 }
+
+.player-head {
+  @each $color-name, $color-hex in zip(map_keys($minecraft-colors-foreground), map_values($minecraft-colors-foreground)) {
+    &.is-#{$color-name} img {
+      border: solid 6px $color-hex;
+    }
+  }
+}

@@ -12,7 +12,7 @@ pub struct Team {
     pub name: String,
     pub color: TeamColor,
 
-    pub players: Vec<SimplePlayer>
+    pub players: Vec<SimplePlayer>,
 }
 
 impl Team {
@@ -23,7 +23,9 @@ impl Team {
             for player in &raw_team.players {
                 match players.get(&player) {
                     Some(player) => team_players.push(player.as_ref().into()),
-                    None => return Err(InvalidReportError::MissingPlayerReference { uuid: *player })
+                    None => {
+                        return Err(InvalidReportError::MissingPlayerReference { uuid: *player })
+                    }
                 }
             }
 
@@ -33,11 +35,14 @@ impl Team {
         Ok(Team {
             name: raw_team.name.clone(),
             color: raw_team.color.clone(),
-            players: team_players
+            players: team_players,
         })
     }
 
-    pub fn from_raw_vec(raw_teams: &Vec<RawTeam>, players: &HashMap<Uuid, Rc<Player>>) -> ReportResult<Vec<Self>> {
+    pub fn from_raw_vec(
+        raw_teams: &Vec<RawTeam>,
+        players: &HashMap<Uuid, Rc<Player>>,
+    ) -> ReportResult<Vec<Self>> {
         let mut teams = Vec::new();
 
         for team in raw_teams {
@@ -68,5 +73,5 @@ pub enum TeamColor {
     White,
     Yellow,
 
-    None
+    None,
 }

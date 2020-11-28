@@ -6,7 +6,10 @@ use uuid::Uuid;
 use crate::report::raw::Event as RawEvent;
 use crate::report::report::since;
 
-#[inline(always)] pub fn default_event_type() -> EventType { EventType::Blue }
+#[inline(always)]
+pub fn default_event_type() -> EventType {
+    EventType::Blue
+}
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Event {
@@ -30,12 +33,15 @@ impl Event {
             event_type: raw_event.event_type.clone(),
             title: raw_event.title.clone(),
             description: raw_event.description.clone(),
-            icon: raw_event.icon.clone()
+            icon: raw_event.icon.clone(),
         }
     }
 
     pub fn from_raw_vec(raw_events: &Vec<RawEvent>, begin: &DateTime<FixedOffset>) -> Vec<Self> {
-        let mut events: Vec<Self> = raw_events.into_iter().map(|raw_event| Self::from_raw(raw_event, begin)).collect();
+        let mut events: Vec<Self> = raw_events
+            .into_iter()
+            .map(|raw_event| Self::from_raw(raw_event, begin))
+            .collect();
 
         events.sort_by(|a, b| a.date.cmp(&b.date));
 
@@ -49,7 +55,7 @@ pub enum EventType {
     Blue,
     Gold,
     Green,
-    Red
+    Red,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -57,5 +63,5 @@ pub enum EventType {
 pub enum EventIcon {
     Player { uuid: Uuid },
     Icon { icon_id: String },
-    Url { url: String }
+    Url { url: String },
 }

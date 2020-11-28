@@ -1,13 +1,13 @@
 import json
-
 from datetime import datetime
-from glob import glob
 from pathlib import Path
 from uuid import UUID
 
 from django.conf import settings
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
+from glob import glob
 
+from hawk_processing import strip_minecraft_color_codes
 from ...models import Report
 
 
@@ -29,7 +29,7 @@ class Command(BaseCommand):
                 continue
 
             # Filenames relative to MEDIA_ROOT (used for db storage)
-            relative_raw_report_filename = str(report_dir / "raw_report.json").replace(
+            relative_raw_report_filename = str(report_dir / "raw-report.json").replace(
                 settings.MEDIA_ROOT + "/", ""
             )
             relative_report_filename = str(report_filename).replace(
@@ -40,6 +40,7 @@ class Command(BaseCommand):
                 report = json.load(report_file)
 
                 report_uuid = UUID(report["match_uuid"])
+                report_title = strip_minecraft_color_codes(report["title"])
                 report_minecraft = (
                     report["minecraft"] if "minecraft" in report else None
                 )
@@ -69,6 +70,7 @@ class Command(BaseCommand):
                     db_report: Report = Report.objects.get(slug=report_slug)
 
                     db_report.uuid = report_uuid
+                    db_report.title = report_title
                     db_report.minecraft_version = report_minecraft
 
                     db_report.generator_name = report_generator
@@ -87,9 +89,7 @@ class Command(BaseCommand):
                     db_report = Report(
                         slug=report_slug,
                         uuid=report_uuid,
-                        published_at=datetime.fromisoformat(
-                            report["date"]
-                        ),  # better than nothing
+                        title=report_title,
                         published_by=None,  # no info available
                         minecraft_version=report_minecraft,
                         generator_name=report_generator,
@@ -99,6 +99,11 @@ class Command(BaseCommand):
                     db_report.raw_report.name = relative_raw_report_filename
                     db_report.processed_report.name = relative_report_filename
 
+                    db_report.save()
+
+                    # Better than nothing. We update it after because else `auto_now_add`
+                    # overwrites the value.
+                    db_report.published_at = datetime.fromisoformat(report["date"])
                     db_report.save()
 
                     self.stdout.write(

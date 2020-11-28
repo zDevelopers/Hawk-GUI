@@ -1,0 +1,228 @@
+@import "variables";
+
+// Less margin above as the players tabs does not take a solid area so the padding feels way too big
+#players {
+    padding-top: 1.5rem;
+}
+
+nav.players-statistics-navigation {
+    &:first-child { // Specificity
+        margin-bottom: .2rem;
+    }
+
+    position: relative;
+    top: .6rem;
+
+    z-index: 21;
+
+    padding-left: 1rem;
+    border-bottom: none;
+
+    ul {
+        align-items: baseline;
+        border-bottom: none;
+
+        li {
+            margin-right: .6rem;
+
+            a {
+                padding: .5em .8rem;
+
+                background: $minecraft-gray-inactive;
+
+                border-top: $minecraft-border-top-left 7px solid;
+                border-left: $minecraft-border-top-left 7px solid;
+                border-right: $minecraft-border-bottom-right 7px solid;
+
+                border-radius: 4px 4px 0 0;
+
+                font-size: 1.16em;
+                color: lighten($minecraft-text, 1%);
+                text-shadow: 1px 1px 0 rgba(170, 170, 170, .2);
+
+                img {
+                    width: 48px;
+                    height: 48px;
+                }
+            }
+
+            &:not(.is-active) {
+                a {
+                    box-shadow: 0 4px 0 black;  // Allows a black bottom border without 45deg angles
+                    border-bottom: 1px;
+
+                    &:hover {
+                        background: lighten($minecraft-gray-inactive, 6%);
+                        border-right-color: lighten($minecraft-border-bottom-right, 6%);
+                    }
+                }
+            }
+
+            &.is-active {
+                a {
+                    padding-bottom: 1.3rem;
+
+                    background: $minecraft-gray-active;
+                    color: $minecraft-text;
+                }
+            }
+        }
+    }
+}
+
+article.players-statistics-container {
+    header {
+        display: flex;
+        flex-direction: row;
+        align-items: start;
+
+        margin-bottom: 3rem;
+        margin-right: .4rem;
+
+        figure.player-head img {
+            border-radius: 4px;
+        }
+
+        div.player-name-and-recap {
+            flex: 2;
+
+            margin-left: 1rem;
+
+            h2 {
+                font-size: 2em;
+            }
+
+            p {
+                &.team-name {
+                    margin-bottom: .8rem;
+                    font-size: 1.2em;
+                }
+            }
+        }
+
+        div.player-tag {
+            max-width: 28rem;
+            text-align: right;
+
+            p.tag-line {
+                font-size: 1.4em;
+                font-variant: all-small-caps;
+
+                letter-spacing: .05em;
+            }
+
+            p.tag-line-secondary {
+                color: lighten($minecraft-text, 10%);
+
+                & + p.tag-line-details {
+                    margin-top: .8rem;
+                }
+            }
+
+            p.tag-line-details {
+                padding-right: .2em;
+
+                color: lighten($minecraft-text, 20%);
+
+                font-size: .9em;
+                font-style: italic;
+            }
+        }
+    }
+
+    .players-statistics {
+        margin-bottom: 2rem;
+
+        border-radius: 4px;
+
+        .players-statistics-list {
+            &:first-child:not(:only-child) {
+                margin-bottom: 0;
+            }
+
+            > .player-statistic {
+                display: flex;
+                flex-direction: row;
+
+                > figure {
+                    width: 64px;
+                    height: 64px;
+
+                    padding: 16px;
+
+                    background: darken($minecraft-gray-active, 4%);
+                    border-radius: 8px;
+                }
+
+                > div {
+                    width: 80%;
+                    margin-left: .6rem;
+
+                    h3 {
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                    }
+
+                    p {
+                        padding-left: 0.1em;
+                        font-size: 1.4em;
+
+                        // Icons are off the line
+                        span.i-gui-heart-full-22 {
+                            position: relative;
+                            top: -13px;
+                        }
+                    }
+                }
+            }
+        }
+
+        a.toggle-hidden-statistics {
+            position: relative;
+
+            display: block;
+            margin: .6rem .4rem 0;
+
+            padding-left: 1.4rem;
+
+            color: $minecraft-text;
+
+            &.is-toggled {
+                margin-bottom: 1.4rem;
+            }
+
+            &:before {
+                content: " ";
+
+                position: absolute;
+                top: 2px;
+                left: 0;
+
+                display: block;
+
+                width: .8rem;
+                height: .8rem;
+
+                border-right: solid 2px $minecraft-text;
+                border-bottom: solid 2px $minecraft-text;
+
+                transform: rotate(45deg);
+
+                transition: transform .2s ease-in-out, top .2s ease-in-out;
+            }
+
+            &.is-toggled:before {
+                transform: rotate(225deg);
+                top: 9px;
+            }
+        }
+    }
+
+    .no-player-statistics {
+        margin: 6rem 1rem;
+
+        text-align: center;
+        color: lighten($minecraft-text, 10%);
+    }
+}

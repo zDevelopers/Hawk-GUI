@@ -16,24 +16,34 @@ pub struct Heal {
     pub since_beginning: Duration,
     pub cause: HealCause,
     pub healed: SimplePlayer,
-    pub heal: u16
+    pub heal: u16,
 }
 
 impl Heal {
-    pub fn from_raw(raw_heal: &RawHeal, players: &HashMap<Uuid, Rc<Player>>, begin: &DateTime<FixedOffset>) -> ReportResult<Self> {
+    pub fn from_raw(
+        raw_heal: &RawHeal,
+        players: &HashMap<Uuid, Rc<Player>>,
+        begin: &DateTime<FixedOffset>,
+    ) -> ReportResult<Self> {
         match players.get(&raw_heal.healed) {
             Some(healed) => Ok(Heal {
                 date: raw_heal.date.clone(),
                 since_beginning: since(&raw_heal.date.clone(), begin),
                 cause: raw_heal.cause.clone(),
                 healed: healed.as_ref().into(),
-                heal: raw_heal.heal
+                heal: raw_heal.heal,
             }),
-            None => Err(InvalidReportError::MissingPlayerReference { uuid: raw_heal.healed })
+            None => Err(InvalidReportError::MissingPlayerReference {
+                uuid: raw_heal.healed,
+            }),
         }
     }
 
-    pub fn from_raw_vec(raw_heals: &Vec<RawHeal>, players: &HashMap<Uuid, Rc<Player>>, begin: &DateTime<FixedOffset>) -> ReportResult<Vec<Self>> {
+    pub fn from_raw_vec(
+        raw_heals: &Vec<RawHeal>,
+        players: &HashMap<Uuid, Rc<Player>>,
+        begin: &DateTime<FixedOffset>,
+    ) -> ReportResult<Vec<Self>> {
         let mut heals = Vec::new();
 
         for heal in raw_heals {
@@ -54,5 +64,5 @@ pub enum HealCause {
     NotchApple,
     HealingPotion,
     Command,
-    Unknown
+    Unknown,
 }

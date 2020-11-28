@@ -1,24 +1,28 @@
 extern crate chrono;
-#[macro_use] extern crate failure;
-#[macro_use] extern crate lazy_static;
+#[macro_use]
+extern crate failure;
+#[macro_use]
+extern crate lazy_static;
 extern crate regex;
 extern crate roman;
 extern crate serde;
-#[macro_use] extern crate serde_derive;
+#[macro_use]
+extern crate serde_derive;
 extern crate serde_json;
 extern crate strum;
-#[macro_use] extern crate strum_macros;
+#[macro_use]
+extern crate strum_macros;
 
 use std::collections::HashMap;
 
-use pyo3::prelude::*;
 use pyo3::exceptions::{RuntimeError, ValueError};
+use pyo3::prelude::*;
 use pyo3::wrap_pyfunction;
 
 use minecraft::{parse_color_codes, strip_color_codes};
 
-pub mod report;
 pub mod minecraft;
+pub mod report;
 
 /// process_report(raw_json_report, /)
 /// --
@@ -44,10 +48,16 @@ fn process_report(raw_json_report: String) -> PyResult<HashMap<String, String>> 
                     let mut report_return = HashMap::new();
 
                     report_return.insert("processed_report".to_string(), json_report);
-                    report_return.insert("match_uuid".to_string(), report.match_uuid.to_hyphenated().to_string());
+                    report_return.insert(
+                        "match_uuid".to_string(),
+                        report.match_uuid.to_hyphenated().to_string(),
+                    );
+                    report_return.insert("title".to_string(), strip_color_codes(report.title));
 
                     match report.minecraft {
-                        Some(minecraft) => { report_return.insert("minecraft_version".to_string(), minecraft); },
+                        Some(minecraft) => {
+                            report_return.insert("minecraft_version".to_string(), minecraft);
+                        }
                         None => {}
                     };
 
@@ -56,20 +66,25 @@ fn process_report(raw_json_report: String) -> PyResult<HashMap<String, String>> 
                             report_return.insert("generator_name".to_string(), generator.name);
 
                             match generator.link {
-                                Some(link) => { report_return.insert("generator_link".to_string(), link); },
-                                None => {},
+                                Some(link) => {
+                                    report_return.insert("generator_link".to_string(), link);
+                                }
+                                None => {}
                             }
-                        },
-                        None => {},
-                    }
+                        }
+                        None => {}
+                    };
 
                     Ok(report_return)
-                },
-                Err(error) => Err(RuntimeError::py_err(format!("Unable to convert report to JSON string: {}", error)))
-            }
-            Err(error) => Err(ValueError::py_err(format!("Invalid report: {}", error)))
+                }
+                Err(error) => Err(RuntimeError::py_err(format!(
+                    "Unable to convert report to JSON string: {}",
+                    error
+                ))),
+            },
+            Err(error) => Err(ValueError::py_err(format!("Invalid report: {}", error))),
         },
-        Err(error) => Err(ValueError::py_err(format!("Invalid JSON: {}", error)))
+        Err(error) => Err(ValueError::py_err(format!("Invalid JSON: {}", error))),
     }
 }
 
@@ -111,7 +126,7 @@ fn strip_minecraft_color_codes(raw_string: String) -> PyResult<String> {
 fn to_roman(number: i32) -> PyResult<String> {
     Ok(match roman::to(number) {
         Some(roman_number) => roman_number,
-        None => format!("{}", number)
+        None => format!("{}", number),
     })
 }
 

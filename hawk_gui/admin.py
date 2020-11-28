@@ -71,6 +71,7 @@ class ReportAdmin(admin.ModelAdmin):
     list_display = (
         "get_slug_for_admin",
         "get_uuid_for_admin",
+        "get_title_for_admin",
         "published_at",
         "get_minecraft_version_full",
         "get_generator_with_html_link",
@@ -82,6 +83,7 @@ class ReportAdmin(admin.ModelAdmin):
     fields = (
         "slug",
         "uuid",
+        "title",
         "raw_report",
         "processed_report",
         "published_at",
@@ -93,6 +95,7 @@ class ReportAdmin(admin.ModelAdmin):
     )
     readonly_fields = (
         "uuid",
+        "title",
         "published_at",
         "published_by",
         "minecraft_version",

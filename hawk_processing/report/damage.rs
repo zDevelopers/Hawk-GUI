@@ -21,11 +21,15 @@ pub struct Damage {
     pub damager: Option<SimplePlayer>,
     pub damagee: SimplePlayer,
     pub damage: u16,
-    pub lethal: bool
+    pub lethal: bool,
 }
 
 impl Damage {
-    pub fn from_raw(raw_damage: &RawDamage, players: &HashMap<Uuid, Rc<Player>>, begin: &DateTime<FixedOffset>) -> ReportResult<Self> {
+    pub fn from_raw(
+        raw_damage: &RawDamage,
+        players: &HashMap<Uuid, Rc<Player>>,
+        begin: &DateTime<FixedOffset>,
+    ) -> ReportResult<Self> {
         match players.get(&raw_damage.damagee) {
             Some(damagee) => Ok(Self {
                 date: raw_damage.date.clone(),
@@ -35,24 +39,32 @@ impl Damage {
                 weapon_name: raw_damage.weapon_name.clone(),
                 weapon_enchantments: match &raw_damage.weapon_enchantments {
                     Some(enchantments) => enchantments.clone(),
-                    None => HashMap::new()
+                    None => HashMap::new(),
                 },
                 damager: match raw_damage.damager {
                     Some(damager) => match players.get(&damager) {
                         Some(damager) => Some((*damager).as_ref().into()),
-                        None => Err(InvalidReportError::MissingPlayerReference { uuid: raw_damage.damagee })?
+                        None => Err(InvalidReportError::MissingPlayerReference {
+                            uuid: raw_damage.damagee,
+                        })?,
                     },
-                    None => None
+                    None => None,
                 },
                 damagee: (*damagee).as_ref().into(),
                 damage: raw_damage.damage,
-                lethal: raw_damage.lethal
+                lethal: raw_damage.lethal,
             }),
-            None => Err(InvalidReportError::MissingPlayerReference { uuid: raw_damage.damagee })
+            None => Err(InvalidReportError::MissingPlayerReference {
+                uuid: raw_damage.damagee,
+            }),
         }
     }
 
-    pub fn from_raw_vec(raw_damages: &Vec<RawDamage>, players: &HashMap<Uuid, Rc<Player>>, begin: &DateTime<FixedOffset>) -> ReportResult<Vec<Self>> {
+    pub fn from_raw_vec(
+        raw_damages: &Vec<RawDamage>,
+        players: &HashMap<Uuid, Rc<Player>>,
+        begin: &DateTime<FixedOffset>,
+    ) -> ReportResult<Vec<Self>> {
         let mut damages = Vec::new();
 
         for damage in raw_damages {
@@ -101,7 +113,7 @@ pub enum DamageCause {
     Starvation,
 
     Command,
-    Unknown
+    Unknown,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -126,7 +138,7 @@ pub enum Weapon {
     Magic,
     Thorns,
 
-    Unknown
+    Unknown,
 }
 
 impl DamageCause {

@@ -45,7 +45,7 @@ pub struct SettingsDamages {
     pub damages_per_players: bool,
 
     #[serde(default = "default_true")]
-    pub damages_per_team: bool,  // TODO unimplemented
+    pub damages_per_team: bool, // TODO unimplemented
 
     #[serde(default = "default_true")]
     pub damages_from_environment: bool,
@@ -102,12 +102,17 @@ pub struct SettingsPlayers {
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct SettingsGenerator {
     pub name: String,
-    pub link: Option<String>
+    pub link: Option<String>,
 }
 
-
-#[inline(always)] fn default_true() -> bool { true }
-#[inline(always)] fn default_false() -> bool { false }
+#[inline(always)]
+fn default_true() -> bool {
+    true
+}
+#[inline(always)]
+fn default_false() -> bool {
+    false
+}
 
 #[inline(always)]
 pub fn default_settings() -> Settings {
@@ -118,7 +123,7 @@ pub fn default_settings() -> Settings {
         summary: default_summary_settings(),
         damages: default_damages_settings(),
         players: default_players_settings(),
-        generator: None
+        generator: None,
     }
 }
 
@@ -128,7 +133,7 @@ fn default_summary_settings() -> SettingsSummary {
         enabled: true,
         history: true,
         players: true,
-        teams: true
+        teams: true,
     }
 }
 
@@ -139,7 +144,7 @@ fn default_damages_settings() -> SettingsDamages {
         damages_per_players: true,
         damages_per_team: true,
         damages_from_environment: true,
-        display_killer: true
+        display_killer: true,
     }
 }
 
@@ -159,6 +164,6 @@ fn default_players_settings() -> SettingsPlayers {
         mined_highlight: vec![],
         picked_up: true,
         picked_up_whitelist: vec![],
-        picked_up_highlight: vec![]
+        picked_up_highlight: vec![],
     }
 }

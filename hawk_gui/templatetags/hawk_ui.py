@@ -1,24 +1,23 @@
-import math
 from datetime import datetime, timedelta
 
+import math
 from django import template
-from django.utils.safestring import mark_safe
 from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _, ngettext_lazy
-
 
 register = template.Library()
 
 
 @register.filter
-def duration(duration):
+def duration(duration, long=False):
     """
     Displays a duration.
 
     :param duration: The duration. Either a timedelta, a
                      dict {"secs": xx, "nanos": xx} or an
                      int (number of seconds).
-    :return: The formatted duration (dd) hh:mm:ss.
+    :param long: True to display the duration in long format
+    :return: The formatted duration (dd) hh:mm:ss or “(dd days), hh hours mm minutes and ss seconds”.
     """
     total_seconds = None
     if isinstance(duration, timedelta):
@@ -39,25 +38,48 @@ def duration(duration):
     minutes = (total_seconds - (days * 86400) - (hours * 3600)) // 60
     seconds = total_seconds - (days * 86400) - (hours * 3600) - (minutes * 60)
 
-    if days != 0:
-        return format_lazy(
-            _("{days:d}d {hours:02d}:{minutes:02d}:{seconds:02d}"),
-            days=days,
-            hours=hours,
-            minutes=minutes,
-            seconds=seconds,
-        )
-    elif hours != 0:
-        return format_lazy(
-            _("{hours:02d}:{minutes:02d}:{seconds:02d}"),
-            hours=hours,
-            minutes=minutes,
-            seconds=seconds,
-        )
+    if long:
+        if days != 0:
+            return format_lazy(
+                _("{days:d} days, {hours:d} hours and {minutes:d} minutes"),
+                days=days,
+                hours=hours,
+                minutes=minutes,
+            )
+        elif hours != 0:
+            return format_lazy(
+                _("{hours:d} hours and {minutes:d} minutes"),
+                hours=hours,
+                minutes=minutes,
+            )
+        elif minutes != 0:
+            return format_lazy(
+                _("{minutes:d} minutes and {seconds:d} seconds"),
+                minutes=minutes,
+                seconds=seconds,
+            )
+        else:
+            return format_lazy(_("{seconds:d} seconds"), seconds=seconds)
     else:
-        return format_lazy(
-            _("{minutes:02d}:{seconds:02d}"), minutes=minutes, seconds=seconds
-        )
+        if days != 0:
+            return format_lazy(
+                _("{days:d}d {hours:02d}:{minutes:02d}:{seconds:02d}"),
+                days=days,
+                hours=hours,
+                minutes=minutes,
+                seconds=seconds,
+            )
+        elif hours != 0:
+            return format_lazy(
+                _("{hours:02d}:{minutes:02d}:{seconds:02d}"),
+                hours=hours,
+                minutes=minutes,
+                seconds=seconds,
+            )
+        else:
+            return format_lazy(
+                _("{minutes:02d}:{seconds:02d}"), minutes=minutes, seconds=seconds
+            )
 
 
 @register.filter

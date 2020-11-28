@@ -1,7 +1,6 @@
 import random
-import string
 
-from django.conf import settings
+import string
 from django.db import models
 from django.urls import reverse_lazy
 from django.utils.html import format_html
@@ -22,7 +21,7 @@ def _report_location(instance, filename, report_filename):
 
 
 def raw_report_location(instance, filename):
-    return _report_location(instance, filename, "raw_report")
+    return _report_location(instance, filename, "raw-report")
 
 
 def processed_report_location(instance, filename):
@@ -53,6 +52,11 @@ class Report(models.Model):
     The report's UUID, used for updates.
     """
     uuid = models.UUIDField(_("UUID"), editable=False)
+
+    """
+    The report's title.
+    """
+    title = models.CharField(_("Title"), max_length=256, editable=False)
 
     """
     The report's creation date, i.e. when it was first published.
@@ -173,9 +177,12 @@ class Report(models.Model):
     def get_slug_for_admin(self):
         return format_html('<code style="color: #447e9b">{}</code>', self.slug)
 
-    get_slug_for_admin.short_description = _("Slug")
-
     def get_uuid_for_admin(self):
         return format_html("<code>{}</code>", self.uuid)
 
+    def get_title_for_admin(self):
+        return format_html('<a href="{}">{}</a>', self.get_absolute_url(), self.title)
+
+    get_slug_for_admin.short_description = _("Slug")
     get_uuid_for_admin.short_description = _("UUID")
+    get_title_for_admin.short_description = _("Title")

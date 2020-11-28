@@ -45,11 +45,20 @@ impl Report {
             players_colors
         };
 
-        let players: HashMap<Uuid, Rc<player::Player>> = (&raw_report.players).into_iter()
-            .map(|player| (
-                player.uuid,
-                Rc::new(player::Player::from_raw(player, &raw_report.teams, &players_colors, &raw::default_team_color(), &raw_report.settings.players))
-            ))
+        let players: HashMap<Uuid, Rc<player::Player>> = (&raw_report.players)
+            .into_iter()
+            .map(|player| {
+                (
+                    player.uuid,
+                    Rc::new(player::Player::from_raw(
+                        player,
+                        &raw_report.teams,
+                        &players_colors,
+                        &raw::default_team_color(),
+                        &raw_report.settings.players,
+                    )),
+                )
+            })
             .collect();
 
         let begin = &raw_report.date;
@@ -66,14 +75,18 @@ impl Report {
                     for player in &winners {
                         match players.get(&player) {
                             Some(player) => team_players.push(player.as_ref().into()),
-                            None => return Err(errors::InvalidReportError::MissingPlayerReference { uuid: *player })
+                            None => {
+                                return Err(errors::InvalidReportError::MissingPlayerReference {
+                                    uuid: *player,
+                                })
+                            }
                         }
                     }
 
                     team_players
                 }
             },
-            None => Self::extract_winners(&players, &damages)
+            None => Self::extract_winners(&players, &damages),
         };
 
         Ok(Report {
@@ -82,21 +95,34 @@ impl Report {
             date: raw_report.date.clone(),
             minecraft: raw_report.minecraft.clone(),
             settings: raw_report.settings.clone(),
-            players: players.iter().map(|(_, player)| (*player.as_ref()).clone()).collect(),
+            players: players
+                .iter()
+                .map(|(_, player)| (*player.as_ref()).clone())
+                .collect(),
             teams: team::Team::from_raw_vec(&raw_report.teams, &players)?,
             events: event::Event::from_raw_vec(&raw_report.events, &begin),
-            aggregates: aggregates::Aggregate::from_raw(&players, &damages, &heals),
+            aggregates: aggregates::Aggregate::from_raw(&players, &damages, &heals, &begin),
             winners,
             damages,
             heals,
-            has_players_without_team: players.iter().any(|(_uuid, player)| player.as_ref().team.is_none())
+            has_players_without_team: players
+                .iter()
+                .any(|(_uuid, player)| player.as_ref().team.is_none()),
         })
     }
 
-    fn extract_winners(players: &HashMap<Uuid, Rc<player::Player>>, damages: &Vec<damage::Damage>) -> Vec<player::SimplePlayer> {
-        let deads: Vec<Uuid> = damages.iter().filter(|damage| damage.lethal).map(|damage| damage.damagee.uuid).collect();
+    fn extract_winners(
+        players: &HashMap<Uuid, Rc<player::Player>>,
+        damages: &Vec<damage::Damage>,
+    ) -> Vec<player::SimplePlayer> {
+        let deads: Vec<Uuid> = damages
+            .iter()
+            .filter(|damage| damage.lethal)
+            .map(|damage| damage.damagee.uuid)
+            .collect();
 
-        players.iter()
+        players
+            .iter()
             .map(|(_uuid, player)| player)
             .filter(|player| !deads.contains(&player.as_ref().uuid))
             .map(|player| player.as_ref().into())
@@ -104,8 +130,8 @@ impl Report {
     }
 }
 
-
-
 pub fn since(now: &DateTime<FixedOffset>, before: &DateTime<FixedOffset>) -> Duration {
-    (now.clone() - before.clone()).to_std().unwrap_or(Duration::new(0, 0))
+    (now.clone() - before.clone())
+        .to_std()
+        .unwrap_or(Duration::new(0, 0))
 }

@@ -3,21 +3,22 @@
 from django.db import migrations, models
 
 
-# fmt: off
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('hawk_gui', '0004_non_editable_report_fields'),
-    ]
+    dependencies = [("hawk_gui", "0004_non_editable_report_fields")]
 
     operations = [
         migrations.AlterModelOptions(
-            name='report',
-            options={'ordering': ['-published_at'], 'verbose_name': 'report', 'verbose_name_plural': 'reports'},
+            name="report",
+            options={
+                "ordering": ["-published_at"],
+                "verbose_name": "report",
+                "verbose_name_plural": "reports",
+            },
         ),
         migrations.AlterField(
-            model_name='report',
-            name='slug',
-            field=models.SlugField(max_length=8, verbose_name='Slug'),
+            model_name="report",
+            name="slug",
+            field=models.SlugField(max_length=8, verbose_name="Slug"),
         ),
     ]

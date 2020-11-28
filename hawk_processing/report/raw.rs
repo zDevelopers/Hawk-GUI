@@ -5,9 +5,14 @@ use uuid::Uuid;
 
 use crate::report::*;
 
-#[inline(always)] fn default_false() -> bool { false }
-#[inline(always)] pub fn default_team_color() -> team::TeamColor { team::TeamColor::None }
-
+#[inline(always)]
+fn default_false() -> bool {
+    false
+}
+#[inline(always)]
+pub fn default_team_color() -> team::TeamColor {
+    team::TeamColor::None
+}
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Player {
@@ -18,7 +23,7 @@ pub struct Player {
     pub tag_line_secondary: Option<String>,
     pub tag_line_details: Option<String>,
 
-    pub statistics: Option<player::PlayerStatistics>
+    pub statistics: Option<player::PlayerStatistics>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]

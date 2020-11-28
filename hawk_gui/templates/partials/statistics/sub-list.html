@@ -1,0 +1,43 @@
+{% load i18n %}
+{% load minecraft hawk_ui %}
+
+<div class="columns is-multiline players-statistics-list {{ statistics_container_classes }}">
+    {% for stat in displayed_statistics %}
+        <div class="column is-3 player-statistic">
+            <figure aria-hidden="true">
+                <span class="i-{{ stat.id | icon }} is-rounded"></span>
+            </figure>
+            <div>
+                <h3 aria-describedby="hawk-tooltip-statistic-{{ player.uuid }}-{{ stat.id|slugify }}">{{ stat.id | name }}</h3>
+                <p>
+                    {% if stat.type == "distance" %}
+                        {% if stat.unit == "m" %}{{ stat.distance | floatformat:0 }}{% else %}{{ stat.distance | floatformat }}{% endif %} {{ stat.unit }}
+                    {% elif stat.type == "duration" %}
+                        <span title="{{ stat.duration | duration:True }}">{{ stat.duration | duration }}</span>
+                    {% elif stat.type == "hearts" %}
+                        {{ stat.hearts | floatformat }} <span class="i-gui-heart-full-22" aria-label="{% trans "Hearts" %}"></span>
+                    {% elif stat.type == "times" %}
+                        {% blocktrans count count=stat.raw with times=stat.raw|floatformat:0 %}
+                            {{ times }} time
+                        {% plural %}
+                            {{ times }} times
+                        {% endblocktrans %}
+                    {% else %}
+                        {{ stat.raw | floatformat }}
+                    {% endif %}
+                </p>
+            </div>
+            <div class="hawk-tooltip" id="hawk-tooltip-statistic-{{ player.uuid }}-{{ stat.id|slugify }}">
+                <span class="has-minecraft-white-color">{{ stat.id | name }}</span><br />
+
+                {% with stat_description=stat.id|description %}
+                    {% if stat_description %}
+                        <span class="has-minecraft-gray-color">{{ stat_description }}</span><br /><br />
+                    {% endif %}
+                {% endwith %}
+
+                <span class="has-minecraft-dark-gray-color">{{ stat.id }}</span>
+            </div>
+        </div>
+    {% endfor %}
+</div>

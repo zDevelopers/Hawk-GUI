@@ -9,6 +9,12 @@
     {% endblocktrans %}
 {% endblock %}
 
+{% block javascripts %}
+    <script src="{% static "js/report-navigation.js" %}"></script>
+    <script src="{% static "js/accessibility.js" %}"></script>
+    <script src="{% static "js/tooltips.js" %}"></script>
+{% endblock %}
+
 {% block body %}
     <header class="hero">
         <div class="hero-body">
@@ -20,10 +26,10 @@
                         </h1>
                         <h2 class="subtitle">
                             {% if report.settings.players_count %}
-                                {% blocktrans count count=report.players|length %}
-                                    {{ count }} player
+                                {% blocktrans count count=report.players|length with written_number=report.players|length|apnumber|title %}
+                                    {{ written_number }} player
                                 {% plural %}
-                                    {{ count }} players
+                                    {{ written_number }} players
                                 {% endblocktrans %}
                             {% endif %}
 
@@ -67,19 +73,19 @@
                     <ul>
                         {% if report.settings.summary.enabled %}
                             <li {% if default_tab == 'summary' %}class="is-active"{% endif %}>
-                                <a class="js-tab-link" href="#summary">{% trans "Game Summary" %}</a>
+                                <a class="js-tab-link" href="#summary" data-target="summary">{% trans "Game Summary" %}</a>
                             </li>
                         {% endif %}
 
                         {% if report.settings.damages.enabled %}
                             <li {% if default_tab == 'damages' %}class="is-active"{% endif %}>
-                                <a class="js-tab-link" href="#damages">{% trans "Damages and Regenerations" %}</a>
+                                <a class="js-tab-link" href="#damages" data-target="damages">{% trans "Damages and Regenerations" %}</a>
                             </li>
                         {% endif %}
 
                         {% if report.settings.players.enabled %}
                             <li {% if default_tab == 'players' %}class="is-active"{% endif %}>
-                                <a class="js-tab-link" href="#players">{% trans "Players and Statistics" %}</a>
+                                <a class="js-tab-link" href="#players" data-target="players">{% trans "Players and Statistics" %}</a>
                             </li>
                         {% endif %}
                     </ul>
@@ -268,14 +274,14 @@
                                                 {% endcaptureas %}
 
                                                 <li title="{{ damage_description }}" data-replace-title>
-                                                    <span class="weapon {% if damage.weapon != 'UNKNOWN' and damage.weapon != 'FISTS' %}i-{{ damage.weapon | icon }}{% endif %}" aria-describedby="hawk-tooltip-weapon-damages-received-{{ player.uuid }}-{{ forloop.counter0 }}"></span>
+                                                    <span class="weapon {% if damage.weapon != 'UNKNOWN' and damage.weapon != 'FISTS' %}i-{{ damage.weapon | icon:"small" }}{% endif %}" aria-describedby="hawk-tooltip-weapon-damages-received-{{ player.uuid }}-{{ forloop.counter0 }}"></span>
 
                                                     {% if damage.cause == 'PLAYER' and damage.damager %}
                                                         <span class="source" aria-describedby="hawk-tooltip-source-damages-received-{{ player.uuid }}-{{ forloop.counter0 }}">
                                                             <img src="{{ damage.damager | head:20 }}" alt="{{ damage.damager.name }}" />
                                                         </span>
                                                     {% else %}
-                                                        <span class="source i-{{ damage.cause | icon }}" aria-describedby="hawk-tooltip-source-damages-received-{{ player.uuid }}-{{ forloop.counter0 }}"></span>
+                                                        <span class="source i-{{ damage.cause | icon:"small" }}" aria-describedby="hawk-tooltip-source-damages-received-{{ player.uuid }}-{{ forloop.counter0 }}"></span>
                                                     {% endif %}
 
                                                     {% hearts damage %}
@@ -341,7 +347,7 @@
                                                 {% endcaptureas %}
 
                                                 <li title="{{ damage_description }}" data-replace-title>
-                                                    <span class="weapon {% if damage.weapon != 'UNKNOWN' and damage.weapon != 'FISTS' %}i-{{ damage.weapon | icon }}{% endif %}"  aria-describedby="hawk-tooltip-weapon-damages-caused-{{ player.uuid }}-{{ forloop.counter0 }}"></span>
+                                                    <span class="weapon {% if damage.weapon != 'UNKNOWN' and damage.weapon != 'FISTS' %}i-{{ damage.weapon | icon:"small" }}{% endif %}"  aria-describedby="hawk-tooltip-weapon-damages-caused-{{ player.uuid }}-{{ forloop.counter0 }}"></span>
                                                     <span class="source" aria-describedby="hawk-tooltip-source-damages-caused-{{ player.uuid }}-{{ forloop.counter0 }}">
                                                         <img src="{{ damage.damagee | head:20 }}" alt="{{ damage.damagee.name }}" />
                                                     </span>
@@ -381,7 +387,7 @@
                                                     {% endblocktrans %}
                                                 {% endcaptureas %}
                                                 <li title="{{ heal_description }}" data-replace-title>
-                                                    <span class="source i-{{ heal.cause | icon }}" aria-describedby="hawk-tooltip-heal-{{ player.uuid }}-{{ forloop.counter0 }}"></span>
+                                                    <span class="source i-{{ heal.cause | icon:"small" }}" aria-describedby="hawk-tooltip-heal-{{ player.uuid }}-{{ forloop.counter0 }}"></span>
 
                                                     {% hearts heal %}
 
@@ -424,7 +430,7 @@
                                                     {% else %}
                                                         <a href="" class="player is-fake-player">
                                                             <figure aria-hidden="true">
-                                                                <span class="i-{{ aggreg.killed_by.cause | icon | cut:"-small" }} is-rounded"></span>
+                                                                <span class="i-{{ aggreg.killed_by.cause | icon }} is-rounded"></span>
                                                             </figure>
                                                             <span>{{ aggreg.killed_by.cause | name }}</span>
                                                         </a>
@@ -435,7 +441,7 @@
 
                                         <h4 class="is-bold">{% trans "Rank" %}</h4>
 
-                                        <p class="player-rank{% if aggreg.rank == 1 %} is-winner{% endif %}">{{ aggreg.rank }}</p>
+                                        <p class="player-rank{% if aggreg.rank == 1 %} is-winner{% endif %}">{{ aggreg.rank|ordinal }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -465,7 +471,7 @@
                                     <div class="columns">
                                         <div class="column is-4 natural-damages-report-source">
                                             <figure>
-                                                <span class="i-{{ cause | large_icon }} is-rounded"></span>
+                                                <span class="i-{{ cause | icon:"large" }} is-rounded"></span>
                                                 <figcaption>{{ cause | name }}</figcaption>
                                             </figure>
                                         </div>
@@ -496,7 +502,7 @@
                                     <div class="columns">
                                         <div class="column is-4 natural-damages-report-source">
                                             <figure>
-                                                <span class="i-{{ cause | large_icon }} is-rounded"></span>
+                                                <span class="i-{{ cause | icon:"large" }} is-rounded"></span>
                                                 <figcaption>{{ cause | name }}</figcaption>
                                             </figure>
                                         </div>
@@ -529,10 +535,96 @@
 
     {% if report.settings.players.enabled %}
     <section class="section js-tab-section {% if default_tab != 'players' %}is-hidden{% endif %}" id="players">
-        <article class="empty-section container">
-            <h3>{% trans "This section isn't available yet." %}</h3>
-            <p>{% trans "When it will be added (soon), your statistics by player will appear here (for all your reports, including this one)." %}</p>
-        </article>
+        <div class="container">
+            <nav class="tabs players-statistics-navigation">
+                <ul>
+                    {% for player in report.players|dictsort:"name" %}
+                        <li{% if forloop.first %} class="is-active"{% endif %}>
+                            <a href="#players:{{ player.name }}">
+                                <img src="{{ player | head:48 }}" alt="{{ player.name }}" class="is-rounded" />
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+            {% for player in report.players|dictsort:"name" %}
+                {% with aggreg=report.aggregates.players_damages|lookup_key:player.uuid %}
+                    <article class="chest players-statistics-container" id="players:{{ player.name }}">
+                        <header>
+                            <figure class="player-head{% if player.team and report.settings.summary.teams %} is-{{ player.color | color_to_css }}{% endif %}">
+                                <img src="{{ player | head:128 }}" alt="{{ player.name }}" />
+                            </figure>
+                            <div class="player-name-and-recap">
+                                <h2>{{ player.name }} </h2>
+                                {% if player.team and report.settings.summary.teams %}
+                                    <p class="team-name">{{ player.team }}</p>
+                                {% endif %}
+
+                                <p>
+                                    {% blocktrans with play_time=aggreg.game_duration|duration:True %}Played {{ play_time }}{% endblocktrans %}
+                                </p>
+                                <p>
+                                    {% if aggreg.kills|length > 0 %}
+                                        {% blocktrans count kills=aggreg.kills|length with rank=aggreg.rank|ordinal %}
+                                            Ranked {{ rank }}, {{ kills }} kill
+                                        {% plural %}
+                                            Ranked {{ rank }}, {{ kills }} kill
+                                        {% endblocktrans %}
+                                    {% else %}
+                                        {% blocktrans with rank=aggreg.rank|ordinal %}
+                                            Ranked {{ rank }}
+                                        {% endblocktrans %}
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <div class="player-tag">
+                                {% if player.tag_line %}
+                                    <p class="tag-line">{{ player.tag_line }}</p>
+                                {% endif %}
+                                {% if player.tag_line_secondary %}
+                                    <p class="tag-line-secondary">{{ player.tag_line_secondary }}</p>
+                                {% endif %}
+                                {% if player.tag_line_details %}
+                                    <p class="tag-line-details">{{ player.tag_line_details|linebreaksbr }}</p>
+                                {% endif %}
+                            </div>
+                        </header>
+
+                        {% if player.displayed_statistics.generic or player.displayed_statistics.mined or player.displayed_statistics.picked_up or player.displayed_statistics.used %}
+                            {% if player.displayed_statistics.generic %}
+                                <h3 class="chest-title">{% trans "General Statistics" %}</h3>
+                                <div class="chest-inner players-statistics">
+                                    {% include "partials/statistics/statistics.html" with player=player statistics=player.displayed_statistics.generic only %}
+                                </div>
+                            {% endif %}
+
+                            {% if player.displayed_statistics.mined %}
+                                <h3 class="chest-title">{% trans "Mined Blocks" %}</h3>
+                                <div class="chest-inner players-statistics">
+                                    {% include "partials/statistics/statistics.html" with player=player statistics=player.displayed_statistics.mined only %}
+                                </div>
+                            {% endif %}
+
+                            {% if player.displayed_statistics.picked_up %}
+                                <h3 class="chest-title">{% trans "Picked-Up Items" %}</h3>
+                                <div class="chest-inner players-statistics">
+                                    {% include "partials/statistics/statistics.html" with player=player statistics=player.displayed_statistics.picked_up only %}
+                                </div>
+                            {% endif %}
+
+                            {% if player.displayed_statistics.used %}
+                                <h3 class="chest-title">{% trans "Used items" %}</h3>
+                                <div class="chest-inner players-statistics">
+                                    {% include "partials/statistics/statistics.html" with player=player statistics=player.displayed_statistics.used only %}
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <p class="no-player-statistics">{% trans "We do not have any recorded statistics for this player." %}</p>
+                        {% endif %}
+                    </article>
+                {% endwith %}
+            {% endfor %}
+        </div>
     </section>
     {% endif %}
 
@@ -583,39 +675,6 @@
 
     <script type="application/javascript">
         document.addEventListener("DOMContentLoaded", function() {
-            const tabs = document.querySelectorAll('.js-tab-section');
-            const tabs_links = document.querySelectorAll('.js-tab-link');
-
-            tabs_links.forEach(function(element) {
-                element.addEventListener("click", function(e) {
-                    e.preventDefault();
-                    tabs.forEach(function(tab) { tab.classList.add('is-hidden'); });
-
-                    let target = e.target.attributes['href'].value;
-                    let tab = document.querySelector(target);
-
-                    if (tab) {
-                        tab.classList.remove('is-hidden');
-
-                        tabs_links.forEach(function(tab_link) {
-                            tab_link.parentElement.classList.remove('is-active');
-                            if (tab_link.attributes['href'].value === target) {
-                                tab_link.parentElement.classList.add('is-active');
-                            }
-                        })
-                    }
-                });
-            });
-
-            const players_links = document.querySelectorAll('a.player');
-
-            players_links.forEach(function(element) {
-                element.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    element.blur();
-                    // TODO link to player stats tab if it's a real link
-                })
-            });
 
             // Replaces marked titles with aria-label, because they interfere with tooltips
             document.querySelectorAll("[data-replace-title]").forEach(function(element) {
@@ -663,6 +722,21 @@
                     real_tooltip.style.top = (offset_top + mouseY - 4) + "px";
                     real_tooltip.style.left = (offset_left + mouseX + 8) + "px";
 
+                });
+            });
+
+            document.querySelectorAll(".is-hidden-statistics").forEach(function(element) {
+                element.classList.add("is-hidden");
+            });
+
+            document.querySelectorAll(".toggle-hidden-statistics").forEach(function(element) {
+                element.addEventListener("click", function(e) {
+                    e.preventDefault();
+
+                    element.classList.toggle("is-toggled");
+                    element.nextElementSibling.classList.toggle("is-hidden");
+
+                    element.blur();
                 });
             });
         });
