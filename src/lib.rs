@@ -15,7 +15,7 @@ extern crate strum_macros;
 
 use std::collections::HashMap;
 
-use pyo3::exceptions::{RuntimeError, ValueError};
+use pyo3::exceptions::{PyRuntimeError, PyValueError};
 use pyo3::prelude::*;
 use pyo3::wrap_pyfunction;
 
@@ -77,14 +77,14 @@ fn process_report(raw_json_report: String) -> PyResult<HashMap<String, String>> 
 
                     Ok(report_return)
                 }
-                Err(error) => Err(RuntimeError::py_err(format!(
+                Err(error) => Err(PyRuntimeError::new_err(format!(
                     "Unable to convert report to JSON string: {}",
                     error
                 ))),
             },
-            Err(error) => Err(ValueError::py_err(format!("Invalid report: {}", error))),
+            Err(error) => Err(PyValueError::new_err(format!("Invalid report: {}", error))),
         },
-        Err(error) => Err(ValueError::py_err(format!("Invalid JSON: {}", error))),
+        Err(error) => Err(PyValueError::new_err(format!("Invalid JSON: {}", error))),
     }
 }
 

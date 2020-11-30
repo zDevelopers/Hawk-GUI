@@ -5,14 +5,12 @@ verify_ssl = true
 
 [dev-packages]
 glue = "*"
+maturin = "*"
 pillow = "*"
 
 [packages]
 django = "*"
-maturin = "*"
-requests = "*"
 django-ipware = "*"
 python-levenshtein = "*"
+requests = "*"
 
-[requires]
-python_version = "3.8"

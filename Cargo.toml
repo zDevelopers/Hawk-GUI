@@ -10,17 +10,26 @@ error-chain = "0.12.*"
 failure = "0.1.*"
 failure_derive = "0.1.*"
 lazy_static = "1.4.*"
-pyo3 = { version = "0.7.0", features = ["extension-module"] }
-regex = "1.2.*"
+pyo3 = { version = "0.12.*", features = ["extension-module"] }
+regex = "1.4.*"
 roman = "0.1.*"
 serde = "1.0.*"
 serde_json = "1.0.*"
 serde_derive = "1.0.*"
-strum = "0.13.*"
-strum_macros = "0.13.*"
-uuid = { version = "0.7.*", features = ["serde", "v4"] }
+strum = "0.20.*"
+strum_macros = "0.20.*"
+uuid = { version = "0.8.*", features = ["serde", "v4"] }
 
 [lib]
 name = "hawk_processing"
-path = "hawk_processing/lib.rs"
+path = "src/lib.rs"
 crate-type = ["cdylib"]
+
+[package.metadata.maturin]
+classifier = [
+    "Development Status :: 4 - Beta",
+    "License :: CeCILL-B Free Software License Agreement (CECILL-B)",
+    "Topic :: Games/Entertainment",
+    "Topic :: Software Development :: Libraries",
+    "Programming Language :: Rust",
+]

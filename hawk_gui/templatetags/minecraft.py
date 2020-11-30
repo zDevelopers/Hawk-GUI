@@ -8,7 +8,6 @@ from django.conf import settings
 from django.urls.base import reverse_lazy
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
-
 from hawk_processing import (
     parse_minecraft_color_codes,
     strip_minecraft_color_codes,
@@ -626,7 +625,6 @@ def icon(key, size=None):
         key = key.replace("_", "-").lower()
         if key in AVAILABLE_ICONS_ASSOCIATION_CACHE:
             icon = AVAILABLE_ICONS_ASSOCIATION_CACHE[key]
-            print(f"Used cache for {key} -> {icon}")
         else:
             potential_icons = []
             key_parts = key.split("-")

@@ -6,11 +6,11 @@ watch:
 
 install-dev:
 	pipenv install --dev
-	pyo3-pack develop
+	maturin develop
 
 link-dev:
-	pyo3-pack develop
+	maturin develop
 
 install-release:
 	pipenv install
-	pyo3-pack develop --release
+	maturin develop --release # TODO update
