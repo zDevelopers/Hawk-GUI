@@ -1,0 +1,169 @@
+{
+  "match_uuid": "9be8ef14-a14e-4f96-b61e-b865c27ada8f",
+  "title": "§5KTZ §dVII",
+  "date": "2018-12-15T22:15:33+02:00",
+
+  "settings": {
+    "date": true,
+    "players_count": true,
+    "winners": true,
+    "summary": {
+      "enabled": true,
+      "history": true,
+      "players": true,
+      "teams": true
+    },
+    "damages": {
+      "enabled": true,
+      "damages_per_players": true,
+      "damages_per_teams": true,
+      "damages_from_environment": true,
+      "display_killer": true
+    },
+    "players": {
+      "enabled": true,
+      "play_time": true,
+      "global_statistics": true,
+      "statistics_whitelist": [],
+      "statistics_highlight": [],
+      "used": false,
+      "used_whitelist": [],
+      "used_highlight": [],
+      "mined": true,
+      "mined_whitelist": [],
+      "mined_highlight": [],
+      "picked_up": true,
+      "picked_up_whitelist": [],
+      "picked_up_highlight": []
+    },
+    "generator": {
+      "name": "UHC Reloaded",
+      "link": "https://github.com/zDevelopers/UHPlugin"
+    }
+  },
+
+  "players": [
+    {
+      "uuid": "55b89885-673c-4458-a8bd-33ad9c6190b4",
+      "name": "Dada_exe",
+      "tag_line": "Allié",
+      "tag_line_details": "Allié avec Jenjeur"
+    },
+    {
+      "uuid": "0dd34bda-c13b-473b-a887-368027ca05ca",
+      "name": "Jenjeur",
+      "tag_line": "Allié",
+      "tag_line_details": "Allié avec Dada_exe"
+    },
+    {
+      "uuid": "da04cd54-c6c7-4672-97c5-85663f5bccf6",
+      "name": "AmauryPi",
+      "tag_line": "Seul"
+    },
+    {
+      "uuid": "445718ae-ee31-4e66-8d57-5a10457ab93b",
+      "name": "MrLefra99",
+      "tag_line": "Seul"
+    }
+  ],
+
+  "teams": [
+    {
+      "name": "The team name",
+      "color": "DARK_BLUE",
+      "players": [
+        "55b89885-673c-4458-a8bd-33ad9c6190b4",
+        "0dd34bda-c13b-473b-a887-368027ca05ca"
+      ]
+    },
+    {
+      "name": "#BananaForScale",
+      "color": "YELLOW",
+      "players": [
+        "da04cd54-c6c7-4672-97c5-85663f5bccf6",
+        "445718ae-ee31-4e66-8d57-5a10457ab93b"
+      ]
+    }
+  ],
+
+  "winners": [],
+
+  "damages": [
+    {
+      "date": "2018-12-15T22:59:16+02:00",
+      "cause": {
+        "cause": "PLAYER",
+        "player": "55b89885-673c-4458-a8bd-33ad9c6190b4",
+        "weapon": {
+          "id": "minecraft:iron_sword"
+        }
+      },
+      "damagee": "da04cd54-c6c7-4672-97c5-85663f5bccf6",
+      "damage": 4,
+      "lethal": true
+    },
+    {
+      "date": "2018-12-15T22:58:48+02:00",
+      "cause": {
+        "cause": "PLAYER",
+        "player": "55b89885-673c-4458-a8bd-33ad9c6190b4",
+        "weapon": {
+          "id": "minecraft:iron_sword",
+          "tag": {
+            "display": {
+              "Name": "Épée de l'Apocalypse"
+            }
+          }
+        }
+      },
+      "damagee": "da04cd54-c6c7-4672-97c5-85663f5bccf6",
+      "damage": 4,
+      "lethal": false
+    },
+    {
+      "date": "2018-12-15T22:58:48+02:00",
+      "cause": {
+        "cause": "ENTITY",
+        "entity": "minecraft:enderman"
+      },
+      "damagee": "445718ae-ee31-4e66-8d57-5a10457ab93b",
+      "damage": 7,
+      "lethal": true
+    },
+    {
+      "date": "2019-01-10T03:34:22.159+01:00",
+      "cause": {
+        "cause": "PLAYER",
+        "player": "da04cd54-c6c7-4672-97c5-85663f5bccf6",
+        "weapon": {
+          "id": "minecraft:bow",
+          "tag": {
+            "display": {
+              "Name": "Arc de l'Apocalyspe"
+            },
+            "Enchantments": {
+              "power": 4,
+              "flame": 1,
+              "unbreaking": 3,
+              "infinity": 1
+            }
+          }
+        }
+      },
+      "damagee": "da04cd54-c6c7-4672-97c5-85663f5bccf6",
+      "damage": 2,
+      "lethal": false
+    }
+  ],
+
+  "heals": [
+    {
+      "date": "2018-12-16T00:12:21+02:00",
+      "cause": "GOLDEN_APPLE",
+      "healed": "0dd34bda-c13b-473b-a887-368027ca05ca",
+      "heal": 8
+    }
+  ],
+
+  "events": []
+}

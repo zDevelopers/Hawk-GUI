@@ -1,0 +1,62 @@
+---
+source: src/report/test/mod.rs
+expression: process_to_string(input)
+---
+{
+  "match_uuid": "9be8ef14-a14e-4f96-b61e-b865c27ada8f",
+  "title": "§5KTZ §dVII",
+  "date": "2018-12-15T22:15:33+02:00",
+  "minecraft": null,
+  "settings": {
+    "date": true,
+    "players_count": true,
+    "winners": true,
+    "summary": {
+      "enabled": true,
+      "history": true,
+      "players": true,
+      "teams": true
+    },
+    "damages": {
+      "enabled": true,
+      "damages_per_players": true,
+      "damages_per_team": true,
+      "damages_from_environment": true,
+      "display_killer": true
+    },
+    "players": {
+      "enabled": true,
+      "play_time": true,
+      "global_statistics": true,
+      "statistics_whitelist": [],
+      "statistics_highlight": [],
+      "used": false,
+      "used_whitelist": [],
+      "used_highlight": [],
+      "mined": true,
+      "mined_whitelist": [],
+      "mined_highlight": [],
+      "picked_up": true,
+      "picked_up_whitelist": [],
+      "picked_up_highlight": []
+    },
+    "generator": null
+  },
+  "players": [],
+  "teams": [],
+  "winners": [],
+  "damages": [],
+  "heals": [],
+  "events": [],
+  "aggregates": {
+    "global_statistics": {
+      "generic": {},
+      "used": {},
+      "mined": {},
+      "picked_up": {}
+    },
+    "players_damages": {},
+    "environmental_damages": {}
+  },
+  "has_players_without_team": false
+}
