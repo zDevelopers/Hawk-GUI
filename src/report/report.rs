@@ -83,11 +83,20 @@ impl Report {
                         }
                     }
 
+                    team_players.sort_by(|a, b| a.name.cmp(&b.name));
+
                     team_players
                 }
             },
             None => Self::extract_winners(&players, &damages),
         };
+
+        let mut players_list: Vec<player::Player> = players
+            .iter()
+            .map(|(_, player)| (*player.as_ref()).clone())
+            .collect();
+
+        players_list.sort_by(|a, b| a.name.cmp(&b.name));
 
         Ok(Report {
             match_uuid: raw_report.match_uuid.clone(),
@@ -95,10 +104,7 @@ impl Report {
             date: raw_report.date.clone(),
             minecraft: raw_report.minecraft.clone(),
             settings: raw_report.settings.clone(),
-            players: players
-                .iter()
-                .map(|(_, player)| (*player.as_ref()).clone())
-                .collect(),
+            players: players_list,
             teams: team::Team::from_raw_vec(&raw_report.teams, &players)?,
             events: event::Event::from_raw_vec(&raw_report.events, &begin),
             aggregates: aggregates::Aggregate::from_raw(&players, &damages, &heals, &begin),
@@ -121,12 +127,16 @@ impl Report {
             .map(|damage| damage.damagee.uuid)
             .collect();
 
-        players
+        let mut winners: Vec<player::SimplePlayer> = players
             .iter()
             .map(|(_uuid, player)| player)
             .filter(|player| !deads.contains(&player.as_ref().uuid))
             .map(|player| player.as_ref().into())
-            .collect()
+            .collect();
+
+        winners.sort_by(|a, b| a.name.cmp(&b.name));
+
+        winners
     }
 }
 

@@ -14,7 +14,7 @@ use crate::report::report::since;
 pub struct Aggregate {
     pub global_statistics: PlayerStatistics,
     pub players_damages: HashMap<Uuid, PlayerAlterationsAggregate>,
-    pub environmental_damages: HashMap<DamageCause, u32>,
+    pub environmental_damages: HashMap<String, u32>,
 }
 
 impl Aggregate {
@@ -148,9 +148,9 @@ impl Aggregate {
         let mut damages_caused: Vec<Damage> = damages
             .iter()
             .cloned()
-            .filter(|damage| match &damage.damager {
-                Some(damager) => &damager.uuid == player,
-                None => false,
+            .filter(|damage| match &damage.cause {
+                DamageCause::Player(cause) => &cause.player.uuid == player,
+                _ => false
             })
             .collect();
         let mut heals: Vec<Heal> = heals
@@ -180,9 +180,9 @@ impl Aggregate {
 
             kills: damages
                 .iter()
-                .filter(|damage| match &damage.damager {
-                    Some(damager) => &damager.uuid == player && damage.lethal,
-                    None => false,
+                .filter(|damage| match &damage.cause {
+                    DamageCause::Player(cause) => &cause.player.uuid == player && damage.lethal,
+                    _ => false
                 })
                 .map(|damage| damage.damagee.clone())
                 .collect(),
@@ -190,13 +190,13 @@ impl Aggregate {
             killed_by: damages
                 .iter()
                 .filter(|damage| &damage.damagee.uuid == player && damage.lethal)
-                .map(|damage| match &damage.damager {
-                    Some(damager) => PlayerKiller::Player {
-                        player: damager.clone(),
+                .map(|damage| match &damage.cause {
+                    DamageCause::Player(cause) => PlayerKiller::Player {
+                        player: cause.player.clone()
                     },
-                    None => PlayerKiller::Other {
-                        cause: damage.cause.clone(),
-                    },
+                    _ => PlayerKiller::Other {
+                        cause: damage.cause.clone()
+                    }
                 })
                 .last(),
 
@@ -218,16 +218,16 @@ impl Aggregate {
         }
     }
 
-    fn aggregate_environmental_damages(damages: &Vec<Damage>) -> HashMap<DamageCause, u32> {
+    fn aggregate_environmental_damages(damages: &Vec<Damage>) -> HashMap<String, u32> {
         let mut aggregated = HashMap::new();
 
         damages
             .iter()
-            .filter(|damage| damage.damager.is_none())
+            .filter(|damage| !matches!(damage.cause, DamageCause::Player { .. }))
             .for_each(|damage| {
                 aggregated.insert(
-                    damage.cause.clone(),
-                    match aggregated.get(&damage.cause) {
+                    damage.cause.clone().to_string(),
+                    match aggregated.get(&damage.cause.to_string()) {
                         Some(aggregate) => aggregate + damage.damage as u32,
                         None => damage.damage as u32,
                     },

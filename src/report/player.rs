@@ -350,7 +350,7 @@ impl DisplayedPlayerStatistics {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, Hash)]
 pub struct SimplePlayer {
     pub uuid: Uuid,
     pub name: String,

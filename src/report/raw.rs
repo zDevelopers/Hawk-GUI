@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 use chrono::{DateTime, FixedOffset};
 use uuid::Uuid;
 
@@ -39,16 +37,54 @@ pub struct Team {
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Damage {
     pub date: DateTime<FixedOffset>,
-    pub cause: damage::DamageCause,
-    pub weapon: Option<damage::Weapon>,
-    pub weapon_name: Option<String>,
-    pub weapon_enchantments: Option<HashMap<String, u32>>,
+    pub cause: DamageCause,
     pub damager: Option<Uuid>,
     pub damagee: Uuid,
     pub damage: u16,
 
     #[serde(default = "default_false")]
     pub lethal: bool,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE", tag = "cause")]
+pub enum DamageCause {
+    Player(PlayerDamageCause),
+    Entity(damage::EntityDamageCause),
+
+    BlockExplosion,
+    Contact,
+    Cramming,
+    DragonBreath,
+    Drowning,
+    Dryout,
+    Fall,
+    FallingBlock,
+    Fire,
+    FireTick, // Is merged with fire while processing
+    FlyIntoWall,
+    HotFloor,
+    Lava,
+    Lightning,
+    Magic,
+    Melting,
+    Poison,
+    Projectile,
+    Starvation,
+    Suffocation,
+    Suicide,
+    Thorns,
+    Void,
+    Wither,
+
+    Command,
+    Unknown,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct PlayerDamageCause {
+    pub player: Uuid,
+    pub weapon: Option<item::Item>
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]

@@ -802,44 +802,65 @@
   "damages": [
     {
       "date": "2018-12-15T22:59:16+02:00",
-      "cause": "PLAYER",
-      "weapon": "SWORD_IRON",
-      "damager": "55b89885-673c-4458-a8bd-33ad9c6190b4",
+      "cause": {
+        "cause": "PLAYER",
+        "player": "55b89885-673c-4458-a8bd-33ad9c6190b4",
+        "weapon": {
+          "id": "minecraft:iron_sword"
+        }
+      },
       "damagee": "da04cd54-c6c7-4672-97c5-85663f5bccf6",
       "damage": 4,
       "lethal": true
     },
     {
       "date": "2018-12-15T22:58:48+02:00",
-      "cause": "PLAYER",
-      "weapon": "SWORD_IRON",
-      "weapon_name": "Épée de l'Apocalypse",
-      "damager": "55b89885-673c-4458-a8bd-33ad9c6190b4",
+      "cause": {
+        "cause": "PLAYER",
+        "player": "55b89885-673c-4458-a8bd-33ad9c6190b4",
+        "weapon": {
+          "id": "minecraft:iron_sword",
+          "tag": {
+            "display": {
+              "Name": "Épée de l'Apocalypse"
+            }
+          }
+        }
+      },
       "damagee": "da04cd54-c6c7-4672-97c5-85663f5bccf6",
       "damage": 4,
       "lethal": false
     },
     {
       "date": "2018-12-15T22:58:48+02:00",
-      "cause": "ENDERMAN",
-      "weapon": null,
-      "damager": null,
+      "cause": {
+        "cause": "ENTITY",
+        "entity": "minecraft:enderman"
+      },
       "damagee": "445718ae-ee31-4e66-8d57-5a10457ab93b",
       "damage": 7,
       "lethal": true
     },
     {
       "date": "2019-01-10T03:34:22.159+01:00",
-      "cause": "PLAYER",
-      "weapon": "BOW",
-      "weapon_enchantments": {
-        "power": 4,
-        "flame": 1,
-        "unbreaking": 3,
-        "infinity": 1
+      "cause": {
+        "cause": "PLAYER",
+        "player": "da04cd54-c6c7-4672-97c5-85663f5bccf6",
+        "weapon": {
+          "id": "minecraft:bow",
+          "tag": {
+            "display": {
+              "Name": "Arc de l'Apocalyspe"
+            },
+            "Enchantments": {
+              "power": 4,
+              "flame": 1,
+              "unbreaking": 3,
+              "infinity": 1
+            }
+          }
+        }
       },
-      "weapon_name": "Arc de l'Apocalyspe",
-      "damager": "da04cd54-c6c7-4672-97c5-85663f5bccf6",
       "damagee": "da04cd54-c6c7-4672-97c5-85663f5bccf6",
       "damage": 2,
       "lethal": false
