@@ -120,49 +120,37 @@ impl DisplayedPlayerStatistics {
         settings: &SettingsPlayers,
     ) -> DisplayedPlayerStatistics {
         DisplayedPlayerStatistics {
-            generic: match settings.global_statistics {
-                true => match &statistics.generic {
-                    Some(statistic) => Some(Self::calculate_displayed(
-                        statistic,
-                        &settings.statistics_whitelist,
-                        &settings.statistics_highlight,
-                    )),
-                    None => None,
-                },
-                false => None,
+            generic: match &statistics.generic {
+                Some(statistic) if settings.global_statistics => Some(Self::calculate_displayed(
+                    statistic,
+                    &settings.statistics_whitelist,
+                    &settings.statistics_highlight,
+                )),
+                _ => None,
             },
-            used: match settings.used {
-                true => match &statistics.used {
-                    Some(statistic) => Some(Self::calculate_displayed(
-                        statistic,
-                        &settings.used_whitelist,
-                        &settings.used_highlight,
-                    )),
-                    None => None,
-                },
-                false => None,
+            used: match &statistics.used {
+                Some(statistic) if settings.used => Some(Self::calculate_displayed(
+                    statistic,
+                    &settings.used_whitelist,
+                    &settings.used_highlight,
+                )),
+                _ => None,
             },
-            mined: match settings.mined {
-                true => match &statistics.mined {
-                    Some(statistic) => Some(Self::calculate_displayed(
-                        statistic,
-                        &settings.mined_whitelist,
-                        &settings.mined_highlight,
-                    )),
-                    None => None,
-                },
-                false => None,
+            mined: match &statistics.mined {
+                Some(statistic) if settings.mined => Some(Self::calculate_displayed(
+                    statistic,
+                    &settings.mined_whitelist,
+                    &settings.mined_highlight,
+                )),
+                _ => None,
             },
-            picked_up: match settings.picked_up {
-                true => match &statistics.picked_up {
-                    Some(statistic) => Some(Self::calculate_displayed(
-                        statistic,
-                        &settings.picked_up_whitelist,
-                        &settings.picked_up_highlight,
-                    )),
-                    None => None,
-                },
-                false => None,
+            picked_up: match &statistics.picked_up {
+                Some(statistic) if settings.picked_up => Some(Self::calculate_displayed(
+                    statistic,
+                    &settings.picked_up_whitelist,
+                    &settings.picked_up_highlight,
+                )),
+                _ => None,
             },
         }
     }
