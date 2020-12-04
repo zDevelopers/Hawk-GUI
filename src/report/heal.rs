@@ -21,15 +21,15 @@ pub struct Heal {
 
 impl Heal {
     pub fn from_raw(
-        raw_heal: &RawHeal,
+        raw_heal: RawHeal,
         players: &HashMap<Uuid, Rc<Player>>,
         begin: &DateTime<FixedOffset>,
     ) -> ReportResult<Self> {
         match players.get(&raw_heal.healed) {
             Some(healed) => Ok(Heal {
-                date: raw_heal.date.clone(),
-                since_beginning: since(&raw_heal.date.clone(), begin),
-                cause: raw_heal.cause.clone(),
+                date: raw_heal.date,
+                since_beginning: since(&raw_heal.date, begin),
+                cause: raw_heal.cause,
                 healed: healed.as_ref().into(),
                 heal: raw_heal.heal,
             }),
@@ -40,7 +40,7 @@ impl Heal {
     }
 
     pub fn from_raw_vec(
-        raw_heals: &Vec<RawHeal>,
+        raw_heals: Vec<RawHeal>,
         players: &HashMap<Uuid, Rc<Player>>,
         begin: &DateTime<FixedOffset>,
     ) -> ReportResult<Vec<Self>> {

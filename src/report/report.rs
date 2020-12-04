@@ -32,44 +32,45 @@ impl Report {
     /// and returns a ready-to-be-serialized-and-used
     /// structure.
     ///
-    pub fn from_raw<'a>(mut raw_report: raw::Report) -> ReportResult<Self> {
+    pub fn from_raw(raw_report: raw::Report) -> ReportResult<Self> {
         let players_colors = {
             let mut players_colors = HashMap::new();
 
             for team in &raw_report.teams {
                 for player in &team.players {
-                    players_colors.insert(player.clone(), team.color.clone());
+                    players_colors.insert(*player, team.color);
                 }
             }
 
             players_colors
         };
 
-        let players: HashMap<Uuid, Rc<player::Player>> = (&raw_report.players)
+        let settings = raw_report.settings;
+        let teams = raw_report.teams;
+
+        let players: HashMap<Uuid, Rc<player::Player>> = raw_report.players
             .into_iter()
             .map(|player| {
                 (
                     player.uuid,
                     Rc::new(player::Player::from_raw(
                         player,
-                        &raw_report.teams,
+                        &teams,
                         &players_colors,
-                        &raw::default_team_color(),
-                        &raw_report.settings.players,
+                        &settings.players,
                     )),
                 )
             })
             .collect();
 
-        let begin = &raw_report.date;
+        let begin = raw_report.date;
 
-        let damages = &mut raw_report.damages;
-
+        let mut damages = raw_report.damages;
         // Damage::from_raw_vec expect damages to be sorted by chronological order.
         damages.sort_by(|a, b| a.date.cmp(&b.date));
 
-        let damages = damage::Damage::from_raw_vec(&damages, &players, &begin)?;
-        let heals = heal::Heal::from_raw_vec(&raw_report.heals, &players, &begin)?;
+        let damages = damage::Damage::from_raw_vec(damages, &players, &begin)?;
+        let heals = heal::Heal::from_raw_vec(raw_report.heals, &players, &begin)?;
 
         let winners = match raw_report.winners {
             Some(winners) => match winners.is_empty() {
@@ -98,19 +99,19 @@ impl Report {
 
         let mut players_list: Vec<player::Player> = players
             .iter()
-            .map(|(_, player)| (*player.as_ref()).clone())
+            .map(|(_, player)| player.as_ref().clone())
             .collect();
 
         players_list.sort_by(|a, b| a.name.cmp(&b.name));
 
         Ok(Report {
-            match_uuid: raw_report.match_uuid.clone(),
-            title: raw_report.title.clone(),
-            date: raw_report.date.clone(),
-            minecraft: raw_report.minecraft.clone(),
-            settings: raw_report.settings.clone(),
+            match_uuid: raw_report.match_uuid,
+            title: raw_report.title,
+            date: raw_report.date,
+            minecraft: raw_report.minecraft,
+            settings,
             players: players_list,
-            teams: team::Team::from_raw_vec(&raw_report.teams, &players)?,
+            teams: team::Team::from_raw_vec(&teams, &players)?,
             events: event::Event::from_raw_vec(&raw_report.events, &begin),
             aggregates: aggregates::Aggregate::from_raw(&players, &damages, &heals, &begin),
             winners,
@@ -118,7 +119,7 @@ impl Report {
             heals,
             has_players_without_team: players
                 .iter()
-                .any(|(_uuid, player)| player.as_ref().team.is_none()),
+                .any(|(_uuid, player)| player.team.is_none()),
         })
     }
 

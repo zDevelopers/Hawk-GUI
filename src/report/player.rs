@@ -26,45 +26,30 @@ pub struct Player {
 
 impl Player {
     pub fn from_raw(
-        raw_player: &RawPlayer,
+        raw_player: RawPlayer,
         teams: &Vec<RawTeam>,
         colors: &HashMap<Uuid, TeamColor>,
-        default_color: &TeamColor,
         settings: &SettingsPlayers,
     ) -> Self {
+        let uuid = raw_player.uuid;
         Self {
-            uuid: raw_player.uuid.clone(),
-            name: raw_player.name.clone(),
-            color: colors
-                .get(&raw_player.uuid)
-                .unwrap_or(default_color)
-                .clone(),
-            tag_line: raw_player
-                .tag_line
-                .clone()
-                .unwrap_or("".to_string())
-                .clone(),
-            tag_line_secondary: raw_player
-                .tag_line_secondary
-                .clone()
-                .unwrap_or("".to_string())
-                .clone(),
-            tag_line_details: raw_player
-                .tag_line_details
-                .clone()
-                .unwrap_or("".to_string())
-                .clone(),
-            statistics: raw_player.statistics.clone(),
+            name: raw_player.name,
+            color: colors.get(&raw_player.uuid).copied().unwrap_or_default(),
+            tag_line: raw_player.tag_line.unwrap_or_default(),
+            tag_line_secondary: raw_player.tag_line_secondary.unwrap_or_default(),
+            tag_line_details: raw_player.tag_line_details.unwrap_or_default(),
             displayed_statistics: match &raw_player.statistics {
                 Some(statistics) => Some(
                     DisplayedPlayerStatistics::calculate_displayed_statistics(statistics, settings),
                 ),
                 None => None,
             },
+            statistics: raw_player.statistics,
             team: teams
                 .iter()
-                .find(|team| team.players.contains(&raw_player.uuid))
+                .find(|team| team.players.contains(&uuid))
                 .map(|team| team.name.clone()),
+            uuid
         }
     }
 }
@@ -370,7 +355,7 @@ impl From<Player> for SimplePlayer {
             uuid: player.uuid,
             name: player.name,
             color: player.color,
-            team: player.team.clone(),
+            team: player.team,
         }
     }
 }

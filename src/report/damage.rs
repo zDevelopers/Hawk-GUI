@@ -25,7 +25,7 @@ pub struct Damage {
 
 impl Damage {
     pub fn from_raw(
-        raw_damage: &RawDamage,
+        raw_damage: RawDamage,
         players: &HashMap<Uuid, Rc<Player>>,
         begin: &DateTime<FixedOffset>,
     ) -> ReportResult<Self> {
@@ -33,9 +33,9 @@ impl Damage {
             .ok_or(InvalidReportError::MissingPlayerReference { uuid: raw_damage.damagee })?;
 
         Ok(Self {
-            date: raw_damage.date.clone(),
+            date: raw_damage.date,
             since_beginning: since(&raw_damage.date, begin),
-            cause: DamageCause::from_raw(&raw_damage.cause, players)?,
+            cause: DamageCause::from_raw(raw_damage.cause, players)?,
             damagee: (*damagee).as_ref().into(),
             damage: raw_damage.damage,
             lethal: raw_damage.lethal,
@@ -59,7 +59,7 @@ impl Damage {
     ///
     /// The given vec of raw damages is **expected to be sorted chronologically**.
     pub fn from_raw_vec(
-        raw_damages: &Vec<RawDamage>,
+        raw_damages: Vec<RawDamage>,
         players: &HashMap<Uuid, Rc<Player>>,
         begin: &DateTime<FixedOffset>,
     ) -> ReportResult<Vec<Self>> {
@@ -140,16 +140,16 @@ impl DamageCause {
         }
     }
 
-    pub fn from_raw(raw: &RawDamageCause, players: &HashMap<Uuid, Rc<Player>>) -> ReportResult<Self> {
+    pub fn from_raw(raw: RawDamageCause, players: &HashMap<Uuid, Rc<Player>>) -> ReportResult<Self> {
         Ok(match raw {
             RawDamageCause::Player(cause) => DamageCause::Player(PlayerDamageCause {
                 player: players.get(&cause.player)
                     .ok_or(InvalidReportError::MissingPlayerReference { uuid: cause.player })?
                     .into(),
 
-                weapon: cause.weapon.clone()
+                weapon: cause.weapon
             }),
-            RawDamageCause::Entity(cause) => DamageCause::Entity(cause.clone()),
+            RawDamageCause::Entity(cause) => DamageCause::Entity(cause),
             RawDamageCause::BlockExplosion => DamageCause::BlockExplosion,
             RawDamageCause::Contact => DamageCause::Contact,
             RawDamageCause::Cramming => DamageCause::Cramming,

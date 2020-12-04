@@ -53,7 +53,7 @@ impl Team {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Copy, Clone, Eq, PartialEq, Hash)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum TeamColor {
     Aqua,
@@ -74,4 +74,11 @@ pub enum TeamColor {
     Yellow,
 
     None,
+}
+
+impl Default for TeamColor {
+    #[inline]
+    fn default() -> Self {
+        TeamColor::None
+    }
 }
