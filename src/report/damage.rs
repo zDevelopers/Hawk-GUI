@@ -63,7 +63,7 @@ impl Damage {
         players: &HashMap<Uuid, Rc<Player>>,
         begin: &DateTime<FixedOffset>,
     ) -> ReportResult<Vec<Self>> {
-        let mut damages = Vec::new();
+        let mut previous_damages = Vec::new();
         let mut latest_damage_per_damagee: HashMap<Uuid, Damage> = HashMap::new();
 
         for damage in raw_damages {
@@ -72,19 +72,22 @@ impl Damage {
             // If the previously recorded damage is the same (same type, same damager if any, same
             // weapon), we merge them.
             match latest_damage_per_damagee.get_mut(&damage.damagee.uuid) {
-                Some(prev_damage) => if prev_damage.should_merge_with(&damage) {
+                Some(prev_damage) if prev_damage.should_merge_with(&damage) => {
                     prev_damage.merge_with(&damage)
-                } else {
-                    damages.push(prev_damage.clone());
-                    latest_damage_per_damagee.insert(damage.damagee.uuid, damage);
                 },
                 _ => {
-                    latest_damage_per_damagee.insert(damage.damagee.uuid, damage);
+                    let prev_damage = latest_damage_per_damagee.insert(damage.damagee.uuid, damage);
+                    if let Some(prev_damage) = prev_damage {
+                        previous_damages.push(prev_damage);
+                    }
                 }
             };
         }
 
-        latest_damage_per_damagee.into_iter().for_each(|(_, damage)| damages.push(damage));
+        let damages = previous_damages
+            .into_iter()
+            .chain(latest_damage_per_damagee.into_iter().map(|(_, d)| d))
+            .collect();
 
         Ok(damages)
     }
