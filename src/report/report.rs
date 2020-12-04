@@ -73,28 +73,18 @@ impl Report {
         let heals = heal::Heal::from_raw_vec(raw_report.heals, &players, &begin)?;
 
         let winners = match raw_report.winners {
-            Some(winners) => match winners.is_empty() {
-                true => Self::extract_winners(&players, &damages),
-                false => {
-                    let mut team_players: Vec<player::SimplePlayer> = Vec::new();
+            Some(winners) if !winners.is_empty() => {
+                let mut team_players = winners.iter()
+                    .map(|p| players.get(&p)
+                        .map(Into::into)
+                        .ok_or(errors::InvalidReportError::MissingPlayerReference { uuid: *p }))
+                    .collect::<ReportResult<Vec<player::SimplePlayer>>>()?;
 
-                    for player in &winners {
-                        match players.get(&player) {
-                            Some(player) => team_players.push(player.as_ref().into()),
-                            None => {
-                                return Err(errors::InvalidReportError::MissingPlayerReference {
-                                    uuid: *player,
-                                })
-                            }
-                        }
-                    }
+                team_players.sort_by(|a, b| a.name.cmp(&b.name));
 
-                    team_players.sort_by(|a, b| a.name.cmp(&b.name));
-
-                    team_players
-                }
+                team_players
             },
-            None => Self::extract_winners(&players, &damages),
+            _ => Self::extract_winners(&players, &damages),
         };
 
         let mut players_list: Vec<player::Player> = players
@@ -111,8 +101,8 @@ impl Report {
             minecraft: raw_report.minecraft,
             settings,
             players: players_list,
-            teams: team::Team::from_raw_vec(&teams, &players)?,
-            events: event::Event::from_raw_vec(&raw_report.events, &begin),
+            teams: team::Team::from_raw_vec(teams, &players)?,
+            events: event::Event::from_raw_vec(raw_report.events, &begin),
             aggregates: aggregates::Aggregate::from_raw(&players, &damages, &heals, &begin),
             winners,
             damages,

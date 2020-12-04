@@ -16,40 +16,25 @@ pub struct Team {
 }
 
 impl Team {
-    pub fn from_raw(raw_team: &RawTeam, players: &HashMap<Uuid, Rc<Player>>) -> ReportResult<Self> {
-        let team_players = {
-            let mut team_players: Vec<SimplePlayer> = Vec::new();
-
-            for player in &raw_team.players {
-                match players.get(&player) {
-                    Some(player) => team_players.push(player.as_ref().into()),
-                    None => {
-                        return Err(InvalidReportError::MissingPlayerReference { uuid: *player })
-                    }
-                }
-            }
-
-            team_players
-        };
+    pub fn from_raw(raw_team: RawTeam, players: &HashMap<Uuid, Rc<Player>>) -> ReportResult<Self> {
+        let team_players: ReportResult<Vec<SimplePlayer>> = raw_team.players.into_iter()
+            .map(|p| players.get(&p)
+                .map(Into::into)
+                .ok_or(InvalidReportError::MissingPlayerReference { uuid: p }))
+            .collect();
 
         Ok(Team {
-            name: raw_team.name.clone(),
-            color: raw_team.color.clone(),
-            players: team_players,
+            name: raw_team.name,
+            color: raw_team.color,
+            players: team_players?,
         })
     }
 
     pub fn from_raw_vec(
-        raw_teams: &Vec<RawTeam>,
+        raw_teams: Vec<RawTeam>,
         players: &HashMap<Uuid, Rc<Player>>,
     ) -> ReportResult<Vec<Self>> {
-        let mut teams = Vec::new();
-
-        for team in raw_teams {
-            teams.push(Self::from_raw(team, players)?);
-        }
-
-        Ok(teams)
+        raw_teams.into_iter().map(|team| Self::from_raw(team, players)).collect()
     }
 }
 

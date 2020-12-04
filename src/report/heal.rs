@@ -30,7 +30,7 @@ impl Heal {
                 date: raw_heal.date,
                 since_beginning: since(&raw_heal.date, begin),
                 cause: raw_heal.cause,
-                healed: healed.as_ref().into(),
+                healed: healed.into(),
                 heal: raw_heal.heal,
             }),
             None => Err(InvalidReportError::MissingPlayerReference {
@@ -44,11 +44,10 @@ impl Heal {
         players: &HashMap<Uuid, Rc<Player>>,
         begin: &DateTime<FixedOffset>,
     ) -> ReportResult<Vec<Self>> {
-        let mut heals = Vec::new();
-
-        for heal in raw_heals {
-            heals.push(Self::from_raw(heal, players, begin)?);
-        }
+        let mut heals = raw_heals
+            .into_iter()
+            .map(|heal| Self::from_raw(heal, players, begin))
+            .collect::<ReportResult<Vec<Self>>>()?;
 
         heals.sort_by(|a, b| a.date.cmp(&b.date));
 

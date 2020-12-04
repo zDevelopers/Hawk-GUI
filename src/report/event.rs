@@ -26,18 +26,18 @@ pub struct Event {
 }
 
 impl Event {
-    pub fn from_raw(raw_event: &RawEvent, begin: &DateTime<FixedOffset>) -> Self {
+    pub fn from_raw(raw_event: RawEvent, begin: &DateTime<FixedOffset>) -> Self {
         Event {
-            date: raw_event.date.clone(),
+            date: raw_event.date,
             since_beginning: since(&raw_event.date, begin),
-            event_type: raw_event.event_type.clone(),
-            title: raw_event.title.clone(),
-            description: raw_event.description.clone(),
-            icon: raw_event.icon.clone(),
+            event_type: raw_event.event_type,
+            title: raw_event.title,
+            description: raw_event.description,
+            icon: raw_event.icon,
         }
     }
 
-    pub fn from_raw_vec(raw_events: &Vec<RawEvent>, begin: &DateTime<FixedOffset>) -> Vec<Self> {
+    pub fn from_raw_vec(raw_events: Vec<RawEvent>, begin: &DateTime<FixedOffset>) -> Vec<Self> {
         let mut events: Vec<Self> = raw_events
             .into_iter()
             .map(|raw_event| Self::from_raw(raw_event, begin))
