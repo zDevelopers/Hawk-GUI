@@ -54,8 +54,8 @@ impl Damage {
 
     /// From a vec of raw damages, extract a vec of processed and grouped damages.
     /// Damages are grouped together if they are between the same players, or between a player and
-    /// the same entity type, or of the same type, with the same properties (exact same weapon,
-    /// etc.) and consecutive.
+    /// the same entity type, or of the same type; with the same properties (exact same weapon,
+    /// etc.); and consecutive.
     ///
     /// The given vec of raw damages is **expected to be sorted chronologically**.
     pub fn from_raw_vec(
@@ -63,6 +63,7 @@ impl Damage {
         players: &HashMap<Uuid, Rc<Player>>,
         begin: &DateTime<FixedOffset>,
     ) -> ReportResult<Vec<Self>> {
+        let mut damages = Vec::new();
         let mut latest_damage_per_damagee: HashMap<Uuid, Damage> = HashMap::new();
 
         for damage in raw_damages {
@@ -71,14 +72,21 @@ impl Damage {
             // If the previously recorded damage is the same (same type, same damager if any, same
             // weapon), we merge them.
             match latest_damage_per_damagee.get_mut(&damage.damagee.uuid) {
-                Some(prev_damage) if prev_damage.should_merge_with(&damage) => prev_damage.merge_with(&damage),
+                Some(prev_damage) => if prev_damage.should_merge_with(&damage) {
+                    prev_damage.merge_with(&damage)
+                } else {
+                    damages.push(prev_damage.clone());
+                    latest_damage_per_damagee.insert(damage.damagee.uuid, damage);
+                },
                 _ => {
                     latest_damage_per_damagee.insert(damage.damagee.uuid, damage);
                 }
             };
         }
 
-        Ok(latest_damage_per_damagee.into_iter().map(|(_, v)| v).collect())
+        latest_damage_per_damagee.into_iter().for_each(|(_, damage)| damages.push(damage));
+
+        Ok(damages)
     }
 }
 

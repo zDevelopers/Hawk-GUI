@@ -63,7 +63,7 @@
         "type": "FIRE_TICK"
       },
       "damagee": "55b89885-673c-4458-a8bd-33ad9c6190b4",
-      "damage": 2,
+      "damage": 4,
       "lethal": true
     },
     {

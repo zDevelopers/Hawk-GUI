@@ -56,14 +56,7 @@ expression: process_to_string(input)
     }
   ],
   "teams": [],
-  "winners": [
-    {
-      "uuid": "55b89885-673c-4458-a8bd-33ad9c6190b4",
-      "name": "Dada_exe",
-      "color": "NONE",
-      "team": null
-    }
-  ],
+  "winners": [],
   "damages": [
     {
       "date": "2018-12-15T22:59:16+02:00",
@@ -80,8 +73,8 @@ expression: process_to_string(input)
         "color": "NONE",
         "team": null
       },
-      "damage": 6,
-      "lethal": false
+      "damage": 22,
+      "lethal": true
     },
     {
       "date": "2018-12-15T22:59:28+02:00",
@@ -98,7 +91,7 @@ expression: process_to_string(input)
         "color": "NONE",
         "team": null
       },
-      "damage": 10,
+      "damage": 12,
       "lethal": false
     }
   ],
@@ -129,8 +122,8 @@ expression: process_to_string(input)
               "color": "NONE",
               "team": null
             },
-            "damage": 6,
-            "lethal": false
+            "damage": 22,
+            "lethal": true
           },
           {
             "date": "2018-12-15T22:59:28+02:00",
@@ -147,19 +140,24 @@ expression: process_to_string(input)
               "color": "NONE",
               "team": null
             },
-            "damage": 10,
+            "damage": 12,
             "lethal": false
           }
         ],
-        "damages_taken_total": 16,
+        "damages_taken_total": 34,
         "damages_caused": [],
         "damages_caused_total": 0,
         "heals": [],
         "heals_total": 0,
         "kills": [],
-        "killed_by": null,
+        "killed_by": {
+          "type": "other",
+          "cause": {
+            "type": "fire"
+          }
+        },
         "game_duration": {
-          "secs": 2635,
+          "secs": 2623,
           "nanos": 0
         },
         "rank": 1
@@ -168,7 +166,7 @@ expression: process_to_string(input)
     "environmental_damages": {
       "entities": {},
       "environment": {
-        "fire": 16
+        "fire": 34
       }
     }
   },
