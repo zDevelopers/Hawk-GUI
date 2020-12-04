@@ -43,7 +43,7 @@ impl Event {
             .map(|raw_event| Self::from_raw(raw_event, begin))
             .collect();
 
-        events.sort_by(|a, b| a.date.cmp(&b.date));
+        events.sort_by_key(|e| e.date);
 
         events
     }

@@ -67,7 +67,7 @@ impl Report {
 
         let mut damages = raw_report.damages;
         // Damage::from_raw_vec expect damages to be sorted by chronological order.
-        damages.sort_by(|a, b| a.date.cmp(&b.date));
+        damages.sort_by_key(|d| d.date);
 
         let damages = damage::Damage::from_raw_vec(damages, &players, &begin)?;
         let heals = heal::Heal::from_raw_vec(raw_report.heals, &players, &begin)?;

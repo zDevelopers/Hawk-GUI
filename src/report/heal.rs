@@ -49,7 +49,7 @@ impl Heal {
             .map(|heal| Self::from_raw(heal, players, begin))
             .collect::<ReportResult<Vec<Self>>>()?;
 
-        heals.sort_by(|a, b| a.date.cmp(&b.date));
+        heals.sort_by_key(|h| h.date);
 
         Ok(heals)
     }

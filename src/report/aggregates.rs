@@ -159,9 +159,9 @@ impl Aggregate {
             .filter(|heal| &heal.healed.uuid == player)
             .collect();
 
-        damages_taken.sort_by(|a, b| a.date.cmp(&b.date));
-        damages_caused.sort_by(|a, b| a.date.cmp(&b.date));
-        heals.sort_by(|a, b| a.date.cmp(&b.date));
+        damages_taken.sort_by_key(|d| d.date);
+        damages_caused.sort_by_key(|d| d.date);
+        heals.sort_by_key(|h| h.date);
 
         PlayerAlterationsAggregate {
             damages_taken_total: (&damages_taken)
