@@ -92,7 +92,7 @@
     {
       "date": "2018-12-15T22:59:16+02:00",
       "cause": {
-        "cause": "PLAYER",
+        "type": "PLAYER",
         "player": "55b89885-673c-4458-a8bd-33ad9c6190b4",
         "weapon": {
           "id": "minecraft:iron_sword"
@@ -105,7 +105,7 @@
     {
       "date": "2018-12-15T22:58:48+02:00",
       "cause": {
-        "cause": "PLAYER",
+        "type": "PLAYER",
         "player": "55b89885-673c-4458-a8bd-33ad9c6190b4",
         "weapon": {
           "id": "minecraft:iron_sword",
@@ -123,7 +123,7 @@
     {
       "date": "2018-12-15T22:58:48+02:00",
       "cause": {
-        "cause": "ENTITY",
+        "type": "ENTITY",
         "entity": "minecraft:enderman"
       },
       "damagee": "445718ae-ee31-4e66-8d57-5a10457ab93b",
@@ -133,7 +133,7 @@
     {
       "date": "2019-01-10T03:34:22.159+01:00",
       "cause": {
-        "cause": "PLAYER",
+        "type": "PLAYER",
         "player": "da04cd54-c6c7-4672-97c5-85663f5bccf6",
         "weapon": {
           "id": "minecraft:bow",
@@ -159,7 +159,7 @@
   "heals": [
     {
       "date": "2018-12-16T00:12:21+02:00",
-      "cause": "GOLDEN_APPLE",
+      "type": "GOLDEN_APPLE",
       "healed": "0dd34bda-c13b-473b-a887-368027ca05ca",
       "heal": 8
     }

@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::{BTreeMap, HashMap};
 use std::rc::Rc;
 use std::time::Duration;
 
@@ -71,10 +71,10 @@ impl Player {
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct PlayerStatistics {
-    pub generic: Option<HashMap<String, u32>>,
-    pub used: Option<HashMap<String, u32>>,
-    pub mined: Option<HashMap<String, u32>>,
-    pub picked_up: Option<HashMap<String, u32>>,
+    pub generic: Option<BTreeMap<String, u32>>,
+    pub used: Option<BTreeMap<String, u32>>,
+    pub mined: Option<BTreeMap<String, u32>>,
+    pub picked_up: Option<BTreeMap<String, u32>>,
 }
 
 ///
@@ -183,7 +183,7 @@ impl DisplayedPlayerStatistics {
     }
 
     fn calculate_displayed(
-        statistics: &HashMap<String, u32>,
+        statistics: &BTreeMap<String, u32>,
         whitelist: &Vec<String>,
         highlight: &Vec<String>,
     ) -> DisplayedStatistics {

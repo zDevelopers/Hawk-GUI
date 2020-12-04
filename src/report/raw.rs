@@ -47,7 +47,7 @@ pub struct Damage {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "SCREAMING_SNAKE_CASE", tag = "cause")]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE", tag = "type")]
 pub enum DamageCause {
     Player(PlayerDamageCause),
     Entity(damage::EntityDamageCause),

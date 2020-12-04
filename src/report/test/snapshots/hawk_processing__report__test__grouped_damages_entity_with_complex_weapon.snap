@@ -1,0 +1,184 @@
+---
+source: src/report/test/mod.rs
+expression: process_to_string(input)
+---
+{
+  "match_uuid": "9be8ef14-a14e-4f96-b61e-b865c27ada8f",
+  "title": "§5KTZ §dVII",
+  "date": "2018-12-15T22:15:33+02:00",
+  "minecraft": null,
+  "settings": {
+    "date": true,
+    "players_count": true,
+    "winners": true,
+    "summary": {
+      "enabled": true,
+      "history": true,
+      "players": true,
+      "teams": true
+    },
+    "damages": {
+      "enabled": true,
+      "damages_per_players": true,
+      "damages_per_team": true,
+      "damages_from_environment": true,
+      "display_killer": true
+    },
+    "players": {
+      "enabled": true,
+      "play_time": true,
+      "global_statistics": true,
+      "statistics_whitelist": [],
+      "statistics_highlight": [],
+      "used": false,
+      "used_whitelist": [],
+      "used_highlight": [],
+      "mined": true,
+      "mined_whitelist": [],
+      "mined_highlight": [],
+      "picked_up": true,
+      "picked_up_whitelist": [],
+      "picked_up_highlight": []
+    },
+    "generator": null
+  },
+  "players": [
+    {
+      "uuid": "55b89885-673c-4458-a8bd-33ad9c6190b4",
+      "name": "Dada_exe",
+      "color": "NONE",
+      "team": null,
+      "tag_line": "Allié",
+      "tag_line_secondary": "",
+      "tag_line_details": "Allié avec Jenjeur",
+      "statistics": null,
+      "displayed_statistics": null
+    }
+  ],
+  "teams": [],
+  "winners": [
+    {
+      "uuid": "55b89885-673c-4458-a8bd-33ad9c6190b4",
+      "name": "Dada_exe",
+      "color": "NONE",
+      "team": null
+    }
+  ],
+  "damages": [
+    {
+      "date": "2018-12-15T22:59:16+02:00",
+      "since_beginning": {
+        "secs": 2623,
+        "nanos": 0
+      },
+      "cause": {
+        "type": "entity",
+        "entity": "minecraft:wither_skeleton",
+        "weapon": {
+          "id": "minecraft:stone_sword",
+          "Count": 1,
+          "tag": {
+            "Damage": null,
+            "Unbreakable": null,
+            "Enchantments": {
+              "flame": 1,
+              "infinity": 1,
+              "power": 4,
+              "unbreaking": 3
+            },
+            "StoredEnchantments": null,
+            "CustomPotionEffects": null,
+            "Potion": null,
+            "display": {
+              "Name": "Épée de l'Apocalypse",
+              "Lore": null
+            }
+          }
+        }
+      },
+      "damagee": {
+        "uuid": "55b89885-673c-4458-a8bd-33ad9c6190b4",
+        "name": "Dada_exe",
+        "color": "NONE",
+        "team": null
+      },
+      "damage": 12,
+      "lethal": false
+    }
+  ],
+  "heals": [],
+  "events": [],
+  "aggregates": {
+    "global_statistics": {
+      "generic": {},
+      "used": {},
+      "mined": {},
+      "picked_up": {}
+    },
+    "players_damages": {
+      "55b89885-673c-4458-a8bd-33ad9c6190b4": {
+        "damages_taken": [
+          {
+            "date": "2018-12-15T22:59:16+02:00",
+            "since_beginning": {
+              "secs": 2623,
+              "nanos": 0
+            },
+            "cause": {
+              "type": "entity",
+              "entity": "minecraft:wither_skeleton",
+              "weapon": {
+                "id": "minecraft:stone_sword",
+                "Count": 1,
+                "tag": {
+                  "Damage": null,
+                  "Unbreakable": null,
+                  "Enchantments": {
+                    "flame": 1,
+                    "infinity": 1,
+                    "power": 4,
+                    "unbreaking": 3
+                  },
+                  "StoredEnchantments": null,
+                  "CustomPotionEffects": null,
+                  "Potion": null,
+                  "display": {
+                    "Name": "Épée de l'Apocalypse",
+                    "Lore": null
+                  }
+                }
+              }
+            },
+            "damagee": {
+              "uuid": "55b89885-673c-4458-a8bd-33ad9c6190b4",
+              "name": "Dada_exe",
+              "color": "NONE",
+              "team": null
+            },
+            "damage": 12,
+            "lethal": false
+          }
+        ],
+        "damages_taken_total": 12,
+        "damages_caused": [],
+        "damages_caused_total": 0,
+        "heals": [],
+        "heals_total": 0,
+        "kills": [],
+        "killed_by": null,
+        "game_duration": {
+          "secs": 2623,
+          "nanos": 0
+        },
+        "rank": 1
+      }
+    },
+    "environmental_damages": {
+      "entities": {
+        "minecraft:wither_skeleton": 12
+      },
+      "environment": {}
+    }
+  },
+  "has_players_without_team": true
+}

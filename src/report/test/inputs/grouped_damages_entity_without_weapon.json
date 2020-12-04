@@ -1,0 +1,43 @@
+{
+  "match_uuid": "9be8ef14-a14e-4f96-b61e-b865c27ada8f",
+  "title": "§5KTZ §dVII",
+  "date": "2018-12-15T22:15:33+02:00",
+
+  "players": [
+    {
+      "uuid": "55b89885-673c-4458-a8bd-33ad9c6190b4",
+      "name": "Dada_exe",
+      "tag_line": "Allié",
+      "tag_line_details": "Allié avec Jenjeur"
+    }
+  ],
+
+  "teams": [],
+
+  "winners": [],
+
+  "damages": [
+    {
+      "date": "2018-12-15T22:59:16+02:00",
+      "cause": {
+        "type": "ENTITY",
+        "entity": "minecraft:enderman"
+      },
+      "damagee": "55b89885-673c-4458-a8bd-33ad9c6190b4",
+      "damage": 4
+    },
+    {
+      "date": "2018-12-15T22:59:18+02:00",
+      "cause": {
+        "type": "ENTITY",
+        "entity": "minecraft:enderman"
+      },
+      "damagee": "55b89885-673c-4458-a8bd-33ad9c6190b4",
+      "damage": 8
+    }
+  ],
+
+  "heals": [],
+
+  "events": []
+}

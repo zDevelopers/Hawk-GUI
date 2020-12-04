@@ -59,7 +59,10 @@ expression: process_to_string(input)
       "picked_up": {}
     },
     "players_damages": {},
-    "environmental_damages": {}
+    "environmental_damages": {
+      "entities": {},
+      "environment": {}
+    }
   },
   "has_players_without_team": false
 }

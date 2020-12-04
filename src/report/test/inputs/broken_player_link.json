@@ -59,7 +59,7 @@
     {
       "date": "2018-12-15T22:59:16+02:00",
       "cause": {
-        "cause": "PLAYER",
+        "type": "PLAYER",
         "player": "55b89885-673c-4458-a8bd-33ad9c6190b4",
         "weapon": {
           "id": "minecraft:iron_sword"

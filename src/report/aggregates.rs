@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::{BTreeMap, HashMap};
 use std::rc::Rc;
 use std::time::Duration;
 
@@ -13,8 +13,8 @@ use crate::report::report::since;
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Aggregate {
     pub global_statistics: PlayerStatistics,
-    pub players_damages: HashMap<Uuid, PlayerAlterationsAggregate>,
-    pub environmental_damages: HashMap<String, u32>,
+    pub players_damages: BTreeMap<Uuid, PlayerAlterationsAggregate>,
+    pub environmental_damages: EnvironmentalDamagesAggregate,
 }
 
 impl Aggregate {
@@ -66,9 +66,9 @@ impl Aggregate {
     }
 
     fn aggregate_single_statistic_group(
-        statistics: &Vec<HashMap<String, u32>>,
-    ) -> HashMap<String, u32> {
-        let mut aggregated = HashMap::new();
+        statistics: &Vec<BTreeMap<String, u32>>,
+    ) -> BTreeMap<String, u32> {
+        let mut aggregated = BTreeMap::new();
 
         statistics
             .iter()
@@ -95,8 +95,8 @@ impl Aggregate {
         damages: &Vec<Damage>,
         heals: &Vec<Heal>,
         begin: &DateTime<FixedOffset>,
-    ) -> HashMap<Uuid, PlayerAlterationsAggregate> {
-        let ranks: HashMap<Uuid, u8> = {
+    ) -> BTreeMap<Uuid, PlayerAlterationsAggregate> {
+        let ranks: BTreeMap<Uuid, u8> = {
             let mut lethal_damages: Vec<&Damage> =
                 damages.iter().filter(|damage| damage.lethal).collect();
             lethal_damages.sort_by(|a, b| a.date.cmp(&b.date).reverse());
@@ -218,16 +218,29 @@ impl Aggregate {
         }
     }
 
-    fn aggregate_environmental_damages(damages: &Vec<Damage>) -> HashMap<String, u32> {
-        let mut aggregated = HashMap::new();
+    fn aggregate_environmental_damages(damages: &Vec<Damage>) -> EnvironmentalDamagesAggregate {
+        let mut aggregated = EnvironmentalDamagesAggregate {
+            entities: BTreeMap::new(),
+            environment: BTreeMap::new()
+        };
 
         damages
             .iter()
             .filter(|damage| !matches!(damage.cause, DamageCause::Player { .. }))
             .for_each(|damage| {
-                aggregated.insert(
-                    damage.cause.clone().to_string(),
-                    match aggregated.get(&damage.cause.to_string()) {
+                let aggregate = match damage.cause {
+                    DamageCause::Entity(_) => &mut aggregated.entities,
+                    _ => &mut aggregated.environment
+                };
+
+                let key = match &damage.cause {
+                   DamageCause::Entity(cause) => cause.entity.clone(),
+                    _ => damage.cause.to_string()
+                };
+
+                aggregate.insert(
+                    key.clone(),
+                    match aggregate.get(&key.clone()) {
                         Some(aggregate) => aggregate + damage.damage as u32,
                         None => damage.damage as u32,
                     },
@@ -257,4 +270,10 @@ pub struct PlayerAlterationsAggregate {
 pub enum PlayerKiller {
     Player { player: SimplePlayer },
     Other { cause: DamageCause },
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct EnvironmentalDamagesAggregate {
+    pub entities: BTreeMap<String, u32>,
+    pub environment: BTreeMap<String, u32>
 }

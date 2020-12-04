@@ -32,7 +32,7 @@ impl Report {
     /// and returns a ready-to-be-serialized-and-used
     /// structure.
     ///
-    pub fn from_raw<'a>(raw_report: raw::Report) -> ReportResult<Self> {
+    pub fn from_raw<'a>(mut raw_report: raw::Report) -> ReportResult<Self> {
         let players_colors = {
             let mut players_colors = HashMap::new();
 
@@ -63,7 +63,12 @@ impl Report {
 
         let begin = &raw_report.date;
 
-        let damages = damage::Damage::from_raw_vec(&raw_report.damages, &players, &begin)?;
+        let damages = &mut raw_report.damages;
+
+        // Damage::from_raw_vec expect damages to be sorted by chronological order.
+        damages.sort_by(|a, b| a.date.cmp(&b.date));
+
+        let damages = damage::Damage::from_raw_vec(&damages, &players, &begin)?;
         let heals = heal::Heal::from_raw_vec(&raw_report.heals, &players, &begin)?;
 
         let winners = match raw_report.winners {

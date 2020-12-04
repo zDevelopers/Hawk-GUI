@@ -68,3 +68,25 @@ fn test_generator_without_name() {
 fn test_broken_player_reference_should_fail() {
     assert_input_fails("broken_player_link", "Processing must fail if there is a broken player reference");
 }
+
+#[test]
+fn test_grouped_damages_player() {
+    assert_input_with_snapshot("grouped_damages_player_without_weapon");
+    assert_input_with_snapshot("grouped_damages_player_with_simple_weapon");
+    assert_input_with_snapshot("grouped_damages_player_with_enchanted_weapon");
+    assert_input_with_snapshot("grouped_damages_player_with_complex_weapon");
+}
+
+#[test]
+fn test_grouped_damages_entity() {
+    assert_input_with_snapshot("grouped_damages_entity_without_weapon");
+    assert_input_with_snapshot("grouped_damages_entity_with_simple_weapon");
+    assert_input_with_snapshot("grouped_damages_entity_with_enchanted_weapon");
+    assert_input_with_snapshot("grouped_damages_entity_with_complex_weapon");
+}
+
+#[test]
+fn test_grouped_damages_environment() {
+    assert_input_with_snapshot("grouped_damages_environment");
+    assert_input_with_snapshot("grouped_damages_environment_fire");
+}
