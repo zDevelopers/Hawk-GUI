@@ -350,12 +350,18 @@ impl DisplayedPlayerStatistics {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, Eq, Hash)]
 pub struct SimplePlayer {
     pub uuid: Uuid,
     pub name: String,
     pub color: TeamColor,
     pub team: Option<String>,
+}
+
+impl PartialEq for SimplePlayer {
+    fn eq(&self, other: &Self) -> bool {
+        self.uuid == other.uuid
+    }
 }
 
 impl From<Player> for SimplePlayer {
