@@ -29,56 +29,17 @@ impl Damage {
         players: &HashMap<Uuid, Rc<Player>>,
         begin: &DateTime<FixedOffset>,
     ) -> ReportResult<Self> {
-        match players.get(&raw_damage.damagee) {
-            Some(damagee) => Ok(Self {
-                date: raw_damage.date.clone(),
-                since_beginning: since(&raw_damage.date, begin),
-                cause: match &raw_damage.cause {
-                    RawDamageCause::Player(cause) => DamageCause::Player(PlayerDamageCause {
-                        player: match players.get(&cause.player) {
-                            Some(player) => (*player).as_ref().into(),
-                            None => Err(InvalidReportError::MissingPlayerReference {
-                                uuid: cause.player,
-                            })?
-                        },
+        let damagee = players.get(&raw_damage.damagee)
+            .ok_or(InvalidReportError::MissingPlayerReference { uuid: raw_damage.damagee })?;
 
-                        weapon: cause.weapon.clone()
-                    }),
-                    RawDamageCause::Entity(cause) => DamageCause::Entity(cause.clone()),
-                    RawDamageCause::BlockExplosion => DamageCause::BlockExplosion,
-                    RawDamageCause::Contact => DamageCause::Contact,
-                    RawDamageCause::Cramming => DamageCause::Cramming,
-                    RawDamageCause::DragonBreath => DamageCause::DragonBreath,
-                    RawDamageCause::Drowning => DamageCause::Drowning,
-                    RawDamageCause::Dryout => DamageCause::Dryout,
-                    RawDamageCause::Fall => DamageCause::Fall,
-                    RawDamageCause::FallingBlock => DamageCause::FallingBlock,
-                    RawDamageCause::Fire | RawDamageCause::FireTick => DamageCause::Fire,
-                    RawDamageCause::FlyIntoWall => DamageCause::FlyIntoWall,
-                    RawDamageCause::HotFloor => DamageCause::HotFloor,
-                    RawDamageCause::Lava => DamageCause::Lava,
-                    RawDamageCause::Lightning => DamageCause::Lightning,
-                    RawDamageCause::Magic => DamageCause::Magic,
-                    RawDamageCause::Melting => DamageCause::Melting,
-                    RawDamageCause::Poison => DamageCause::Poison,
-                    RawDamageCause::Projectile => DamageCause::Projectile,
-                    RawDamageCause::Starvation => DamageCause::Starvation,
-                    RawDamageCause::Suffocation => DamageCause::Suffocation,
-                    RawDamageCause::Suicide => DamageCause::Suicide,
-                    RawDamageCause::Thorns => DamageCause::Thorns,
-                    RawDamageCause::Void => DamageCause::Void,
-                    RawDamageCause::Wither => DamageCause::Wither,
-                    RawDamageCause::Command => DamageCause::Command,
-                    RawDamageCause::Unknown => DamageCause::Unknown
-                },
-                damagee: (*damagee).as_ref().into(),
-                damage: raw_damage.damage,
-                lethal: raw_damage.lethal,
-            }),
-            None => Err(InvalidReportError::MissingPlayerReference {
-                uuid: raw_damage.damagee,
-            }),
-        }
+        Ok(Self {
+            date: raw_damage.date.clone(),
+            since_beginning: since(&raw_damage.date, begin),
+            cause: DamageCause::from_raw(&raw_damage.cause, players)?,
+            damagee: (*damagee).as_ref().into(),
+            damage: raw_damage.damage,
+            lethal: raw_damage.lethal,
+        })
     }
 
     pub fn should_merge_with(&self, other: &Damage) -> bool {
@@ -177,5 +138,43 @@ impl DamageCause {
 
             _ => false
         }
+    }
+
+    pub fn from_raw(raw: &RawDamageCause, players: &HashMap<Uuid, Rc<Player>>) -> ReportResult<Self> {
+        Ok(match raw {
+            RawDamageCause::Player(cause) => DamageCause::Player(PlayerDamageCause {
+                player: players.get(&cause.player)
+                    .ok_or(InvalidReportError::MissingPlayerReference { uuid: cause.player })?
+                    .into(),
+
+                weapon: cause.weapon.clone()
+            }),
+            RawDamageCause::Entity(cause) => DamageCause::Entity(cause.clone()),
+            RawDamageCause::BlockExplosion => DamageCause::BlockExplosion,
+            RawDamageCause::Contact => DamageCause::Contact,
+            RawDamageCause::Cramming => DamageCause::Cramming,
+            RawDamageCause::DragonBreath => DamageCause::DragonBreath,
+            RawDamageCause::Drowning => DamageCause::Drowning,
+            RawDamageCause::Dryout => DamageCause::Dryout,
+            RawDamageCause::Fall => DamageCause::Fall,
+            RawDamageCause::FallingBlock => DamageCause::FallingBlock,
+            RawDamageCause::Fire | RawDamageCause::FireTick => DamageCause::Fire,
+            RawDamageCause::FlyIntoWall => DamageCause::FlyIntoWall,
+            RawDamageCause::HotFloor => DamageCause::HotFloor,
+            RawDamageCause::Lava => DamageCause::Lava,
+            RawDamageCause::Lightning => DamageCause::Lightning,
+            RawDamageCause::Magic => DamageCause::Magic,
+            RawDamageCause::Melting => DamageCause::Melting,
+            RawDamageCause::Poison => DamageCause::Poison,
+            RawDamageCause::Projectile => DamageCause::Projectile,
+            RawDamageCause::Starvation => DamageCause::Starvation,
+            RawDamageCause::Suffocation => DamageCause::Suffocation,
+            RawDamageCause::Suicide => DamageCause::Suicide,
+            RawDamageCause::Thorns => DamageCause::Thorns,
+            RawDamageCause::Void => DamageCause::Void,
+            RawDamageCause::Wither => DamageCause::Wither,
+            RawDamageCause::Command => DamageCause::Command,
+            RawDamageCause::Unknown => DamageCause::Unknown
+        })
     }
 }
