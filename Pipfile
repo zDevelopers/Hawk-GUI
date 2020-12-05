@@ -13,4 +13,3 @@ django = "*"
 django-ipware = "*"
 python-levenshtein = "*"
 requests = "*"
-

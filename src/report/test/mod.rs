@@ -90,3 +90,8 @@ fn test_grouped_damages_environment() {
     assert_input_with_snapshot("grouped_damages_environment");
     assert_input_with_snapshot("grouped_damages_environment_fire");
 }
+
+#[test]
+fn test_grouped_damages_with_multiple_actors() {
+    assert_input_with_snapshot("grouped_damages_multiple_actors_environment");
+}

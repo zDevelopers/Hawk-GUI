@@ -13,6 +13,7 @@ use crate::report::raw::Damage as RawDamage;
 use crate::report::raw::DamageCause as RawDamageCause;
 use crate::report::report::since;
 
+/// Some damage made to a player, represented as a single line on the web interface.
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Damage {
     pub date: DateTime<FixedOffset>,
@@ -24,13 +25,19 @@ pub struct Damage {
 }
 
 impl Damage {
+    /// Converts raw damages to processed ones, individually. The grouping is done in the
+    /// `from_raw_vec` method.
     pub fn from_raw(
         raw_damage: RawDamage,
         players: &HashMap<Uuid, Rc<Player>>,
         begin: &DateTime<FixedOffset>,
     ) -> ReportResult<Self> {
-        let damagee = players.get(&raw_damage.damagee)
-            .ok_or(InvalidReportError::MissingPlayerReference { uuid: raw_damage.damagee })?;
+        let damagee =
+            players
+                .get(&raw_damage.damagee)
+                .ok_or(InvalidReportError::MissingPlayerReference {
+                    uuid: raw_damage.damagee,
+                })?;
 
         Ok(Self {
             date: raw_damage.date,
@@ -42,11 +49,15 @@ impl Damage {
         })
     }
 
+    /// Checks if two consecutive damages from a player should be merged into one
+    /// in the web interface.
     pub fn should_merge_with(&self, other: &Damage) -> bool {
         self.cause == other.cause && !self.lethal
     }
 
-    pub fn merge_with (&mut self, other: &Damage) {
+    /// Merges this damage with another one. The damage points, and the lethality, are updated,
+    /// but not the date, so the other damage should be posterior.
+    pub fn merge_with(&mut self, other: &Damage) {
         self.damage += other.damage;
         // If the new damage is lethal, so is the previous one grouped with the new.
         self.lethal = other.lethal;
@@ -74,7 +85,7 @@ impl Damage {
             match latest_damage_per_damagee.get_mut(&damage.damagee.uuid) {
                 Some(prev_damage) if prev_damage.should_merge_with(&damage) => {
                     prev_damage.merge_with(&damage)
-                },
+                }
                 _ => {
                     let prev_damage = latest_damage_per_damagee.insert(damage.damagee.uuid, damage);
                     if let Some(prev_damage) = prev_damage {
@@ -93,6 +104,7 @@ impl Damage {
     }
 }
 
+/// Represents what caused a damage, including metadata (like player or entity, and weapon) if any.
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, Hash, Display)]
 #[serde(rename_all = "snake_case", tag = "type")]
 #[strum(serialize_all = "snake_case")]
@@ -132,33 +144,40 @@ pub enum DamageCause {
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, Hash)]
 pub struct EntityDamageCause {
     pub entity: String,
-    pub weapon: Option<Item>
+    pub weapon: Option<Item>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, Hash)]
 pub struct PlayerDamageCause {
     pub player: SimplePlayer,
-    pub weapon: Option<Item>
+    pub weapon: Option<Item>,
 }
 
 impl DamageCause {
+    /// Checks if this damage is caused by some sort of creature (either an entity or a player).
     pub fn is_creature(&self) -> bool {
         match self {
             DamageCause::Player(_) => true,
             DamageCause::Entity(_) => true,
 
-            _ => false
+            _ => false,
         }
     }
 
-    pub fn from_raw(raw: RawDamageCause, players: &HashMap<Uuid, Rc<Player>>) -> ReportResult<Self> {
+    /// Converts a raw damage cause to a processed one. Players UUIDs are replaced by simple players
+    /// references, and `Fire` and `FireTick` are merged together.
+    pub fn from_raw(
+        raw: RawDamageCause,
+        players: &HashMap<Uuid, Rc<Player>>,
+    ) -> ReportResult<Self> {
         Ok(match raw {
             RawDamageCause::Player(cause) => DamageCause::Player(PlayerDamageCause {
-                player: players.get(&cause.player)
+                player: players
+                    .get(&cause.player)
                     .ok_or(InvalidReportError::MissingPlayerReference { uuid: cause.player })?
                     .into(),
 
-                weapon: cause.weapon
+                weapon: cause.weapon,
             }),
             RawDamageCause::Entity(cause) => DamageCause::Entity(cause),
             RawDamageCause::BlockExplosion => DamageCause::BlockExplosion,
@@ -185,7 +204,7 @@ impl DamageCause {
             RawDamageCause::Void => DamageCause::Void,
             RawDamageCause::Wither => DamageCause::Wither,
             RawDamageCause::Command => DamageCause::Command,
-            RawDamageCause::Unknown => DamageCause::Unknown
+            RawDamageCause::Unknown => DamageCause::Unknown,
         })
     }
 }
