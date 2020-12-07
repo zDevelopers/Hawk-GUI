@@ -95,10 +95,14 @@ impl Damage {
             };
         }
 
-        let damages = previous_damages
+        let mut damages: Vec<Damage> = previous_damages
             .into_iter()
             .chain(latest_damage_per_damagee.into_iter().map(|(_, d)| d))
             .collect();
+
+        // Ensures the latest inserted damages (the ones from latest_damage_per_damagee)
+        // are correctly sorted.
+        damages.sort_by_key(|d| d.date);
 
         Ok(damages)
     }
