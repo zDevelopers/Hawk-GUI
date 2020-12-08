@@ -1,11 +1,26 @@
 from datetime import datetime, timedelta
 
 import math
+from functools import reduce
+
 from django import template
 from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _, ngettext_lazy
 
 register = template.Library()
+
+
+def deep_get(dictionary, path, default=None):
+    """
+    Finds the value represented by the path in the dictionary, or the default
+    value if not found.
+
+    :param dictionary: The dictionary.
+    :param path: The path in the dictionary (e.g. “key.sub-key.sub-sub-key”).
+    :param default: The default value returned if not found.
+    :return: The value found, or the default.
+    """
+    return reduce(lambda d, key: d.get(key, default) if isinstance(d, dict) else default, path.split("."), dictionary)
 
 
 @register.filter
@@ -162,12 +177,12 @@ def damage_tooltip(damage):
     }
 
 
-@register.inclusion_tag("partials/tooltips/weapon.html")
-def weapon_tooltip(weapon, weapon_name=None, weapon_enchantments=None):
+@register.inclusion_tag("partials/tooltips/item.html")
+def item_tooltip(item):
     return {
-        "weapon": weapon,
-        "weapon_name": weapon_name,
-        "weapon_enchantments": weapon_enchantments,
+        "item": item,
+        "item_name": deep_get(item, "tag.display.Name", ""),
+        "item_enchantments": (deep_get(item, 'tag.Enchantments', []) or []) + (deep_get(item, 'tag.StoredEnchantments', []) or []),
     }
 
 

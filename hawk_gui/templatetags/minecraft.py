@@ -683,22 +683,3 @@ def is_creature(damage_cause: str):
         damage_cause.upper().replace("-", "_").replace(" ", "_")
         not in ENVIRONMENT_DAMAGE_CAUSES
     )
-
-
-def gen_filtering_dict_filter(filter_callable):
-    def func(unfiltered_dict):
-        for key, value in unfiltered_dict.items():
-            if filter_callable(key):
-                yield key, value
-
-    return func
-
-
-register.filter(
-    "only_creatures",
-    gen_filtering_dict_filter(lambda cause: cause not in ENVIRONMENT_DAMAGE_CAUSES),
-)
-register.filter(
-    "only_environment",
-    gen_filtering_dict_filter(lambda cause: cause in ENVIRONMENT_DAMAGE_CAUSES),
-)

@@ -2,24 +2,24 @@
 
 <time class="has-minecraft-dark-gray-color" datetime="{{ damage.date }}"> {{ damage.since_beginning | duration }}</time>
 
-{% if damage.cause == 'PLAYER' and damage.damager %}
-    {% player_tooltip_title damage.damager %}
+{% if damage.cause.type == 'player' and damage.cause.player %}
+    {% player_tooltip_title damage.cause.player %}
 {% else %}
-    <span class="has-minecraft-white-color">{{ damage.cause | name }}</span>
+    <span class="has-minecraft-white-color">{{ damage.cause.type | name }}</span>
 {% endif %}
 
 <br />
 <span class="has-minecraft-gray-color">{{ hearts_count_for_display }}</span>
 
-{% if damage.cause|is_creature %}
+{% if damage.cause.type == 'entity' %}
     <br />
     <span class="has-minecraft-gray-color">
-        {% if damage.weapon_enchantments %}
-            {% blocktrans with weapon=damage.weapon|name %}
+        {% if damage.cause.weapon.tag.Enchantments %}
+            {% blocktrans with weapon=damage.cause.weapon.id|name %}
                 {{ weapon }} with enchants
             {% endblocktrans %}
         {% else %}
-            {{ damage.weapon | name }}
+            {{ damage.cause.weapon.id | name }}
         {% endif %}
     </span>
 {% endif %}
