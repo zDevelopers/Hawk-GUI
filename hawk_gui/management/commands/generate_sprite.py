@@ -6,7 +6,7 @@ from pathlib import Path
 from shutil import copyfile
 from zipfile import ZipFile, BadZipFile
 
-from PIL import Image
+from PIL import Image, ImageOps
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 
@@ -31,13 +31,17 @@ RESOURCES_PACK_REPLACEMENTS = [
     ("clock", "clock_04.png", "clock.png"),
     ("bow_pulling", "bow_pulling_1.png", "bow-pulling.png"),
     ("crossbow_pulling", "crossbow_pulling_2.png", "crossbow-pulling.png"),
+    ("respawn_anchor_side", "respawn_anchor_side4.png", "respawn-anchor-side.png"),
+    ("redstone_dust_line", "redstone_dust_line1.png", "redstone-dust-line.png"),
+    ("bamboo_stage", "bamboo_stage0.png", "bamboo-shoot.png")
 ]
 
 # Some icons are not wanted, e.g. when a block and its item are saved under the
 # same name and the block texture is unusable. This is matched against the
 # end of the file name.
 RESOURCES_PACK_EXCLUSIONS = [
-    "block/soul_lantern.png"
+    "block/soul_lantern.png",  # Non-icon texture
+    "block/redstone_dust_overlay.png",  # Actually transparent
 ]
 
 # In the resources pack, some textures are animated, and to do so
@@ -85,6 +89,36 @@ RESOURCES_PACK_TRIM_ANIMATIONS = [
     "crimson-stem.png",
     "soul-lantern.png",
 ]
+
+# The dicts keys are the parameters to give to ImageOps.colorize() to
+# colorize the textures.
+COLORS_WATER = {"white": (63, 118, 228), "black": (5, 5, 51)}
+COLORS_GRASS = {"white": (145, 189, 89), "black": (13, 18, 8)}
+COLORS_LEAVES_BIRCH = {"white": (128, 167, 85), "black": (38, 50, 25)}
+COLORS_LEAVES_SPRUCE = {"white": (97, 153, 97), "black": (29, 45, 29)}
+COLORS_LEAVES_OTHERS = {"white": (72, 181, 24), "black": (21, 54, 7)}
+COLORS_REDSTONE = {"white": (230, 32, 8), "black": (115, 12, 0)}
+
+RESOURCES_PACK_COLORIZE = {
+    "water.png": COLORS_WATER,
+    "grass.png": COLORS_GRASS,
+    "vine.png": COLORS_LEAVES_OTHERS,
+    "grass-block-top.png": COLORS_GRASS,
+    "grass-block-side-overlay.png": COLORS_GRASS,
+    "tall-grass-top.png": COLORS_GRASS,
+    "tall-grass-bottom.png": COLORS_GRASS,
+    "large-fern-top.png": COLORS_GRASS,
+    "large-fern-bottom.png": COLORS_GRASS,
+    "lily-pad.png": COLORS_LEAVES_OTHERS,
+    "oak-leaves.png": COLORS_LEAVES_OTHERS,
+    "dark-oak-leaves.png": COLORS_LEAVES_OTHERS,
+    "acacia-leaves.png": COLORS_LEAVES_OTHERS,
+    "spruce-leaves.png": COLORS_LEAVES_SPRUCE,
+    "jungle-leaves.png": COLORS_LEAVES_OTHERS,
+    "redstone-dust-overlay.png": COLORS_REDSTONE,
+    "redstone-dust-line.png": COLORS_REDSTONE,
+    "redstone-dust-dot.png": COLORS_REDSTONE,
+}
 
 # Not all icons are available in large format, to get a smaller sprite.
 # All entities are, plus these ones. We use them to display damages source
@@ -166,20 +200,38 @@ class Command(BaseCommand):
             default=False,
             help="Disables file size optimizations",
         )
+        parser.add_argument(
+            "--debug",
+            action="store_true",
+            default=False,
+            help="Creates a debug HTML file in the sprites output directory",
+        )
 
     def handle(self, *args, **options):
         resources_pack = Path(options["resources_pack"])
         images = Path(options["images"])
+        debug = options["debug"]
 
         output_sprite = Path(options["output_sprite"])
         output_scss = Path(options["output_scss"])
         output_json = Path(options["output_json"])
+        debug_dir = output_sprite.parent / "debug"
 
         if not resources_pack.exists() or not resources_pack.is_file():
             raise CommandError("The resources pack doesn't exist or is not a file.")
         if not images.exists() or not images.is_dir():
             raise CommandError(
                 "The images directory doesn't exist or is not a directory."
+            )
+
+        if debug:
+            debug_dir.mkdir(parents=True, exist_ok=True)
+            self.stderr.write(self.style.WARNING("Running in debug mode."))
+            self.stderr.write(
+                self.style.WARNING(
+                    f"A test webpage will be created into {debug_dir}. "
+                    f"SCSS files will NOT be updated."
+                )
             )
 
         try:
@@ -240,11 +292,17 @@ class Command(BaseCommand):
                             sprite_name = get_sprite_name(texture.name)
                             if sprite_name:
                                 destination = (
-                                    working_dir_sprite_images / f"{prefix}-{sprite_name}"
+                                    working_dir_sprite_images
+                                    / f"{prefix}-{sprite_name}"
                                 )
                                 texture.rename(destination)
                                 if sprite_name in RESOURCES_PACK_TRIM_ANIMATIONS:
                                     self.trim_animation(destination)
+                                if sprite_name in RESOURCES_PACK_COLORIZE:
+                                    self.colorize(
+                                        destination,
+                                        RESOURCES_PACK_COLORIZE[sprite_name],
+                                    )
 
                 filter_process_and_move_textures(pack_blocks, "block")
                 filter_process_and_move_textures(pack_items, "item")
@@ -312,18 +370,41 @@ class Command(BaseCommand):
 
                 self.stdout.write("Building sprite…")
 
-                subprocess.call(
-                    [
-                        "glue",
-                        "--source",
-                        str(working_dir_sprite_images_final),
-                        "--output",
-                        str(working_dir_glue),
-                        "--json",
-                        str(working_dir_glue),
-                        "--quiet",
+                glue_cmd = [
+                    "glue",
+                    "--source",
+                    str(working_dir_sprite_images_final),
+                    "--output",
+                    str(working_dir_glue),
+                    "--json",
+                    str(working_dir_glue),
+                    "--quiet",
+                ]
+
+                if debug:
+                    glue_cmd += [
+                        "--css",
+                        str(debug_dir),
+                        "--img",
+                        str(debug_dir),
+                        "--html",
+                        str(debug_dir),
                     ]
-                )
+
+                subprocess.call(glue_cmd)
+
+                if debug:
+                    self.stdout.write(
+                        self.style.SUCCESS(
+                            f"Test webpage available at {debug_dir / 'final.html'}"
+                        )
+                    )
+                    self.stdout.write(
+                        self.style.WARNING(
+                            f"Rerun without --debug to actually generate SCSS files."
+                        )
+                    )
+                    return
 
                 # Okay so now we have two files in the `working_dir_glue`: one
                 # `final.png`, our sprite, and one `final.json`, the data about
@@ -417,3 +498,25 @@ class Command(BaseCommand):
         :param filename: The filename (works in-place)
         """
         Image.open(filename).crop((0, 0, 16, 16)).save(filename)
+
+    @staticmethod
+    def colorize(filename, parameters):
+        """
+        Colorizes a grayscale image, keeping alpha channel as-is.
+
+        :param filename: The filename (works in-place)
+        :param parameters: A dict with parameters to give to ImageOps.colorize().
+        :return:
+        """
+        image = Image.open(filename).convert("RGBA")
+        alpha = image.getchannel('A')
+        grayscale = ImageOps.grayscale(image)
+
+        # Colorize gray image
+        image = ImageOps.colorize(grayscale, **parameters)
+
+        # Put back alpha channel
+        image.putalpha(alpha)
+
+        # Save
+        image.save(filename)
