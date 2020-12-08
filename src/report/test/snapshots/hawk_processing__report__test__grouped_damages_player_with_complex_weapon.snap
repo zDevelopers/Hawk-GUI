@@ -83,14 +83,25 @@ expression: process_to_string(input)
           "id": "minecraft:netherite_sword",
           "Count": 1,
           "tag": {
-            "Damage": null,
             "Unbreakable": null,
-            "Enchantments": {
-              "flame": 1,
-              "infinity": 1,
-              "power": 4,
-              "unbreaking": 3
-            },
+            "Enchantments": [
+              {
+                "id": "minecraft:power",
+                "lvl": 2
+              },
+              {
+                "id": "minecraft:flame",
+                "lvl": 1
+              },
+              {
+                "id": "minecraft:unbreaking",
+                "lvl": 3
+              },
+              {
+                "id": "minecraft:infinity",
+                "lvl": 1
+              }
+            ],
             "StoredEnchantments": null,
             "CustomPotionEffects": null,
             "Potion": null,
@@ -141,14 +152,25 @@ expression: process_to_string(input)
                 "id": "minecraft:netherite_sword",
                 "Count": 1,
                 "tag": {
-                  "Damage": null,
                   "Unbreakable": null,
-                  "Enchantments": {
-                    "flame": 1,
-                    "infinity": 1,
-                    "power": 4,
-                    "unbreaking": 3
-                  },
+                  "Enchantments": [
+                    {
+                      "id": "minecraft:power",
+                      "lvl": 2
+                    },
+                    {
+                      "id": "minecraft:flame",
+                      "lvl": 1
+                    },
+                    {
+                      "id": "minecraft:unbreaking",
+                      "lvl": 3
+                    },
+                    {
+                      "id": "minecraft:infinity",
+                      "lvl": 1
+                    }
+                  ],
                   "StoredEnchantments": null,
                   "CustomPotionEffects": null,
                   "Potion": null,
@@ -189,14 +211,25 @@ expression: process_to_string(input)
                 "id": "minecraft:netherite_sword",
                 "Count": 1,
                 "tag": {
-                  "Damage": null,
                   "Unbreakable": null,
-                  "Enchantments": {
-                    "flame": 1,
-                    "infinity": 1,
-                    "power": 4,
-                    "unbreaking": 3
-                  },
+                  "Enchantments": [
+                    {
+                      "id": "minecraft:power",
+                      "lvl": 2
+                    },
+                    {
+                      "id": "minecraft:flame",
+                      "lvl": 1
+                    },
+                    {
+                      "id": "minecraft:unbreaking",
+                      "lvl": 3
+                    },
+                    {
+                      "id": "minecraft:infinity",
+                      "lvl": 1
+                    }
+                  ],
                   "StoredEnchantments": null,
                   "CustomPotionEffects": null,
                   "Potion": null,

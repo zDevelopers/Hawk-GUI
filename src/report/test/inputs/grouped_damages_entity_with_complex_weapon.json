@@ -28,12 +28,24 @@
             "display": {
               "Name": "Épée de l'Apocalypse"
             },
-            "Enchantments": {
-              "power": 4,
-              "flame": 1,
-              "unbreaking": 3,
-              "infinity": 1
-            }
+            "Enchantments": [
+              {
+                "id": "minecraft:power",
+                "lvl": 2
+              },
+              {
+                "id": "minecraft:flame",
+                "lvl": 1
+              },
+              {
+                "id": "minecraft:unbreaking",
+                "lvl": 3
+              },
+              {
+                "id": "minecraft:infinity",
+                "lvl": 1
+              }
+            ]
           }
         }
       },
@@ -51,12 +63,24 @@
             "display": {
               "Name": "Épée de l'Apocalypse"
             },
-            "Enchantments": {
-              "power": 4,
-              "flame": 1,
-              "unbreaking": 3,
-              "infinity": 1
-            }
+            "Enchantments": [
+              {
+                "id": "minecraft:power",
+                "lvl": 2
+              },
+              {
+                "id": "minecraft:flame",
+                "lvl": 1
+              },
+              {
+                "id": "minecraft:unbreaking",
+                "lvl": 3
+              },
+              {
+                "id": "minecraft:infinity",
+                "lvl": 1
+              }
+            ]
           }
         }
       },

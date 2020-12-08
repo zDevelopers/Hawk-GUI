@@ -1,5 +1,3 @@
-use std::collections::BTreeMap;
-
 #[inline(always)]
 fn default_one_u8() -> u8 {
     1
@@ -29,14 +27,21 @@ pub struct Item {
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, Hash)]
 #[serde(rename_all = "PascalCase")]
 pub struct ItemTag {
-    pub damage: Option<u8>,
     pub unbreakable: Option<u8>,  // Technically a boolean but stored as 0/1
-    pub enchantments: Option<BTreeMap<String, u32>>, // As silly as this could sound, the maximal enchantment level (for 1.14+) is 2,147,483,647
-    pub stored_enchantments: Option<BTreeMap<String, u32>>,
+    pub enchantments: Option<Vec<EnchantmentTag>>,
+    pub stored_enchantments: Option<Vec<EnchantmentTag>>,
     pub custom_potion_effects: Option<Vec<PotionEffectTag>>,
     pub potion: Option<String>,
     #[serde(rename = "display")]
     pub display: Option<DisplayTag>
+}
+
+/// An enchantment applied to an item.
+#[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, Hash)]
+pub struct EnchantmentTag {
+    pub id: String,
+    #[serde(default = "default_one_u32")]
+    pub lvl: u32  // As silly as this could sound, the maximal enchantment level (for 1.14+) is 2,147,483,647
 }
 
 /// A potion effect (ignoring fields we don't care about, i.e. display-related ones).
