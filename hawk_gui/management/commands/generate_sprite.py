@@ -24,12 +24,20 @@ RESOURCES_PACK_REPLACEMENTS = [
     ("destroy_stage", "destroy_stage_9.png", "destroy-stage.png"),
     ("frosted_ice", "frosted_ice_0.png", "frosted-ice.png"),
     ("fire", "fire_1.png", "fire.png"),
+    ("soul_fire", "soul_fire_1.png", "soul-fire.png"),
     ("lava", "lava_still.png", "lava.png"),
     ("water", "water_still.png", "water.png"),
     ("compass", "compass_19.png", "compass.png"),
     ("clock", "clock_04.png", "clock.png"),
     ("bow_pulling", "bow_pulling_1.png", "bow-pulling.png"),
     ("crossbow_pulling", "crossbow_pulling_2.png", "crossbow-pulling.png"),
+]
+
+# Some icons are not wanted, e.g. when a block and its item are saved under the
+# same name and the block texture is unusable. This is matched against the
+# end of the file name.
+RESOURCES_PACK_EXCLUSIONS = [
+    "block/soul_lantern.png"
 ]
 
 # In the resources pack, some textures are animated, and to do so
@@ -51,6 +59,7 @@ RESOURCES_PACK_TRIM_ANIMATIONS = [
     "prismarine.png",
     "lava.png",
     "nether-portal.png",
+    "portal.png",
     "tall-seagrass-bottom.png",
     "repeating-command-block-side.png",
     "repeating-command-block-conditional.png",
@@ -58,14 +67,23 @@ RESOURCES_PACK_TRIM_ANIMATIONS = [
     "chain-command-block-back.png",
     "chain-command-block-side.png",
     "fire.png",
+    "soul-fire.png",
+    "soul-fire-0.png",
+    "soul-fire-1.png",
     "blast-furnace-front-on.png",
     "command-block-conditional.png",
     "chain-command-block-conditional.png",
     "command-block-side.png",
     "campfire-fire.png",
+    "soul-campfire-fire.png",
     "chain-command-block-front.png",
     "command-block-front.png",
     "campfire-log-lit.png",
+    "soul-campfire-log-lit.png",
+    "respawn-anchor-top.png",
+    "warped-stem.png",
+    "crimson-stem.png",
+    "soul-lantern.png",
 ]
 
 # Not all icons are available in large format, to get a smaller sprite.
@@ -215,14 +233,18 @@ class Command(BaseCommand):
 
                 def filter_process_and_move_textures(folder: Path, prefix: str):
                     for texture in folder.glob("*.png"):
-                        sprite_name = get_sprite_name(texture.name)
-                        if sprite_name:
-                            destination = (
-                                working_dir_sprite_images / f"{prefix}-{sprite_name}"
-                            )
-                            texture.rename(destination)
-                            if sprite_name in RESOURCES_PACK_TRIM_ANIMATIONS:
-                                self.trim_animation(destination)
+                        for exclusion in RESOURCES_PACK_EXCLUSIONS:
+                            if str(texture).lower().endswith(exclusion):
+                                break
+                        else:
+                            sprite_name = get_sprite_name(texture.name)
+                            if sprite_name:
+                                destination = (
+                                    working_dir_sprite_images / f"{prefix}-{sprite_name}"
+                                )
+                                texture.rename(destination)
+                                if sprite_name in RESOURCES_PACK_TRIM_ANIMATIONS:
+                                    self.trim_animation(destination)
 
                 filter_process_and_move_textures(pack_blocks, "block")
                 filter_process_and_move_textures(pack_items, "item")
