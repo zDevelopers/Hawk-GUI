@@ -1,8 +1,11 @@
 styles:
-	sass -s compressed static/scss/hawk.scss:static/dist/css/hawk.min.css
+	sass --style compressed static/scss/hawk.scss:static/dist/css/hawk.min.css
 
 watch:
-	sass -s compressed --watch static/scss/hawk.scss:static/dist/css/hawk.min.css
+	sass --style compressed --watch static/scss/hawk.scss:static/dist/css/hawk.min.css
+
+run-back:
+	python manage.py runserver
 
 install-dev:
 	pipenv install --dev
@@ -14,3 +17,6 @@ link-dev:
 install-release:
 	pipenv install
 	maturin develop --release # TODO update
+
+run: link-dev
+	make -j2 run-back watch
