@@ -47,8 +47,11 @@ nav.players-statistics-navigation {
             }
 
             &:not(.is-active) {
+                position: relative;
+                bottom: -.3rem;
+
                 a {
-                    box-shadow: 0 4px 0 black;  // Allows a black bottom border without 45deg angles
+                    // box-shadow: 0 4px 0 black;  // Allows a black bottom border without 45deg angles
                     border-bottom: 1px;
 
                     &:hover {

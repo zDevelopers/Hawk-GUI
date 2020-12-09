@@ -1,0 +1,30 @@
+{% load i18n static humanize %}
+{% load minecraft hawk_ui hawk_utils captureas %}
+
+<nav class="tabs players-statistics-navigation">
+    <ul>
+        <li class="is-active">
+            <a href="#global">
+                <span class="i-item-music-disc-pigstep-medium" aria-describedby="tooltip-statistics-tabs-global"></span>
+            </a>
+        </li>
+        {% for player in report.players|dictsort:"name" %}
+            <li>
+                <a href="#players:{{ player.name }}">
+                    <img src="{{ player | head:48 }}" alt="{{ player.name }}" class="is-rounded" aria-describedby="tooltip-statistics-tabs-{{ player.uuid }}" />
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class="hawk-tooltip" id="tooltip-statistics-tabs-global">{% trans "Global statistics" %}</div>
+    {% for player in report.players %}<div class="hawk-tooltip" id="tooltip-statistics-tabs-{{ player.uuid }}">{{ player.name }}</div>{% endfor %}
+</nav>
+
+{% include "sections/statistics/section.html" with displayed_statistics=report.aggregates.global_statistics only %}
+
+{% for player in report.players|dictsort:"name" %}
+    {% with aggreg=report.aggregates.players_damages|lookup_key:player.uuid %}
+        {% include "sections/statistics/section.html" with report=report player=player displayed_statistics=player.displayed_statistics aggreg=aggreg only %}
+    {% endwith %}
+{% endfor %}

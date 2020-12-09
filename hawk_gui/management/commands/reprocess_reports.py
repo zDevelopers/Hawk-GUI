@@ -13,7 +13,18 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for report in Report.objects.all():
             raw_report = report.raw_report.read().decode("utf-8")
-            processed = process_report(raw_report)
+
+            try:
+                processed = process_report(raw_report)
+            except ValueError as e:
+                self.stderr.write(self.style.WARNING(f"Unable to reprocess report {report.slug} ({report.uuid} - "
+                                                     f"{report.title}) - it may be outdated?"))
+                self.stderr.write(str(e))
+                continue
+            except RuntimeError as e:
+                self.stderr.write(self.style.ERROR(f"Error while reprocessing report {report.slug}"))
+                self.stderr.write(str(e))
+                continue
 
             # We first remove the file to avoid Django creating another with a
             # suffix—we don't care if we overwrite the old one

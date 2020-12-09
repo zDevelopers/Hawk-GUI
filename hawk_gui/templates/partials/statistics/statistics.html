@@ -1,7 +1,7 @@
 {% load i18n %}
 
 {% if statistics.visible %}
-    {% include "partials/statistics/sub-list.html" with player=player displayed_statistics=statistics.visible only %}
+    {% include "partials/statistics/sub-list.html" with key=key displayed_statistics=statistics.visible only %}
 {% endif %}
 
 {% if statistics.visible and statistics.hidden %}
@@ -10,8 +10,8 @@
 
 {% if statistics.hidden %}
     {% if statistics.visible %}
-        {% include "partials/statistics/sub-list.html" with player=player displayed_statistics=statistics.hidden statistics_container_classes="is-hidden-statistics" only %}
+        {% include "partials/statistics/sub-list.html" with key=key displayed_statistics=statistics.hidden statistics_container_classes="is-hidden-statistics" only %}
     {% else %}
-        {% include "partials/statistics/sub-list.html" with player=player displayed_statistics=statistics.hidden only %}
+        {% include "partials/statistics/sub-list.html" with key=keyuuid displayed_statistics=statistics.hidden only %}
     {% endif %}
 {% endif %}

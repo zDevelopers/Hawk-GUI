@@ -4,6 +4,8 @@
 
 {% if damage.cause.type == 'player' and damage.cause.player %}
     {% player_tooltip_title damage.cause.player %}
+{% elif damage.cause.type == 'entity' %}
+    <span class="has-minecraft-white-color">{{ damage.cause.entity | name }}</span>
 {% else %}
     <span class="has-minecraft-white-color">{{ damage.cause.type | name }}</span>
 {% endif %}
@@ -11,7 +13,7 @@
 <br />
 <span class="has-minecraft-gray-color">{{ hearts_count_for_display }}</span>
 
-{% if damage.cause.type == 'entity' %}
+{% if damage.cause.type == 'entity' and damage.cause.weapon %}
     <br />
     <span class="has-minecraft-gray-color">
         {% if damage.cause.weapon.tag.Enchantments %}

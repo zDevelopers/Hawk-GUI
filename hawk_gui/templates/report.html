@@ -239,7 +239,7 @@
                                         <ul>
                                             {% for damage in aggreg.damages_taken %}
                                                 {% captureas damager_name %}
-                                                    {% if damage.cause.type == 'PLAYER' %}{{ damage.cause.player.name }}{% else %}{{ damage.cause.type | name }}{% endif %}
+                                                    {% if damage.cause.type == 'player' %}{{ damage.cause.player.name }}{% elif damage.cause.type == 'entity' %}{{  damage.cause.entity | name }}{% else %}{{ damage.cause.type | name }}{% endif %}
                                                 {% endcaptureas %}
                                                 {% captureas damage_description %}
                                                     {% if damage.lethal %}
@@ -316,7 +316,7 @@
                                         <ul>
                                             {% for damage in aggreg.damages_caused %}
                                                 {% captureas damager_name %}
-                                                    {% if damage.cause.type == 'player' %}{{ damage.cause.player.name }}{% else %}{{ damage.cause.type | name }}{% endif %}
+                                                    {% if damage.cause.type == 'player' %}{{ damage.cause.player.name }}{% elif damage.cause.type == 'entity' %}{{  damage.cause.entity | name }}{% else %}{{ damage.cause.type | name }}{% endif %}
                                                 {% endcaptureas %}
                                                 {% captureas damage_description %}
                                                     {% if damage.lethal %}
@@ -435,10 +435,17 @@
                                                         {% player aggreg.killed_by.player %}
                                                     {% else %}
                                                         <a href="" class="player is-fake-player">
-                                                            <figure aria-hidden="true">
-                                                                <span class="i-{{ aggreg.killed_by.cause | icon }} is-rounded"></span>
-                                                            </figure>
-                                                            <span>{{ aggreg.killed_by.cause | name }}</span>
+                                                            {% if aggreg.killed_by.type == "entity" %}
+                                                                <figure aria-hidden="true">
+                                                                    <span class="i-{{ aggreg.killed_by.entity | icon }} is-rounded"></span>
+                                                                </figure>
+                                                                <span>{{ aggreg.killed_by.entity | name }}</span>
+                                                            {% else %}
+                                                                <figure aria-hidden="true">
+                                                                    <span class="i-{{ aggreg.killed_by.type | icon }} is-rounded"></span>
+                                                                </figure>
+                                                                <span>{{ aggreg.killed_by.type | name }}</span>
+                                                            {% endif %}
                                                         </a>
                                                     {% endif %}
                                                 </li>
@@ -540,98 +547,11 @@
     {% endif %}
 
     {% if report.settings.players.enabled %}
-    <section class="section js-tab-section {% if default_tab != 'players' %}is-hidden{% endif %}" id="players">
-        <div class="container">
-            <nav class="tabs players-statistics-navigation">
-                <ul>
-                    {% for player in report.players|dictsort:"name" %}
-                        <li{% if forloop.first %} class="is-active"{% endif %}>
-                            <a href="#players:{{ player.name }}">
-                                <img src="{{ player | head:48 }}" alt="{{ player.name }}" class="is-rounded" />
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </nav>
-            {% for player in report.players|dictsort:"name" %}
-                {% with aggreg=report.aggregates.players_damages|lookup_key:player.uuid %}
-                    <article class="chest players-statistics-container" id="players:{{ player.name }}">
-                        <header>
-                            <figure class="player-head{% if player.team and report.settings.summary.teams %} is-{{ player.color | color_to_css }}{% endif %}">
-                                <img src="{{ player | head:128 }}" alt="{{ player.name }}" />
-                            </figure>
-                            <div class="player-name-and-recap">
-                                <h2>{{ player.name }} </h2>
-                                {% if player.team and report.settings.summary.teams %}
-                                    <p class="team-name">{{ player.team }}</p>
-                                {% endif %}
-
-                                <p>
-                                    {% blocktrans with play_time=aggreg.game_duration|duration:True %}Played {{ play_time }}{% endblocktrans %}
-                                </p>
-                                <p>
-                                    {% if aggreg.kills|length > 0 %}
-                                        {% blocktrans count kills=aggreg.kills|length with rank=aggreg.rank|ordinal %}
-                                            Ranked {{ rank }}, {{ kills }} kill
-                                        {% plural %}
-                                            Ranked {{ rank }}, {{ kills }} kill
-                                        {% endblocktrans %}
-                                    {% else %}
-                                        {% blocktrans with rank=aggreg.rank|ordinal %}
-                                            Ranked {{ rank }}
-                                        {% endblocktrans %}
-                                    {% endif %}
-                                </p>
-                            </div>
-                            <div class="player-tag">
-                                {% if player.tag_line %}
-                                    <p class="tag-line">{{ player.tag_line }}</p>
-                                {% endif %}
-                                {% if player.tag_line_secondary %}
-                                    <p class="tag-line-secondary">{{ player.tag_line_secondary }}</p>
-                                {% endif %}
-                                {% if player.tag_line_details %}
-                                    <p class="tag-line-details">{{ player.tag_line_details|linebreaksbr }}</p>
-                                {% endif %}
-                            </div>
-                        </header>
-
-                        {% if player.displayed_statistics.generic or player.displayed_statistics.mined or player.displayed_statistics.picked_up or player.displayed_statistics.used %}
-                            {% if player.displayed_statistics.generic.visible or player.displayed_statistics.generic.hidden %}
-                                <h3 class="chest-title">{% trans "General Statistics" %}</h3>
-                                <div class="chest-inner players-statistics">
-                                    {% include "partials/statistics/statistics.html" with player=player statistics=player.displayed_statistics.generic only %}
-                                </div>
-                            {% endif %}
-
-                            {% if player.displayed_statistics.mined.visible or player.displayed_statistics.mined.hidden %}
-                                <h3 class="chest-title">{% trans "Mined Blocks" %}</h3>
-                                <div class="chest-inner players-statistics">
-                                    {% include "partials/statistics/statistics.html" with player=player statistics=player.displayed_statistics.mined only %}
-                                </div>
-                            {% endif %}
-
-                            {% if player.displayed_statistics.picked_up.visible or player.displayed_statistics.picked_up.hidden %}
-                                <h3 class="chest-title">{% trans "Picked-Up Items" %}</h3>
-                                <div class="chest-inner players-statistics">
-                                    {% include "partials/statistics/statistics.html" with player=player statistics=player.displayed_statistics.picked_up only %}
-                                </div>
-                            {% endif %}
-
-                            {% if player.displayed_statistics.used.visible or player.displayed_statistics.used.hidden %}
-                                <h3 class="chest-title">{% trans "Used items" %}</h3>
-                                <div class="chest-inner players-statistics">
-                                    {% include "partials/statistics/statistics.html" with player=player statistics=player.displayed_statistics.used only %}
-                                </div>
-                            {% endif %}
-                        {% else %}
-                            <p class="no-player-statistics">{% trans "We do not have any recorded statistics for this player." %}</p>
-                        {% endif %}
-                    </article>
-                {% endwith %}
-            {% endfor %}
-        </div>
-    </section>
+        <section class="section js-tab-section {% if default_tab != 'players' %}is-hidden{% endif %}" id="players">
+            <div class="container">
+                {% include "sections/statistics.html" %}
+            </div>
+        </section>
     {% endif %}
 
     <footer>

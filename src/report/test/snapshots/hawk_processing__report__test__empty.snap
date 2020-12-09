@@ -50,10 +50,19 @@ expression: process_to_string(input)
   "events": [],
   "aggregates": {
     "global_statistics": {
-      "generic": {},
-      "used": {},
-      "mined": {},
-      "picked_up": {}
+      "generic": {
+        "visible": [],
+        "hidden": []
+      },
+      "used": null,
+      "mined": {
+        "visible": [],
+        "hidden": []
+      },
+      "picked_up": {
+        "visible": [],
+        "hidden": []
+      }
     },
     "players_damages": {},
     "environmental_damages": {

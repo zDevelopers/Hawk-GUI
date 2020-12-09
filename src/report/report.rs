@@ -87,6 +87,8 @@ impl Report {
             _ => Self::extract_winners(&players, &damages),
         };
 
+        let aggregates = aggregates::Aggregate::from_raw(&players, &damages, &heals, &begin, &settings.players);
+
         let mut players_list: Vec<player::Player> = players
             .iter()
             .map(|(_, player)| player.as_ref().clone())
@@ -103,7 +105,7 @@ impl Report {
             players: players_list,
             teams: team::Team::from_raw_vec(teams, &players)?,
             events: event::Event::from_raw_vec(raw_report.events, &begin),
-            aggregates: aggregates::Aggregate::from_raw(&players, &damages, &heals, &begin),
+            aggregates,
             winners,
             damages,
             heals,

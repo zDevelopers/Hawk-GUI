@@ -169,31 +169,31 @@ impl DisplayedPlayerStatistics {
                 match highlight.is_empty() || highlight.contains(stat) {
                     true => &mut visible,
                     false => &mut hidden
-                }.push(match stat.replace("minecraft.custom:", "").to_lowercase().as_str() {
-                    "minecraft.play_one_minute" |
-                    "minecraft.time_since_death" |
-                    "minecraft.sneak_time" |
-                    "minecraft.time_since_rest" => Statistic::Duration {
+                }.push(match stat.replace("minecraft.custom:", "").replace("minecraft.", "minecraft:").to_lowercase().as_str() {
+                    "minecraft:play_one_minute" |
+                    "minecraft:time_since_death" |
+                    "minecraft:sneak_time" |
+                    "minecraft:time_since_rest" => Statistic::Duration {
                         id: stat.clone(),
                         raw: *val,
                         duration: Duration::from_secs((*val / 20).into())
                     },
 
-                    "minecraft.walk_one_cm" |
-                    "minecraft.crouch_one_cm" |
-                    "minecraft.sprint_one_cm" |
-                    "minecraft.swim_one_cm" |
-                    "minecraft.fall_one_cm" |
-                    "minecraft.climb_one_cm" |
-                    "minecraft.fly_one_cm" |
-                    "minecraft.walk_under_water_one_cm" |
-                    "minecraft.dive_one_cm" |  // legacy
-                    "minecraft.minecart_one_cm" |
-                    "minecraft.boat_one_cm" |
-                    "minecraft.pig_one_cm" |
-                    "minecraft.horse_one_cm" |
-                    "minecraft.aviate_one_cm" |
-                    "minecraft.walk_on_water_one_cm" => {
+                    "minecraft:walk_one_cm" |
+                    "minecraft:crouch_one_cm" |
+                    "minecraft:sprint_one_cm" |
+                    "minecraft:swim_one_cm" |
+                    "minecraft:fall_one_cm" |
+                    "minecraft:climb_one_cm" |
+                    "minecraft:fly_one_cm" |
+                    "minecraft:walk_under_water_one_cm" |
+                    "minecraft:dive_one_cm" |  // legacy
+                    "minecraft:minecart_one_cm" |
+                    "minecraft:boat_one_cm" |
+                    "minecraft:pig_one_cm" |
+                    "minecraft:horse_one_cm" |
+                    "minecraft:aviate_one_cm" |
+                    "minecraft:walk_on_water_one_cm" => {
                         let meters = *val as f32 / 100_f32;
                         if meters < 1000_f32 {
                             Statistic::Distance {
@@ -213,40 +213,40 @@ impl DisplayedPlayerStatistics {
                         }
                     },
 
-                    "minecraft.damage_dealt" |
-                    "minecraft.damage_dealt_absorbed" |
-                    "minecraft.damage_dealt_resisted" |
-                    "minecraft.damage_taken" |
-                    "minecraft.damage_absorbed" |
-                    "minecraft.damage_resisted" |
-                    "minecraft.damage_blocked_by_shield" => Statistic::Hearts {
+                    "minecraft:damage_dealt" |
+                    "minecraft:damage_dealt_absorbed" |
+                    "minecraft:damage_dealt_resisted" |
+                    "minecraft:damage_taken" |
+                    "minecraft:damage_absorbed" |
+                    "minecraft:damage_resisted" |
+                    "minecraft:damage_blocked_by_shield" => Statistic::Hearts {
                         id: stat.clone(),
                         raw: *val,
                         hearts: (*val as f32 / 20_f32).into()  // These are stored in tenths of life points, i.e. 20th of hearts
                     },
 
-                    "minecraft.interact_with_brewingstand" |
-                    "minecraft.interact_with_beacon" |
-                    "minecraft.interact_with_crafting_table" |
-                    "minecraft.interact_with_furnace" |
-                    "minecraft.interact_with_blast_furnace" |
-                    "minecraft.interact_with_campfire" |
-                    "minecraft.interact_with_cartography_table" |
-                    "minecraft.interact_with_lectern" |
-                    "minecraft.interact_with_loom" |
-                    "minecraft.interact_with_smoker" |
-                    "minecraft.interact_with_stonecutter" |
-                    "minecraft.inspect_dispenser" |
-                    "minecraft.inspect_dropper" |
-                    "minecraft.inspect_hopper" |
-                    "minecraft.open_chest" |
-                    "minecraft.trigger_trapped_chest" |
-                    "minecraft.open_enderchest" |
-                    "minecraft.play_noteblock" |
-                    "minecraft.tune_noteblock" |
-                    "minecraft.eat" |  // legacy
-                    "minecraft.talked_to_villager" |
-                    "minecraft.traded_with_villager" => Statistic::Times { id: stat.clone(), raw: *val },
+                    "minecraft:interact_with_brewingstand" |
+                    "minecraft:interact_with_beacon" |
+                    "minecraft:interact_with_crafting_table" |
+                    "minecraft:interact_with_furnace" |
+                    "minecraft:interact_with_blast_furnace" |
+                    "minecraft:interact_with_campfire" |
+                    "minecraft:interact_with_cartography_table" |
+                    "minecraft:interact_with_lectern" |
+                    "minecraft:interact_with_loom" |
+                    "minecraft:interact_with_smoker" |
+                    "minecraft:interact_with_stonecutter" |
+                    "minecraft:inspect_dispenser" |
+                    "minecraft:inspect_dropper" |
+                    "minecraft:inspect_hopper" |
+                    "minecraft:open_chest" |
+                    "minecraft:trigger_trapped_chest" |
+                    "minecraft:open_enderchest" |
+                    "minecraft:play_noteblock" |
+                    "minecraft:tune_noteblock" |
+                    "minecraft:eat" |  // legacy
+                    "minecraft:talked_to_villager" |
+                    "minecraft:traded_with_villager" => Statistic::Times { id: stat.clone(), raw: *val },
 
                     _ => Statistic::Number { id: stat.clone(), raw: *val }
                 });

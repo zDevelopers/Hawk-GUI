@@ -8,8 +8,8 @@
                 <span class="i-{{ stat.id | icon }} is-rounded"></span>
             </figure>
             <div>
-                <h3 aria-describedby="hawk-tooltip-statistic-{{ player.uuid }}-{{ stat.id|slugify }}">{{ stat.id | name }}</h3>
-                <p>
+                <h3 aria-describedby="hawk-tooltip-statistic-{{ key }}-{{ stat.id|slugify }}">{{ stat.id | name }}</h3>
+                <p aria-describedby="hawk-tooltip-statistic-{{ key }}-{{ stat.id|slugify }}">
                     {% if stat.type == "distance" %}
                         {% if stat.unit == "m" %}{{ stat.distance | floatformat:0 }}{% else %}{{ stat.distance | floatformat }}{% endif %} {{ stat.unit }}
                     {% elif stat.type == "duration" %}
@@ -27,7 +27,7 @@
                     {% endif %}
                 </p>
             </div>
-            <div class="hawk-tooltip" id="hawk-tooltip-statistic-{{ player.uuid }}-{{ stat.id|slugify }}">
+            <div class="hawk-tooltip" id="hawk-tooltip-statistic-{{ key }}-{{ stat.id|slugify }}">
                 <span class="has-minecraft-white-color">{{ stat.id | name }}</span><br />
 
                 {% with stat_description=stat.id|description %}

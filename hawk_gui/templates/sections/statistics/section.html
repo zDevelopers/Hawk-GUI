@@ -1,0 +1,92 @@
+{% load i18n static humanize %}
+{% load minecraft hawk_ui hawk_utils captureas %}
+
+<article class="chest players-statistics-container" id="players:{{ player.name }}">
+    <header>
+        {% if player %}
+            <figure class="player-head{% if player.team and report.settings.summary.teams %} is-{{ player.color | color_to_css }}{% endif %}">
+                <img src="{{ player | head:128 }}" alt="{{ player.name }}" />
+            </figure>
+            <div class="player-name-and-recap">
+                <h2>{{ player.name }}</h2>
+                {% if player.team and report.settings.summary.teams %}
+                    <p class="team-name">{{ player.team }}</p>
+                {% endif %}
+
+                <p>
+                    {% blocktrans with play_time=aggreg.game_duration|duration:True %}Played {{ play_time }}{% endblocktrans %}
+                </p>
+                <p>
+                    {% if aggreg.kills|length > 0 %}
+                        {% blocktrans count kills=aggreg.kills|length with rank=aggreg.rank|ordinal %}
+                            Ranked {{ rank }}, {{ kills }} kill
+                        {% plural %}
+                            Ranked {{ rank }}, {{ kills }} kill
+                        {% endblocktrans %}
+                    {% else %}
+                        {% blocktrans with rank=aggreg.rank|ordinal %}
+                            Ranked {{ rank }}
+                        {% endblocktrans %}
+                    {% endif %}
+                </p>
+            </div>
+            <div class="player-tag">
+                {% if player.tag_line %}
+                    <p class="tag-line">{{ player.tag_line }}</p>
+                {% endif %}
+                {% if player.tag_line_secondary %}
+                    <p class="tag-line-secondary">{{ player.tag_line_secondary }}</p>
+                {% endif %}
+                {% if player.tag_line_details %}
+                    <p class="tag-line-details">{{ player.tag_line_details|linebreaksbr }}</p>
+                {% endif %}
+            </div>
+        {% else %}
+            <figure aria-hidden="true">
+                <span class="i-item-music-disc-pigstep-huge"></span>
+            </figure>
+            <div class="player-name-and-recap">
+                <h2>{% trans "Global statistics" %}</h2>
+                {% if player.team and report.settings.summary.teams %}
+                    <p class="team-name">{{ player.team }}</p>
+                {% endif %}
+
+                <p>{% trans "All the stats from all the players, aggregated." %}</p>
+                <p>{% trans "Use tabs above to check out detailled statistics for each player!" %}</p>
+            </div>
+        {% endif %}
+    </header>
+
+    {% if displayed_statistics.generic or displayed_statistics.mined or displayed_statistics.picked_up or displayed_statistics.used %}
+        {% captureas key %}{% if player %}{{ player.uuid }}{% else %}global{% endif %}{% endcaptureas %}
+        {% if displayed_statistics.generic.visible or displayed_statistics.generic.hidden %}
+            <h3 class="chest-title">{% trans "General Statistics" %}</h3>
+            <div class="chest-inner players-statistics">
+                {% include "partials/statistics/statistics.html" with key=key statistics=displayed_statistics.generic only %}
+            </div>
+        {% endif %}
+
+        {% if displayed_statistics.mined.visible or displayed_statistics.mined.hidden %}
+            <h3 class="chest-title">{% trans "Mined Blocks" %}</h3>
+            <div class="chest-inner players-statistics">
+                {% include "partials/statistics/statistics.html" with key=key statistics=displayed_statistics.mined only %}
+            </div>
+        {% endif %}
+
+        {% if displayed_statistics.picked_up.visible or displayed_statistics.picked_up.hidden %}
+            <h3 class="chest-title">{% trans "Picked-Up Items" %}</h3>
+            <div class="chest-inner players-statistics">
+                {% include "partials/statistics/statistics.html" with key=key statistics=displayed_statistics.picked_up only %}
+            </div>
+        {% endif %}
+
+        {% if displayed_statistics.used.visible or displayed_statistics.used.hidden %}
+            <h3 class="chest-title">{% trans "Used items" %}</h3>
+            <div class="chest-inner players-statistics">
+                {% include "partials/statistics/statistics.html" with key=key statistics=displayed_statistics.used only %}
+            </div>
+        {% endif %}
+    {% else %}
+        <p class="no-player-statistics">{% trans "We do not have any recorded statistics for this player." %}</p>
+    {% endif %}
+</article>

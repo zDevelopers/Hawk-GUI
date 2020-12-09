@@ -15,6 +15,7 @@ SPRITE_ALIASES = {
     "item-enchanted-book": ["item-book-enchanted"],
     "item-golden-apple": ["item-apple-golden"],
     "block-nether-portal": ["block-portal"],
+    "entity-zombified-piglin": ["entity-zombie-pigman"]
 }
 
 # Some icons are saved multiple times in resources packs, for various
@@ -120,6 +121,11 @@ RESOURCES_PACK_COLORIZE = {
     "redstone-dust-dot.png": COLORS_REDSTONE,
 }
 
+# These icons will be available in medium format (48×48).
+MEDIUM_ICONS = [
+    "item-music-disc-pigstep.png",
+]
+
 # Not all icons are available in large format, to get a smaller sprite.
 # All entities are, plus these ones. We use them to display damages source
 # summaries.
@@ -136,6 +142,11 @@ NON_ENTITIES_LARGE_ICONS = [
     "block-campfire-fire.png",
     "block-campfire-log-lit.png",
     "item-broken-elytra.png",
+]
+
+# These icons will be available in huge format (128×128).
+HUGE_ICONS = [
+    "item-music-disc-pigstep.png",
 ]
 
 
@@ -343,8 +354,30 @@ class Command(BaseCommand):
                     [f'"{large_icon}"' for large_icon in large_icons]
                 )
 
+                # Same for 128×128 pixels
+                huge_icons_shell_list = " ".join(
+                    [f'"{huge_icon}"' for huge_icon in HUGE_ICONS]
+                )
+
+                # Same for 48×48 pixels
+                medium_icons_shell_list = " ".join(
+                    [f'"{medium_icon}"' for medium_icon in MEDIUM_ICONS]
+                )
+
+                subprocess.call(
+                    f'convert {medium_icons_shell_list} -scale 150% -set filename:base "%[basename]" "final/%[filename:base]-medium.png"',
+                    shell=True,
+                    cwd=working_dir_sprite_images,
+                )
+
                 subprocess.call(
                     f'convert {large_icons_shell_list} -scale 200% -set filename:base "%[basename]" "final/%[filename:base]-large.png"',
+                    shell=True,
+                    cwd=working_dir_sprite_images,
+                )
+
+                subprocess.call(
+                    f'convert {huge_icons_shell_list} -scale 400% -set filename:base "%[basename]" "final/%[filename:base]-huge.png"',
                     shell=True,
                     cwd=working_dir_sprite_images,
                 )

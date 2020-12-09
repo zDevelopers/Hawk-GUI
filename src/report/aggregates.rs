@@ -7,12 +7,13 @@ use uuid::Uuid;
 
 use crate::report::damage::{Damage, DamageCause};
 use crate::report::heal::Heal;
-use crate::report::player::{Player, PlayerStatistics, SimplePlayer};
+use crate::report::player::{Player, PlayerStatistics, DisplayedPlayerStatistics, SimplePlayer};
 use crate::report::report::since;
+use crate::report::settings::SettingsPlayers;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Aggregate {
-    pub global_statistics: PlayerStatistics,
+    pub global_statistics: DisplayedPlayerStatistics,
     pub players_damages: BTreeMap<Uuid, PlayerAlterationsAggregate>,
     pub environmental_damages: EnvironmentalDamagesAggregate,
 }
@@ -23,6 +24,7 @@ impl Aggregate {
         damages: &Vec<Damage>,
         heals: &Vec<Heal>,
         begin: &DateTime<FixedOffset>,
+        settings: &SettingsPlayers,
     ) -> Self {
         Aggregate {
             global_statistics: Self::aggregate_global_statistics(
@@ -30,14 +32,15 @@ impl Aggregate {
                     .iter()
                     .filter_map(|(_uuid, player)| (player.as_ref()).statistics.clone())
                     .collect(),
+                settings
             ),
             players_damages: Self::aggregate_alterations(players, damages, heals, begin),
             environmental_damages: Self::aggregate_environmental_damages(damages),
         }
     }
 
-    fn aggregate_global_statistics(statistics: &Vec<PlayerStatistics>) -> PlayerStatistics {
-        PlayerStatistics {
+    fn aggregate_global_statistics(statistics: &Vec<PlayerStatistics>, settings: &SettingsPlayers) -> DisplayedPlayerStatistics {
+        DisplayedPlayerStatistics::calculate_displayed_statistics(&PlayerStatistics {
             generic: Some(Self::aggregate_single_statistic_group(
                 &statistics
                     .iter()
@@ -62,7 +65,7 @@ impl Aggregate {
                     .filter_map(|statistic| statistic.picked_up.clone())
                     .collect(),
             )),
-        }
+        }, settings)
     }
 
     fn aggregate_single_statistic_group(
@@ -190,14 +193,7 @@ impl Aggregate {
             killed_by: damages
                 .iter()
                 .filter(|damage| &damage.damagee.uuid == player && damage.lethal)
-                .map(|damage| match &damage.cause {
-                    DamageCause::Player(cause) => PlayerKiller::Player {
-                        player: cause.player.clone()
-                    },
-                    _ => PlayerKiller::Other {
-                        cause: damage.cause.clone()
-                    }
-                })
+                .map(|damage| damage.cause.clone())
                 .last(),
 
             game_duration: match damages
@@ -260,16 +256,9 @@ pub struct PlayerAlterationsAggregate {
     pub heals: Vec<Heal>,
     pub heals_total: u32,
     pub kills: Vec<SimplePlayer>,
-    pub killed_by: Option<PlayerKiller>,
+    pub killed_by: Option<DamageCause>,
     pub game_duration: Duration,
     pub rank: u8,
-}
-
-#[derive(Serialize, Deserialize, Debug, Clone)]
-#[serde(rename_all = "snake_case", tag = "type")]
-pub enum PlayerKiller {
-    Player { player: SimplePlayer },
-    Other { cause: DamageCause },
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]

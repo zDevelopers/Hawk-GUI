@@ -126,10 +126,19 @@ expression: process_to_string(input)
   "events": [],
   "aggregates": {
     "global_statistics": {
-      "generic": {},
-      "used": {},
-      "mined": {},
-      "picked_up": {}
+      "generic": {
+        "visible": [],
+        "hidden": []
+      },
+      "used": null,
+      "mined": {
+        "visible": [],
+        "hidden": []
+      },
+      "picked_up": {
+        "visible": [],
+        "hidden": []
+      }
     },
     "players_damages": {
       "55b89885-673c-4458-a8bd-33ad9c6190b4": {
