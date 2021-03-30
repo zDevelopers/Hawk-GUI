@@ -30,6 +30,7 @@
                     modal_triggers.forEach(function(modal_trigger) {
                         modal_trigger.addEventListener("click", function (e) {
                             e.preventDefault();
+                            modal_trigger.blur();
 
                             let target = modal_trigger.getAttribute("aria-controls");
                             let modal = document.getElementById(target);

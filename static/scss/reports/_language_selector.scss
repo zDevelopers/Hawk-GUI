@@ -2,39 +2,45 @@ aside.language-selector {
     padding-top: .5rem;
     margin-bottom: 1.5rem;
 
-    .modal > .modal-content .chest {
-        h3.chest-title {
-            margin-top: .4rem;
-            margin-bottom: 2rem;
-
-            color: #DDD;
-            font-weight: normal;
+    .modal {
+        &, .modal-background {
+            position: fixed;
         }
 
-        button {
-            display: block;
+        > .modal-content .chest {
+            h3.chest-title {
+                margin-top: .4rem;
+                margin-bottom: 2rem;
 
-            width: 95%;
-            margin: .6rem auto;
-            padding: .4rem;
-
-            background: transparent;
-            border: solid 2px transparent;
-            border-radius: 0;
-
-            font-family: $family-minecraft;
-            font-size: 1.1em;
-            color: white;
-
-            &.is-active {
-                background: rgba(black, 40%);
-                border-color: $minecraft-gray-active;
+                color: #DDD;
+                font-weight: normal;
             }
 
-            &:not(.is-active):hover, &:not(.is-active):active, &:not(.is-active):focus {
-                background: rgba(black, 20%);
-                border-color: $minecraft-gray-inactive;
-                cursor: pointer;
+            button {
+                display: block;
+
+                width: 95%;
+                margin: .6rem auto;
+                padding: .4rem;
+
+                background: transparent;
+                border: solid 2px transparent;
+                border-radius: 0;
+
+                font-family: $family-minecraft;
+                font-size: 1.1em;
+                color: white;
+
+                &.is-active {
+                    background: rgba(black, 40%);
+                    border-color: $minecraft-gray-active;
+                }
+
+                &:not(.is-active):hover, &:not(.is-active):active, &:not(.is-active):focus {
+                    background: rgba(black, 20%);
+                    border-color: $minecraft-gray-inactive;
+                    cursor: pointer;
+                }
             }
         }
     }

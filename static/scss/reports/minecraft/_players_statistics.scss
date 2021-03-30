@@ -74,6 +74,15 @@ nav.players-statistics-navigation {
 }
 
 article.players-statistics-container {
+    &:not(.is-active) {
+        display: none;
+    }
+
+    // Specificity
+    &.is-active {
+        margin-top: 0;
+    }
+
     header {
         display: flex;
         flex-direction: row;

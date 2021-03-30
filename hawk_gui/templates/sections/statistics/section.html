@@ -1,7 +1,7 @@
 {% load i18n static humanize %}
 {% load minecraft hawk_ui hawk_utils captureas %}
 
-<article class="chest players-statistics-container" id="players:{{ player.name }}">
+<article class="chest players-statistics-container" id="players:{% if player %}{{ player.name }}{% else %}~global{% endif %}">
     <header>
         {% if player %}
             <figure class="player-head{% if player.team and report.settings.summary.teams %} is-{{ player.color | color_to_css }}{% endif %}">
@@ -87,6 +87,13 @@
             </div>
         {% endif %}
     {% else %}
-        <p class="no-player-statistics">{% trans "We do not have any recorded statistics for this player." %}</p>
+        <p class="no-player-statistics">
+            {% if player %}
+                {% trans "We do not have any recorded statistics for this player." %}
+            {% else %}
+                {% trans "Global statistics are not available for this report because it is too old." %}<br />
+                {% trans "You can still check players statistics above." %}
+            {% endif %}
+        </p>
     {% endif %}
 </article>

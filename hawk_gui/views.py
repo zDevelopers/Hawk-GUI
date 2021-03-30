@@ -41,9 +41,6 @@ class ReportView(DetailView):
         else:
             context["default_tab"] = "players"
 
-        # temp
-        context["default_tab"] = "players"
-
         return context
 
 

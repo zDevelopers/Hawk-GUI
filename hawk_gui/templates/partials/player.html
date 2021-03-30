@@ -1,6 +1,6 @@
 {% load minecraft %}
 
-<a href="" class="player
+<a href="" data-player="{{ player.name }}" class="player
                   {% if large %}is-large{% endif %}
                   {% if player.team %}
                       {% if visible_color %}is-{{ player.color | color_to_css }} has-background
