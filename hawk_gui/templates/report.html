@@ -598,24 +598,4 @@
             </p>
         </div>
     </footer>
-
-    <script type="application/javascript">
-        document.addEventListener("DOMContentLoaded", function() {
-
-            document.querySelectorAll(".is-hidden-statistics").forEach(function(element) {
-                element.classList.add("is-hidden");
-            });
-
-            document.querySelectorAll(".toggle-hidden-statistics").forEach(function(element) {
-                element.addEventListener("click", function(e) {
-                    e.preventDefault();
-
-                    element.classList.toggle("is-toggled");
-                    element.nextElementSibling.classList.toggle("is-hidden");
-
-                    element.blur();
-                });
-            });
-        });
-    </script>
 {% endblock %}

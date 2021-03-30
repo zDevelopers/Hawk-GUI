@@ -5,13 +5,18 @@
 {% endif %}
 
 {% if statistics.visible and statistics.hidden %}
-    <a href="#" class="toggle-hidden-statistics" data-toggle="{% trans "Show less" %}">{% trans "Show all" %}</a>
+    <details>
+        <summary>{% trans "Show all" %}</summary>
 {% endif %}
 
 {% if statistics.hidden %}
     {% if statistics.visible %}
-        {% include "partials/statistics/sub-list.html" with key=key displayed_statistics=statistics.hidden statistics_container_classes="is-hidden-statistics" only %}
+        {% include "partials/statistics/sub-list.html" with key=key displayed_statistics=statistics.hidden only %}
     {% else %}
         {% include "partials/statistics/sub-list.html" with key=keyuuid displayed_statistics=statistics.hidden only %}
     {% endif %}
+{% endif %}
+
+{% if statistics.visible and statistics.hidden %}
+    </details>
 {% endif %}

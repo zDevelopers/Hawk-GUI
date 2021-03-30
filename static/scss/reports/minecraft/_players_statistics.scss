@@ -190,43 +190,56 @@ article.players-statistics-container {
             }
         }
 
-        a.toggle-hidden-statistics {
+        details {
             position: relative;
 
             display: block;
             margin: .6rem .4rem 0;
 
-            padding-left: 1.4rem;
-
-            color: $minecraft-text;
-
-            &.is-toggled {
+            &[open] {
                 margin-bottom: 1.4rem;
             }
 
-            &:before {
-                content: " ";
+            > summary {
+                list-style: none;
+                padding-left: 1.4rem;
 
-                position: absolute;
-                top: 2px;
-                left: 0;
+                color: $minecraft-text;
 
-                display: block;
+                cursor: pointer;
 
-                width: .8rem;
-                height: .8rem;
+                &::marker, &::-webkit-details-marker {
+                    display: none;
+                }
 
-                border-right: solid 2px $minecraft-text;
-                border-bottom: solid 2px $minecraft-text;
+                &:before {
+                    content: " ";
 
-                transform: rotate(45deg);
+                    position: absolute;
+                    top: 2px;
+                    left: 0;
 
-                transition: transform .2s ease-in-out, top .2s ease-in-out;
+                    display: block;
+
+                    width: .8rem;
+                    height: .8rem;
+
+                    border-right: solid 2px $minecraft-text;
+                    border-bottom: solid 2px $minecraft-text;
+
+                    transform: rotate(45deg);
+
+                    transition: transform .2s ease-in-out, top .2s ease-in-out;
+                }
             }
 
-            &.is-toggled:before {
-                transform: rotate(225deg);
-                top: 9px;
+            &[open] > summary {
+                margin-bottom: .6rem;
+
+                &:before {
+                    transform: rotate(225deg);
+                    top: 9px;
+                }
             }
         }
     }
