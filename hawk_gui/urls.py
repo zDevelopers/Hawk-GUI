@@ -7,6 +7,6 @@ urlpatterns = [
     path("head/<uuid:uuid>/<int:size>", MinecraftHeadView.as_view(), name="minecraft-head"),
 
     path("publish", PublicationView.as_view(), name="publish"),
-    path("<slug>", ReportView.as_view(), name="report"),
-    path("<slug>/as-json", ReportJSONView.as_view(), name="report-json")
+    path("<slug>.json", ReportJSONView.as_view(), name="report-json"),
+    path("<slug>", ReportView.as_view(), name="report")
 ]
