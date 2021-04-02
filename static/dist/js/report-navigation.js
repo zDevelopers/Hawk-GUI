@@ -45,11 +45,11 @@ document.addEventListener("DOMContentLoaded", function() {
             })
         }
 
-        if (sub && tab === 'players') {
+        if (tab === 'players') {
             switch_to_player(sub, no_history)
         } else if (!no_history) {
             if (tab === 'summary') {
-                history.pushState({}, '', '#')
+                history.pushState({}, '', location.pathname)
             } else {
                 history.pushState({}, '', "#" + tab)
             }
@@ -66,6 +66,8 @@ document.addEventListener("DOMContentLoaded", function() {
         if (!player) {
             player = '~global'
         }
+
+        console.log(player)
 
         players_tabs_links.forEach(function(tab_link) {
             const anchor = tab_link.querySelector("a")
