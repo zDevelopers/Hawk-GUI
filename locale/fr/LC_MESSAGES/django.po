@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-06 11:05+0000\n"
-"PO-Revision-Date: 2019-09-06 13:27+0200\n"
+"POT-Creation-Date: 2021-04-02 23:37+0000\n"
+"PO-Revision-Date: 2021-04-03 12:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.4.1\n"
 
 #: hawk/settings.py:117
 msgid "English"
@@ -26,9 +26,9 @@ msgstr "Anglais"
 msgid "French"
 msgstr "Français"
 
-#: hawk_gui/admin.py:10 hawk_gui/models.py:75 hawk_gui/models.py:170
+#: hawk_gui/admin.py:10 hawk_gui/models.py:79 hawk_gui/models.py:174
 msgid "Minecraft version"
-msgstr "version de Minecraft"
+msgstr "Version de Minecraft"
 
 #: hawk_gui/admin.py:30
 msgid "Unknown version"
@@ -42,47 +42,51 @@ msgstr "générateur"
 msgid "Unspecified generator"
 msgstr "Générateur inconnu"
 
-#: hawk_gui/models.py:43
+#: hawk_gui/models.py:42
 msgid "report"
 msgstr "rapport"
 
-#: hawk_gui/models.py:44
+#: hawk_gui/models.py:43
 msgid "reports"
 msgstr "rapports"
 
-#: hawk_gui/models.py:50 hawk_gui/models.py:176
+#: hawk_gui/models.py:49 hawk_gui/models.py:186
 msgid "Slug"
 msgstr "Slug"
 
-#: hawk_gui/models.py:55 hawk_gui/models.py:181
+#: hawk_gui/models.py:54 hawk_gui/models.py:187
 msgid "UUID"
 msgstr "UUID"
 
-#: hawk_gui/models.py:61
+#: hawk_gui/models.py:59 hawk_gui/models.py:188
+msgid "Title"
+msgstr "Titre"
+
+#: hawk_gui/models.py:65
 msgid "Published at"
 msgstr "Publié le"
 
-#: hawk_gui/models.py:68
+#: hawk_gui/models.py:72
 msgid "Published by"
 msgstr "Publié par"
 
-#: hawk_gui/models.py:87 hawk_gui/models.py:159
+#: hawk_gui/models.py:91 hawk_gui/models.py:163
 msgid "Generator"
 msgstr "Générateur"
 
-#: hawk_gui/models.py:99
+#: hawk_gui/models.py:103
 msgid "Generator link"
 msgstr "Lien vers le générateur"
 
-#: hawk_gui/models.py:105
+#: hawk_gui/models.py:109
 msgid "Views count"
 msgstr "Nombre de vues"
 
-#: hawk_gui/models.py:111
+#: hawk_gui/models.py:115
 msgid "Raw report"
 msgstr "Rapport brut"
 
-#: hawk_gui/models.py:118
+#: hawk_gui/models.py:122
 msgid "Processed report"
 msgstr "Rapport traité"
 
@@ -94,7 +98,34 @@ msgstr "Changer de langue"
 msgid "Select your language…"
 msgstr "Sélectionnez votre langue…"
 
-#: hawk_gui/templates/partials/tooltips/damage.html:18
+#: hawk_gui/templates/partials/statistics/statistics.html:9
+msgid "Show all"
+msgstr "Tout afficher"
+
+#: hawk_gui/templates/partials/statistics/sub-list.html:18
+msgid "Hearts"
+msgstr "Cœurs"
+
+#: hawk_gui/templates/partials/statistics/sub-list.html:20
+#, python-format
+msgid ""
+"\n"
+"                            %(times)s time\n"
+"                        "
+msgid_plural ""
+"\n"
+"                            %(times)s times\n"
+"                        "
+msgstr[0] ""
+"\n"
+"                            %(times)s fois\n"
+"                        "
+msgstr[1] ""
+"\n"
+"                            %(times)s fois\n"
+"                        "
+
+#: hawk_gui/templates/partials/tooltips/damage.html:20
 #, python-format
 msgid ""
 "\n"
@@ -102,9 +133,10 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"%(weapon)s avec enchantements"
+"%(weapon)s avec enchantements\n"
+" "
 
-#: hawk_gui/templates/partials/tooltips/damage.html:27
+#: hawk_gui/templates/partials/tooltips/damage.html:29
 msgid "Lethal attack"
 msgstr "Coup léthal"
 
@@ -124,26 +156,29 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"%(title)s – Récapitulatif de partie – Hawk"
+"%(title)s – Récapitulatif de partie – Hawk\n"
+" "
 
-#: hawk_gui/templates/report.html:23
+#: hawk_gui/templates/report.html:29
 #, python-format
 msgid ""
 "\n"
-"                                    %(count)s player\n"
+"                                    %(written_number)s player\n"
 "                                "
 msgid_plural ""
 "\n"
-"                                    %(count)s players\n"
+"                                    %(written_number)s players\n"
 "                                "
 msgstr[0] ""
 "\n"
-"%(count)s joueur"
+"                                    %(written_number)s joueur\n"
+"                                "
 msgstr[1] ""
 "\n"
-"%(count)s joueurs"
+"                                    %(written_number)s joueurs\n"
+"                                "
 
-#: hawk_gui/templates/report.html:42
+#: hawk_gui/templates/report.html:48
 msgid ""
 "\n"
 "                                        Winner\n"
@@ -154,44 +189,46 @@ msgid_plural ""
 "                                    "
 msgstr[0] ""
 "\n"
-"Vainqueur"
+"Vainqueur\n"
+" "
 msgstr[1] ""
 "\n"
-"Vainqueurs"
+"Vainqueurs\n"
+" "
 
-#: hawk_gui/templates/report.html:70
+#: hawk_gui/templates/report.html:76
 msgid "Game Summary"
 msgstr "Récapitulatif"
 
-#: hawk_gui/templates/report.html:76
+#: hawk_gui/templates/report.html:82
 msgid "Damages and Regenerations"
 msgstr "Dégâts et régénérations"
 
-#: hawk_gui/templates/report.html:82
+#: hawk_gui/templates/report.html:88
 msgid "Players and Statistics"
 msgstr "Joueurs et statistiques"
 
-#: hawk_gui/templates/report.html:98
+#: hawk_gui/templates/report.html:104
 msgid "Game timeline"
 msgstr "Déroulement de la partie"
 
-#: hawk_gui/templates/report.html:141 hawk_gui/templates/report.html:197
+#: hawk_gui/templates/report.html:144 hawk_gui/templates/report.html:200
 msgid "Players"
 msgstr "Les joueurs"
 
-#: hawk_gui/templates/report.html:143
+#: hawk_gui/templates/report.html:146
 msgid "Teams"
 msgstr "Les équipes"
 
-#: hawk_gui/templates/report.html:169
+#: hawk_gui/templates/report.html:172
 msgid "Teamless players"
 msgstr "Joueurs sans équipe"
 
-#: hawk_gui/templates/report.html:196
+#: hawk_gui/templates/report.html:199
 msgid "Hover icons for details"
 msgstr "Survolez les icônes pour plus de détails"
 
-#: hawk_gui/templates/report.html:229
+#: hawk_gui/templates/report.html:232
 #, python-format
 msgid ""
 "\n"
@@ -205,12 +242,14 @@ msgid_plural ""
 "                                            "
 msgstr[0] ""
 "\n"
-"<strong>%(damage)s</strong> dégât reçu"
+"<strong>%(damage)s</strong> dégât reçu\n"
+" "
 msgstr[1] ""
 "\n"
-"<strong>%(damage)s</strong> dégâts reçus"
+"<strong>%(damage)s</strong> dégâts reçus\n"
+" "
 
-#: hawk_gui/templates/report.html:244 hawk_gui/templates/report.html:317
+#: hawk_gui/templates/report.html:247 hawk_gui/templates/report.html:324
 #, python-format
 msgid ""
 "\n"
@@ -224,12 +263,14 @@ msgid_plural ""
 "                                                            "
 msgstr[0] ""
 "\n"
-"%(damager_name)s avec %(weapon)s: -%(damage)s point de vie (mortel)"
+"%(damager_name)s avec %(weapon)s: -%(damage)s point de vie (mortel)\n"
+" "
 msgstr[1] ""
 "\n"
-"%(damager_name)s avec %(weapon)s: -%(damage)s points de vie (mortel)"
+"%(damager_name)s avec %(weapon)s: -%(damage)s points de vie (mortel)\n"
+" "
 
-#: hawk_gui/templates/report.html:250 hawk_gui/templates/report.html:323
+#: hawk_gui/templates/report.html:253 hawk_gui/templates/report.html:330
 #, python-format
 msgid ""
 "\n"
@@ -252,7 +293,7 @@ msgstr[1] ""
 "-%(damage)s points de vie (mortel)\n"
 "                                                            "
 
-#: hawk_gui/templates/report.html:258 hawk_gui/templates/report.html:331
+#: hawk_gui/templates/report.html:261 hawk_gui/templates/report.html:338
 #, python-format
 msgid ""
 "\n"
@@ -275,7 +316,7 @@ msgstr[1] ""
 "avec %(weapon)s: -%(damage)s points de vie\n"
 "                                                            "
 
-#: hawk_gui/templates/report.html:264 hawk_gui/templates/report.html:337
+#: hawk_gui/templates/report.html:267 hawk_gui/templates/report.html:344
 #, python-format
 msgid ""
 "\n"
@@ -298,7 +339,7 @@ msgstr[1] ""
 "-%(damage)s points de vie\n"
 "                                                            "
 
-#: hawk_gui/templates/report.html:302
+#: hawk_gui/templates/report.html:309
 #, python-format
 msgid ""
 "\n"
@@ -321,7 +362,7 @@ msgstr[1] ""
 "dégâts engendrés\n"
 "                                            "
 
-#: hawk_gui/templates/report.html:370
+#: hawk_gui/templates/report.html:379
 #, python-format
 msgid ""
 "\n"
@@ -344,7 +385,7 @@ msgstr[1] ""
 "régénérée\n"
 "                                            "
 
-#: hawk_gui/templates/report.html:380
+#: hawk_gui/templates/report.html:389
 #, python-format
 msgid ""
 "\n"
@@ -367,7 +408,7 @@ msgstr[1] ""
 "%(heal)s points de vie\n"
 "                                                    "
 
-#: hawk_gui/templates/report.html:404
+#: hawk_gui/templates/report.html:413
 #, python-format
 msgid ""
 "\n"
@@ -390,19 +431,19 @@ msgstr[1] ""
 "joueurs tués\n"
 "                                                "
 
-#: hawk_gui/templates/report.html:421
+#: hawk_gui/templates/report.html:430
 msgid "Killed by"
 msgstr "Tué(e) par"
 
-#: hawk_gui/templates/report.html:439
+#: hawk_gui/templates/report.html:455
 msgid "Rank"
 msgstr "Classement"
 
-#: hawk_gui/templates/report.html:461
+#: hawk_gui/templates/report.html:477
 msgid "Environmental damages"
 msgstr "Dégâts engendrés par l'environnement"
 
-#: hawk_gui/templates/report.html:477 hawk_gui/templates/report.html:508
+#: hawk_gui/templates/report.html:493 hawk_gui/templates/report.html:524
 #, python-format
 msgid ""
 "\n"
@@ -425,27 +466,15 @@ msgstr[1] ""
 "dégâts engendrés\n"
 "                                                "
 
-#: hawk_gui/templates/report.html:490
+#: hawk_gui/templates/report.html:506
 msgid "Creatures caused no damage."
 msgstr "Les créatures n'ont causé aucun dégât."
 
-#: hawk_gui/templates/report.html:521
+#: hawk_gui/templates/report.html:537
 msgid "No damages were caused by the environment."
 msgstr "L'environnement inanimé n'a causé aucun dégât."
 
-#: hawk_gui/templates/report.html:536
-msgid "This section isn't available yet."
-msgstr "Cette section n'est pas encore disponible."
-
-#: hawk_gui/templates/report.html:537
-msgid ""
-"When it will be added (soon), your statistics by player will appear here (for all "
-"your reports, including this one)."
-msgstr ""
-"Quand elle sera ajoutée, prochainement, vos statistiques par joueur apparaîtront "
-"ici (pour tous vos rapports, incluant celui-ci)."
-
-#: hawk_gui/templates/report.html:548
+#: hawk_gui/templates/report.html:563
 #, python-format
 msgid ""
 "\n"
@@ -458,7 +487,7 @@ msgstr ""
 "sous Minecraft %(minecraft)s grâce à <a href=\"%(home_url)s\">Hawk</a>.\n"
 "                        "
 
-#: hawk_gui/templates/report.html:552
+#: hawk_gui/templates/report.html:567
 #, python-format
 msgid ""
 "\n"
@@ -471,7 +500,7 @@ msgstr ""
 "grâce à <a href=\"%(home_url)s\">Hawk</a>.\n"
 "                        "
 
-#: hawk_gui/templates/report.html:558
+#: hawk_gui/templates/report.html:573
 #, python-format
 msgid ""
 "\n"
@@ -484,7 +513,7 @@ msgstr ""
 "\"%(home_url)s\">Hawk</a>.\n"
 "                        "
 
-#: hawk_gui/templates/report.html:562
+#: hawk_gui/templates/report.html:577
 #, python-format
 msgid ""
 "\n"
@@ -495,7 +524,7 @@ msgstr ""
 "                            Généré grâce à <a href=\"%(home_url)s\">Hawk</a>.\n"
 "                        "
 
-#: hawk_gui/templates/report.html:570
+#: hawk_gui/templates/report.html:585
 #, python-format
 msgid ""
 "\n"
@@ -512,7 +541,7 @@ msgstr ""
 "\"%(florian_url)s\">Florian Cassayre</a>.\n"
 "                "
 
-#: hawk_gui/templates/report.html:578
+#: hawk_gui/templates/report.html:593
 msgid ""
 "We are not responsible of the reports content (in particular, pseudonyms and team "
 "names)."
@@ -520,463 +549,1158 @@ msgstr ""
 "Nous ne sommes pas responsables du contenu de ce site (en particulier des "
 "pseudonymes et des noms d'équipe)."
 
-#: hawk_gui/templates/report.html:582
+#: hawk_gui/templates/report.html:597
 msgid "View this report in JSON format (machine readable)"
 msgstr "Voir ce rapport au format JSON (lisible par une machine)"
 
-#: hawk_gui/templatetags/hawk_ui.py:35
+#: hawk_gui/templates/sections/statistics.html:20
+#: hawk_gui/templates/sections/statistics/section.html:49
+msgid "Global statistics"
+msgstr "Statistiques générales"
+
+#: hawk_gui/templates/sections/statistics/section.html:17
+#, python-format
+msgid "Played %(play_time)s"
+msgstr "A joué %(play_time)s"
+
+#: hawk_gui/templates/sections/statistics/section.html:21
+#, python-format
+msgid ""
+"\n"
+"                            Ranked %(rank)s, %(kills)s kill\n"
+"                        "
+msgid_plural ""
+"\n"
+"                            Ranked %(rank)s, %(kills)s kill\n"
+"                        "
+msgstr[0] ""
+"\n"
+"                            Classé(e) %(rank)s, %(kills)s tué(e)\n"
+"                        "
+msgstr[1] ""
+"\n"
+"                            Classé(e) %(rank)s, %(kills)s tué(e)s\n"
+"                        "
+
+#: hawk_gui/templates/sections/statistics/section.html:27
+#, python-format
+msgid ""
+"\n"
+"                            Ranked %(rank)s\n"
+"                        "
+msgstr ""
+"\n"
+"                            Classé(e) %(rank)s\n"
+"                        "
+
+#: hawk_gui/templates/sections/statistics/section.html:54
+msgid "All the stats from all the players, aggregated."
+msgstr "Toutes les statistiques de tous les joueurs, agrégées."
+
+#: hawk_gui/templates/sections/statistics/section.html:55
+msgid "Use tabs above to check out detailled statistics for each player!"
+msgstr ""
+"Utilisez les onglets ci-dessus pour consulter les statistiques pour chaque "
+"joueur !"
+
+#: hawk_gui/templates/sections/statistics/section.html:63
+msgid "General Statistics"
+msgstr "Statistiques générales"
+
+#: hawk_gui/templates/sections/statistics/section.html:70
+msgid "Mined Blocks"
+msgstr "Blocs minés"
+
+#: hawk_gui/templates/sections/statistics/section.html:77
+msgid "Picked-Up Items"
+msgstr "Blocs récupérés"
+
+#: hawk_gui/templates/sections/statistics/section.html:84
+msgid "Used items"
+msgstr "Éléments utilisés"
+
+#: hawk_gui/templates/sections/statistics/section.html:92
+msgid "We do not have any recorded statistics for this player."
+msgstr "Nous n'avons pas de statistiques collectés pour ce joueur ou cette joueuse."
+
+#: hawk_gui/templates/sections/statistics/section.html:94
+msgid "Global statistics are not available for this report because it is too old."
+msgstr ""
+"Les statistiques générales ne sont pas disponibles car ce rapport est trop ancien."
+
+#: hawk_gui/templates/sections/statistics/section.html:95
+msgid "You can still check players statistics above."
+msgstr "Vous pouvez malgré tout consulter les statistiques individuelles ci-dessus."
+
+#: hawk_gui/templatetags/hawk_ui.py:49
 msgid "00:00"
 msgstr "00:00"
 
-#: hawk_gui/templatetags/hawk_ui.py:44
+#: hawk_gui/templatetags/hawk_ui.py:59
+#, python-brace-format
+msgid "{days:d} days, {hours:d} hours and {minutes:d} minutes"
+msgstr "{days:d} jours, {hours:d} heures et {minutes:d} minutes"
+
+#: hawk_gui/templatetags/hawk_ui.py:66
+#, python-brace-format
+msgid "{hours:d} hours and {minutes:d} minutes"
+msgstr "{hours:d} heures et {minutes:d} minutes"
+
+#: hawk_gui/templatetags/hawk_ui.py:72
+#, python-brace-format
+msgid "{minutes:d} minutes and {seconds:d} seconds"
+msgstr "{minutes:d} minutes et {seconds:d} secondes"
+
+#: hawk_gui/templatetags/hawk_ui.py:77
+#, python-brace-format
+msgid "{seconds:d} seconds"
+msgstr "{seconds:d} secondes"
+
+#: hawk_gui/templatetags/hawk_ui.py:81
 #, python-brace-format
 msgid "{days:d}d {hours:02d}:{minutes:02d}:{seconds:02d}"
 msgstr "{days:d}d {hours:02d}:{minutes:02d}:{seconds:02d}"
 
-#: hawk_gui/templatetags/hawk_ui.py:52
+#: hawk_gui/templatetags/hawk_ui.py:89
 #, python-brace-format
 msgid "{hours:02d}:{minutes:02d}:{seconds:02d}"
 msgstr "{hours:02d}:{minutes:02d}:{seconds:02d}"
 
-#: hawk_gui/templatetags/hawk_ui.py:59
+#: hawk_gui/templatetags/hawk_ui.py:96
 #, python-brace-format
 msgid "{minutes:02d}:{seconds:02d}"
 msgstr "{minutes:02d}:{seconds:02d}"
 
-#: hawk_gui/templatetags/hawk_ui.py:114
+#: hawk_gui/templatetags/hawk_ui.py:151
 #, python-brace-format
 msgid "{damage} heart against {damagee}"
 msgid_plural "{damage} hearts against {damagee}"
 msgstr[0] "{damage} cœur contre {damagee}"
 msgstr[1] "{damage} cœurs contre {damagee}"
 
-#: hawk_gui/templatetags/hawk_ui.py:122
+#: hawk_gui/templatetags/hawk_ui.py:159
 #, python-format
 msgid "Half a heart against %s"
 msgstr "Un demi-cœur contre %s"
 
-#: hawk_gui/templatetags/hawk_ui.py:128
+#: hawk_gui/templatetags/hawk_ui.py:165
 #, python-brace-format
 msgid "{damage} heart and a half against {damagee}"
 msgid_plural "{damage} hearts and a half against {damagee}"
 msgstr[0] "{damage} cœur et demi contre {damagee}"
 msgstr[1] "{damage} cœurs et demi contre {damagee}"
 
-#: hawk_gui/templatetags/hawk_ui.py:158
+#: hawk_gui/templatetags/hawk_ui.py:195
 #, python-format
 msgid "%d heart regenerated"
 msgid_plural "%d hearts regenerated"
 msgstr[0] "%d cœur régénéré"
 msgstr[1] "%d cœurs régénérés"
 
-#: hawk_gui/templatetags/hawk_ui.py:161
+#: hawk_gui/templatetags/hawk_ui.py:198
 msgid "Half a heart regenerated"
 msgstr "Un demi-cœur régénéré"
 
-#: hawk_gui/templatetags/hawk_ui.py:165
+#: hawk_gui/templatetags/hawk_ui.py:202
 #, python-brace-format
-#| msgid "Half a heart regenerated"
 msgid "{heal} heart and a half regenerated"
 msgid_plural "{heal} hearts and a half regenerated"
 msgstr[0] "{heal} cœur et demi régénéré"
 msgstr[1] "{heal} cœurs et demi régénérés"
 
-#: hawk_gui/templatetags/minecraft.py:68
+#: hawk_gui/templatetags/minecraft.py:71
 msgid "Aqua Affinity"
 msgstr "Affinité aquatique"
 
-#: hawk_gui/templatetags/minecraft.py:69
+#: hawk_gui/templatetags/minecraft.py:72
 msgid "Bane of Arthropods"
 msgstr "Fléau des arthropodes"
 
-#: hawk_gui/templatetags/minecraft.py:70
+#: hawk_gui/templatetags/minecraft.py:73
 msgid "Blast Protection"
 msgstr "Protection contre les explosions"
 
-#: hawk_gui/templatetags/minecraft.py:71
+#: hawk_gui/templatetags/minecraft.py:74
 msgid "Channeling"
 msgstr "Canalisation"
 
-#: hawk_gui/templatetags/minecraft.py:72
+#: hawk_gui/templatetags/minecraft.py:75
 msgid "Curse of Binding"
 msgstr "Malédiction du lien éternel"
 
-#: hawk_gui/templatetags/minecraft.py:73
+#: hawk_gui/templatetags/minecraft.py:76
 msgid "Curse of Vanishing"
 msgstr "Malédiction de disparition"
 
-#: hawk_gui/templatetags/minecraft.py:74
+#: hawk_gui/templatetags/minecraft.py:77
 msgid "Depth Strider"
 msgstr "Agilité aquatique"
 
-#: hawk_gui/templatetags/minecraft.py:75
+#: hawk_gui/templatetags/minecraft.py:78
 msgid "Efficiency"
 msgstr "Efficacité"
 
-#: hawk_gui/templatetags/minecraft.py:76
+#: hawk_gui/templatetags/minecraft.py:79
 msgid "Feather Falling"
 msgstr "Chute amortie"
 
-#: hawk_gui/templatetags/minecraft.py:77
+#: hawk_gui/templatetags/minecraft.py:80
 msgid "Fire Aspect"
 msgstr "Aura de feu"
 
-#: hawk_gui/templatetags/minecraft.py:78
+#: hawk_gui/templatetags/minecraft.py:81
 msgid "Fire Protection"
 msgstr "Protection contre le feu"
 
-#: hawk_gui/templatetags/minecraft.py:79
+#: hawk_gui/templatetags/minecraft.py:82
 msgid "Flame"
 msgstr "Flamme"
 
-#: hawk_gui/templatetags/minecraft.py:80
+#: hawk_gui/templatetags/minecraft.py:83
 msgid "Fortune"
 msgstr "Fortune"
 
-#: hawk_gui/templatetags/minecraft.py:81
+#: hawk_gui/templatetags/minecraft.py:84
 msgid "Frost Walker"
 msgstr "Semelles givrantes"
 
-#: hawk_gui/templatetags/minecraft.py:82
+#: hawk_gui/templatetags/minecraft.py:85
 msgid "Impaling"
 msgstr "Empalement"
 
-#: hawk_gui/templatetags/minecraft.py:83
+#: hawk_gui/templatetags/minecraft.py:86
 msgid "Infinity"
 msgstr "Infinité"
 
-#: hawk_gui/templatetags/minecraft.py:84
+#: hawk_gui/templatetags/minecraft.py:87
 msgid "Knockback"
 msgstr "Recul"
 
-#: hawk_gui/templatetags/minecraft.py:85
+#: hawk_gui/templatetags/minecraft.py:88
 msgid "Looting"
 msgstr "Butin"
 
-#: hawk_gui/templatetags/minecraft.py:86
+#: hawk_gui/templatetags/minecraft.py:89
 msgid "Loyalty"
 msgstr "Loyauté"
 
-#: hawk_gui/templatetags/minecraft.py:87
+#: hawk_gui/templatetags/minecraft.py:90
 msgid "Luck of the Sea"
 msgstr "Chance de la mer"
 
-#: hawk_gui/templatetags/minecraft.py:88
+#: hawk_gui/templatetags/minecraft.py:91
 msgid "Lure"
 msgstr "Appât"
 
-#: hawk_gui/templatetags/minecraft.py:89
+#: hawk_gui/templatetags/minecraft.py:92
 msgid "Mending"
 msgstr "Raccommodage"
 
-#: hawk_gui/templatetags/minecraft.py:90
+#: hawk_gui/templatetags/minecraft.py:93
 msgid "Multishot"
 msgstr "Tir multiple"
 
-#: hawk_gui/templatetags/minecraft.py:91
+#: hawk_gui/templatetags/minecraft.py:94
 msgid "Piercing"
 msgstr "Perforation"
 
-#: hawk_gui/templatetags/minecraft.py:92
+#: hawk_gui/templatetags/minecraft.py:95
 msgid "Power"
 msgstr "Puissance"
 
-#: hawk_gui/templatetags/minecraft.py:93
+#: hawk_gui/templatetags/minecraft.py:96
 msgid "Projectile Protection"
 msgstr "Protection contre les projectiles"
 
-#: hawk_gui/templatetags/minecraft.py:94
+#: hawk_gui/templatetags/minecraft.py:97
 msgid "Protection"
 msgstr "Protection"
 
-#: hawk_gui/templatetags/minecraft.py:95
+#: hawk_gui/templatetags/minecraft.py:98
 msgid "Punch"
 msgstr "Frappe"
 
-#: hawk_gui/templatetags/minecraft.py:96
+#: hawk_gui/templatetags/minecraft.py:99
 msgid "Quick Charge"
 msgstr "Charge rapide"
 
-#: hawk_gui/templatetags/minecraft.py:97
+#: hawk_gui/templatetags/minecraft.py:100
 msgid "Respiration"
 msgstr "Apnée"
 
-#: hawk_gui/templatetags/minecraft.py:98
+#: hawk_gui/templatetags/minecraft.py:101
 msgid "Riptide"
 msgstr "Impulsion"
 
-#: hawk_gui/templatetags/minecraft.py:99
+#: hawk_gui/templatetags/minecraft.py:102
 msgid "Sharpness"
 msgstr "Tranchant"
 
-#: hawk_gui/templatetags/minecraft.py:100
+#: hawk_gui/templatetags/minecraft.py:103
 msgid "Silk Touch"
 msgstr "Toucher de soie"
 
-#: hawk_gui/templatetags/minecraft.py:101
+#: hawk_gui/templatetags/minecraft.py:104
 msgid "Smite"
 msgstr "Châtiment"
 
-#: hawk_gui/templatetags/minecraft.py:102
+#: hawk_gui/templatetags/minecraft.py:105
 msgid "Sweeping Edge"
 msgstr "Affilage"
 
-#: hawk_gui/templatetags/minecraft.py:103 hawk_gui/templatetags/minecraft.py:219
+#: hawk_gui/templatetags/minecraft.py:106 hawk_gui/templatetags/minecraft.py:222
 msgid "Thorns"
 msgstr "Épines"
 
-#: hawk_gui/templatetags/minecraft.py:104
+#: hawk_gui/templatetags/minecraft.py:107
 msgid "Unbreaking"
 msgstr "Solidité"
 
-#: hawk_gui/templatetags/minecraft.py:159
+#: hawk_gui/templatetags/minecraft.py:162
 msgid "Player"
 msgstr "Joueur"
 
-#: hawk_gui/templatetags/minecraft.py:160
+#: hawk_gui/templatetags/minecraft.py:163
 msgid "Zombie"
 msgstr "Zombie"
 
-#: hawk_gui/templatetags/minecraft.py:161
+#: hawk_gui/templatetags/minecraft.py:164
 msgid "Skeleton"
 msgstr "Squelette"
 
-#: hawk_gui/templatetags/minecraft.py:162
+#: hawk_gui/templatetags/minecraft.py:165
 msgid "Pigman"
 msgstr "Cochon zombie"
 
-#: hawk_gui/templatetags/minecraft.py:163
+#: hawk_gui/templatetags/minecraft.py:166
 msgid "Witch"
 msgstr "Sorcière"
 
-#: hawk_gui/templatetags/minecraft.py:164
+#: hawk_gui/templatetags/minecraft.py:167
 msgid "Spider"
 msgstr "Araignée"
 
-#: hawk_gui/templatetags/minecraft.py:165
+#: hawk_gui/templatetags/minecraft.py:168
 msgid "Cave Spider"
 msgstr "Araignée des cavernes"
 
-#: hawk_gui/templatetags/minecraft.py:166
+#: hawk_gui/templatetags/minecraft.py:169
 msgid "Creeper"
 msgstr "Creeper"
 
-#: hawk_gui/templatetags/minecraft.py:167
+#: hawk_gui/templatetags/minecraft.py:170
 msgid "Enderman"
 msgstr "Enderman"
 
-#: hawk_gui/templatetags/minecraft.py:168
+#: hawk_gui/templatetags/minecraft.py:171
 msgid "Slime"
 msgstr "Slime"
 
-#: hawk_gui/templatetags/minecraft.py:169
+#: hawk_gui/templatetags/minecraft.py:172
 msgid "Ghast"
 msgstr "Ghast"
 
-#: hawk_gui/templatetags/minecraft.py:170
+#: hawk_gui/templatetags/minecraft.py:173
 msgid "Magme Cube"
 msgstr "Cube de magma"
 
-#: hawk_gui/templatetags/minecraft.py:171
+#: hawk_gui/templatetags/minecraft.py:174
 msgid "Blaze"
 msgstr "Blaze"
 
-#: hawk_gui/templatetags/minecraft.py:172
+#: hawk_gui/templatetags/minecraft.py:175
 msgid "Wolf"
 msgstr "Loup"
 
-#: hawk_gui/templatetags/minecraft.py:173
+#: hawk_gui/templatetags/minecraft.py:176
 msgid "Angry Wolf"
 msgstr "Loup énervé"
 
-#: hawk_gui/templatetags/minecraft.py:175
+#: hawk_gui/templatetags/minecraft.py:178
 msgid "Iron Golem"
 msgstr "Golem de fer"
 
-#: hawk_gui/templatetags/minecraft.py:176
+#: hawk_gui/templatetags/minecraft.py:179
 msgid "Zombie Villager"
 msgstr "Zombie-villageois"
 
-#: hawk_gui/templatetags/minecraft.py:177
+#: hawk_gui/templatetags/minecraft.py:180
 msgid "Ender Dragon"
 msgstr "Ender Dragon"
 
-#: hawk_gui/templatetags/minecraft.py:178
+#: hawk_gui/templatetags/minecraft.py:181
 msgid "Wither Boss"
 msgstr "Wither"
 
-#: hawk_gui/templatetags/minecraft.py:179
+#: hawk_gui/templatetags/minecraft.py:182
 msgid "Wither Skeleton"
 msgstr "Wither squelette"
 
-#: hawk_gui/templatetags/minecraft.py:180
+#: hawk_gui/templatetags/minecraft.py:183
 msgid "Fire"
 msgstr "Feu"
 
-#: hawk_gui/templatetags/minecraft.py:181
+#: hawk_gui/templatetags/minecraft.py:184
 msgid "Lava"
 msgstr "Lave"
 
-#: hawk_gui/templatetags/minecraft.py:182
+#: hawk_gui/templatetags/minecraft.py:185
 msgid "Thunder"
 msgstr "Orage"
 
-#: hawk_gui/templatetags/minecraft.py:183
+#: hawk_gui/templatetags/minecraft.py:186
 msgid "Cactus"
 msgstr "Cactus"
 
-#: hawk_gui/templatetags/minecraft.py:184
+#: hawk_gui/templatetags/minecraft.py:187
 msgid "TNT"
 msgstr "Trinitrotoluène"
 
-#: hawk_gui/templatetags/minecraft.py:185
+#: hawk_gui/templatetags/minecraft.py:188
 msgid "Fall"
 msgstr "Chute"
 
-#: hawk_gui/templatetags/minecraft.py:186
+#: hawk_gui/templatetags/minecraft.py:189
 msgid "Suffocation"
 msgstr "Suffocation"
 
-#: hawk_gui/templatetags/minecraft.py:187
+#: hawk_gui/templatetags/minecraft.py:190
 msgid "Drowning"
 msgstr "Noyade"
 
-#: hawk_gui/templatetags/minecraft.py:188
+#: hawk_gui/templatetags/minecraft.py:191
 msgid "Starvation"
 msgstr "Faim"
 
-#: hawk_gui/templatetags/minecraft.py:189
+#: hawk_gui/templatetags/minecraft.py:192
 msgid "Command"
 msgstr "Commande"
 
-#: hawk_gui/templatetags/minecraft.py:191
+#: hawk_gui/templatetags/minecraft.py:194
 msgid "Fists"
 msgstr "Poings"
 
-#: hawk_gui/templatetags/minecraft.py:192
+#: hawk_gui/templatetags/minecraft.py:195
 msgid "Wooden Sword"
 msgstr "Épée en bois"
 
-#: hawk_gui/templatetags/minecraft.py:193
+#: hawk_gui/templatetags/minecraft.py:196
 msgid "Stone Sword"
 msgstr "Épée en pierre"
 
-#: hawk_gui/templatetags/minecraft.py:194
+#: hawk_gui/templatetags/minecraft.py:197
 msgid "Iron Sword"
 msgstr "Épée en fer"
 
-#: hawk_gui/templatetags/minecraft.py:195
+#: hawk_gui/templatetags/minecraft.py:198
 msgid "Golden Sword"
 msgstr "Épée en or"
 
-#: hawk_gui/templatetags/minecraft.py:196
+#: hawk_gui/templatetags/minecraft.py:199
 msgid "Diamond Sword"
 msgstr "Épée en diamant"
 
-#: hawk_gui/templatetags/minecraft.py:197
+#: hawk_gui/templatetags/minecraft.py:200
 msgid "Wooden Axe"
 msgstr "Hache en bois"
 
-#: hawk_gui/templatetags/minecraft.py:198
+#: hawk_gui/templatetags/minecraft.py:201
 msgid "Stone Axe"
 msgstr "Hache en pierre"
 
-#: hawk_gui/templatetags/minecraft.py:199
+#: hawk_gui/templatetags/minecraft.py:202
 msgid "Iron Axe"
 msgstr "Hache en fer"
 
-#: hawk_gui/templatetags/minecraft.py:200
+#: hawk_gui/templatetags/minecraft.py:203
 msgid "Golden Axe"
 msgstr "Hache en or"
 
-#: hawk_gui/templatetags/minecraft.py:201
+#: hawk_gui/templatetags/minecraft.py:204
 msgid "Diamond Axe"
 msgstr "Hache en diamant"
 
-#: hawk_gui/templatetags/minecraft.py:202
+#: hawk_gui/templatetags/minecraft.py:205
 msgid "Wooden Pickaxe"
 msgstr "Pioche en bois"
 
-#: hawk_gui/templatetags/minecraft.py:203
+#: hawk_gui/templatetags/minecraft.py:206
 msgid "Stone Pickaxe"
 msgstr "Pioche en pierre"
 
-#: hawk_gui/templatetags/minecraft.py:204
+#: hawk_gui/templatetags/minecraft.py:207
 msgid "Iron Pickaxe"
 msgstr "Pioche en fer"
 
-#: hawk_gui/templatetags/minecraft.py:205
+#: hawk_gui/templatetags/minecraft.py:208
 msgid "Golden Pickaxe"
 msgstr "Pioche en or"
 
-#: hawk_gui/templatetags/minecraft.py:206
+#: hawk_gui/templatetags/minecraft.py:209
 msgid "Diamond Pickaxe"
 msgstr "Pioche en diamant"
 
-#: hawk_gui/templatetags/minecraft.py:207
+#: hawk_gui/templatetags/minecraft.py:210
 msgid "Wooden Hoe"
 msgstr "Houe en bois"
 
-#: hawk_gui/templatetags/minecraft.py:208
+#: hawk_gui/templatetags/minecraft.py:211
 msgid "Stone Hoe"
 msgstr "Houe en pierre"
 
-#: hawk_gui/templatetags/minecraft.py:209
+#: hawk_gui/templatetags/minecraft.py:212
 msgid "Iron Hoe"
 msgstr "Houe en fer"
 
-#: hawk_gui/templatetags/minecraft.py:210
+#: hawk_gui/templatetags/minecraft.py:213
 msgid "Golden Hoe"
 msgstr "Houe en or"
 
-#: hawk_gui/templatetags/minecraft.py:211
+#: hawk_gui/templatetags/minecraft.py:214
 msgid "Diamond Hoe"
 msgstr "Houe en diamant"
 
-#: hawk_gui/templatetags/minecraft.py:212
+#: hawk_gui/templatetags/minecraft.py:215
 msgid "Wooden Shovel"
 msgstr "Pelle en bois"
 
-#: hawk_gui/templatetags/minecraft.py:213
+#: hawk_gui/templatetags/minecraft.py:216
 msgid "Stone Shovel"
 msgstr "Pelle en pierre"
 
-#: hawk_gui/templatetags/minecraft.py:214
+#: hawk_gui/templatetags/minecraft.py:217
 msgid "Iron Shovel"
 msgstr "Pelle en fer"
 
-#: hawk_gui/templatetags/minecraft.py:215
+#: hawk_gui/templatetags/minecraft.py:218
 msgid "Golden Shovel"
 msgstr "Pelle en or"
 
-#: hawk_gui/templatetags/minecraft.py:216
+#: hawk_gui/templatetags/minecraft.py:219
 msgid "Diamond Shovel"
 msgstr "Pelle en diamant"
 
-#: hawk_gui/templatetags/minecraft.py:217
+#: hawk_gui/templatetags/minecraft.py:220
 msgid "Bow"
 msgstr "Arc"
 
-#: hawk_gui/templatetags/minecraft.py:218
+#: hawk_gui/templatetags/minecraft.py:221
 msgid "Magic"
 msgstr "Magie"
 
-#: hawk_gui/templatetags/minecraft.py:221
+#: hawk_gui/templatetags/minecraft.py:224
 msgid "Natural Regeneration"
 msgstr "Régénération naturelle"
 
-#: hawk_gui/templatetags/minecraft.py:222
+#: hawk_gui/templatetags/minecraft.py:225
 msgid "Golden Apple"
 msgstr "Pomme dorée"
 
-#: hawk_gui/templatetags/minecraft.py:223
+#: hawk_gui/templatetags/minecraft.py:226
 msgid "Enchanted Golden Apple"
 msgstr "Pomme dorée enchantée"
 
-#: hawk_gui/templatetags/minecraft.py:224
+#: hawk_gui/templatetags/minecraft.py:227
 msgid "Healing Potion"
 msgstr "Potion de soins"
 
-#: hawk_gui/templatetags/minecraft.py:226
+#: hawk_gui/templatetags/minecraft.py:229
 msgid "Unknown"
 msgstr "Inconnu"
+
+#: hawk_gui/templatetags/minecraft.py:231
+msgid "Games quit"
+msgstr "Parties quittées"
+
+#: hawk_gui/templatetags/minecraft.py:232
+msgid "Time Played"
+msgstr "Temps de jeu"
+
+#: hawk_gui/templatetags/minecraft.py:233
+msgid "Since Last Death"
+msgstr "Temps depuis la dernière mort"
+
+#: hawk_gui/templatetags/minecraft.py:234
+msgid "Sneak Time"
+msgstr "Temps passé accroupi(e)"
+
+#: hawk_gui/templatetags/minecraft.py:235
+msgid "Distance Walked"
+msgstr "Distance à pied"
+
+#: hawk_gui/templatetags/minecraft.py:236
+msgid "Distance Crouched"
+msgstr "Distance accroupi(e)"
+
+#: hawk_gui/templatetags/minecraft.py:237
+msgid "Distance Sprinted"
+msgstr "Distance courue"
+
+#: hawk_gui/templatetags/minecraft.py:238
+msgid "Distance Swum"
+msgstr "Distance nagée"
+
+#: hawk_gui/templatetags/minecraft.py:239
+msgid "Distance Fallen"
+msgstr "Distance en tombant"
+
+#: hawk_gui/templatetags/minecraft.py:240
+msgid "Distance Climbed"
+msgstr "Distance grimpée"
+
+#: hawk_gui/templatetags/minecraft.py:241
+msgid "Distance Flown"
+msgstr "Distance en l'air"
+
+#: hawk_gui/templatetags/minecraft.py:242 hawk_gui/templatetags/minecraft.py:243
+msgid "Distance Walked under Water"
+msgstr "Distance sous l'eau"
+
+#: hawk_gui/templatetags/minecraft.py:244
+msgid "Distance by Minecart"
+msgstr "Distance en wagonnet"
+
+#: hawk_gui/templatetags/minecraft.py:245
+msgid "Distance by Boat"
+msgstr "Distance en bateau"
+
+#: hawk_gui/templatetags/minecraft.py:246
+msgid "Distance by Pig"
+msgstr "Distance à dos de cochon"
+
+#: hawk_gui/templatetags/minecraft.py:247
+msgid "Distance by Horse"
+msgstr "Distance à cheval"
+
+#: hawk_gui/templatetags/minecraft.py:248
+msgid "Distance by Elytra"
+msgstr "Distance en élytres"
+
+#: hawk_gui/templatetags/minecraft.py:249
+msgid "Jumps"
+msgstr "Sauts"
+
+#: hawk_gui/templatetags/minecraft.py:250
+msgid "Damage Dealt"
+msgstr "Dégâts infligés"
+
+#: hawk_gui/templatetags/minecraft.py:251
+msgid "Damage Dealt (Absorbed)"
+msgstr "Dégâts infligés (absorbés)"
+
+#: hawk_gui/templatetags/minecraft.py:252
+msgid "Damage Dealt (Resisted)"
+msgstr "Dégâts infligés (résistés)"
+
+#: hawk_gui/templatetags/minecraft.py:253
+msgid "Damage Taken"
+msgstr "Dégâts reçus"
+
+#: hawk_gui/templatetags/minecraft.py:254
+msgid "Damage Absorbed"
+msgstr "Dégâts absorbés"
+
+#: hawk_gui/templatetags/minecraft.py:255
+msgid "Damage Resisted"
+msgstr "Dégâts résistés"
+
+#: hawk_gui/templatetags/minecraft.py:256
+msgid "Damage Blocked by Shield"
+msgstr "Dégâts bloqués par le bouclier"
+
+#: hawk_gui/templatetags/minecraft.py:257
+msgid "Number of Deaths"
+msgstr "Nombre de morts"
+
+#: hawk_gui/templatetags/minecraft.py:258
+msgid "Mob Kills"
+msgstr "Créatures tuées"
+
+#: hawk_gui/templatetags/minecraft.py:259
+msgid "Player Kills"
+msgstr "Personnes tué(e)s"
+
+#: hawk_gui/templatetags/minecraft.py:260
+msgid "Items Dropped"
+msgstr "Objets jetés"
+
+#: hawk_gui/templatetags/minecraft.py:261
+msgid "Items Enchanted"
+msgstr "Objets enchantés"
+
+#: hawk_gui/templatetags/minecraft.py:262
+msgid "Animals Bred"
+msgstr "Animaux engendrés"
+
+#: hawk_gui/templatetags/minecraft.py:263
+msgid "Ate"
+msgstr "Mangé"
+
+#: hawk_gui/templatetags/minecraft.py:264
+msgid "Fish Caught"
+msgstr "Poissons pêchés"
+
+#: hawk_gui/templatetags/minecraft.py:265
+msgid "Talked to Villagers"
+msgstr "Villageois abordés"
+
+#: hawk_gui/templatetags/minecraft.py:266
+msgid "Traded with Villagers"
+msgstr "Échanges avec les villageois"
+
+#: hawk_gui/templatetags/minecraft.py:267
+msgid "Cake Slices Eaten"
+msgstr "Parts de gâteau mangées"
+
+#: hawk_gui/templatetags/minecraft.py:268
+msgid "Cauldrons Filled"
+msgstr "Chaudrons remplis"
+
+#: hawk_gui/templatetags/minecraft.py:269
+msgid "Water Taken from Cauldron"
+msgstr "Eau prise de chaudrons"
+
+#: hawk_gui/templatetags/minecraft.py:270
+msgid "Armor Pieces Cleaned"
+msgstr "Pièces d'armure nettoyées"
+
+#: hawk_gui/templatetags/minecraft.py:271
+msgid "Banners Cleaned"
+msgstr "Bannières nettoyées"
+
+#: hawk_gui/templatetags/minecraft.py:272
+msgid "Brewing Stand Used"
+msgstr "Alambic utilisé"
+
+#: hawk_gui/templatetags/minecraft.py:273
+msgid "Beacon Used"
+msgstr "Balise utilisée"
+
+#: hawk_gui/templatetags/minecraft.py:274
+msgid "Crafting Table Used"
+msgstr "Établi utilisé"
+
+#: hawk_gui/templatetags/minecraft.py:275
+msgid "Furnace Used"
+msgstr "Fourneau utilisé"
+
+#: hawk_gui/templatetags/minecraft.py:276
+msgid "Blast Furnace Used"
+msgstr "Haut fourneau utilisé"
+
+#: hawk_gui/templatetags/minecraft.py:277
+msgid "Campfire Used"
+msgstr "Feu de camp utilisé"
+
+#: hawk_gui/templatetags/minecraft.py:278
+msgid "Cartography Table Used"
+msgstr "Table de cartographe utilisée"
+
+#: hawk_gui/templatetags/minecraft.py:279
+msgid "Lectern Used"
+msgstr "Pupitre utilisé"
+
+#: hawk_gui/templatetags/minecraft.py:280
+msgid "Loom Used"
+msgstr "Métier à tisser utilisé"
+
+#: hawk_gui/templatetags/minecraft.py:281
+msgid "Smoker Used"
+msgstr "Fumoir utilisé"
+
+#: hawk_gui/templatetags/minecraft.py:282
+msgid "Stonecutter Used"
+msgstr "Tailleur de pierres utilisé"
+
+#: hawk_gui/templatetags/minecraft.py:283
+msgid "Dispensers Searched"
+msgstr "Distributeurs inspectés"
+
+#: hawk_gui/templatetags/minecraft.py:284
+msgid "Droppers Searched"
+msgstr "Droppers inspectés"
+
+#: hawk_gui/templatetags/minecraft.py:285
+msgid "Hoppers Searched"
+msgstr "Entonnoirs inspectés"
+
+#: hawk_gui/templatetags/minecraft.py:286
+msgid "Chests Opened"
+msgstr "Coffres ouverts"
+
+#: hawk_gui/templatetags/minecraft.py:287
+msgid "Trapped Chests Triggered"
+msgstr "Coffres piégés déclanchés"
+
+#: hawk_gui/templatetags/minecraft.py:288
+msgid "Ender Chests Opened"
+msgstr "Coffres de l'Ender ouverts"
+
+#: hawk_gui/templatetags/minecraft.py:289
+msgid "Note Blocks played"
+msgstr "Blocs musicaux joués"
+
+#: hawk_gui/templatetags/minecraft.py:290
+msgid "Note Blocks tuned"
+msgstr "Blocs musicaux accordés"
+
+#: hawk_gui/templatetags/minecraft.py:291
+msgid "Plants Potted"
+msgstr "Plantes mises en pot"
+
+#: hawk_gui/templatetags/minecraft.py:292
+msgid "Music Discs Played"
+msgstr "Disques de musique joués"
+
+#: hawk_gui/templatetags/minecraft.py:293
+msgid "Times Slept in a Bed"
+msgstr "Nuits passées dans un lit"
+
+#: hawk_gui/templatetags/minecraft.py:294
+msgid "Shulker Boxes Cleaned"
+msgstr "Boîtes de Shulker nettoyées"
+
+#: hawk_gui/templatetags/minecraft.py:295
+msgid "Shulker Boxes Opened"
+msgstr "Boîtes de Shulker ouvertes"
+
+#: hawk_gui/templatetags/minecraft.py:296
+msgid "Distance Walked on Water"
+msgstr "Distance sur l'eau"
+
+#: hawk_gui/templatetags/minecraft.py:297
+msgid "Since Last Rest"
+msgstr "Temps depuis le dernier repos"
+
+#: hawk_gui/templatetags/minecraft.py:298
+msgid "Barrels Opened"
+msgstr "Tonneaux ouverts"
+
+#: hawk_gui/templatetags/minecraft.py:299
+msgid "Bells Rung"
+msgstr "Cloches sonnées"
+
+#: hawk_gui/templatetags/minecraft.py:300
+msgid "Raids Triggered"
+msgstr "Invasions déclanchées"
+
+#: hawk_gui/templatetags/minecraft.py:301
+msgid "Raids Won"
+msgstr "Invasions vaincues"
+
+#: hawk_gui/templatetags/minecraft.py:306
+msgid "The number of times \"Save and quit to title\" has been clicked."
+msgstr "Le nombre de fois que « Sauvegarder et quitter » a été cliqué."
+
+#: hawk_gui/templatetags/minecraft.py:308
+msgid "The total amount of time played."
+msgstr "Le temps total joué."
+
+#: hawk_gui/templatetags/minecraft.py:309
+msgid "The time since the player's last death."
+msgstr "Le temps écoulé depuis la dernière mort."
+
+#: hawk_gui/templatetags/minecraft.py:310
+msgid "The time the player has held down the sneak button."
+msgstr "La durée pendant laquelle le bouton d'accroupissement a été maintenu."
+
+#: hawk_gui/templatetags/minecraft.py:311
+msgid "The total distance walked."
+msgstr "La distance totale marchée."
+
+#: hawk_gui/templatetags/minecraft.py:312
+msgid "The total distance walked while sneaking."
+msgstr "La distance totale marchée en étant accroupi(e)."
+
+#: hawk_gui/templatetags/minecraft.py:313
+msgid "The total distance sprinted."
+msgstr "La distance totale courue."
+
+#: hawk_gui/templatetags/minecraft.py:314
+msgid "The total distance covered with sprint-swimming."
+msgstr "La distance totale parcourue en nageant rapidement."
+
+#: hawk_gui/templatetags/minecraft.py:316
+msgid ""
+"The total distance fallen, excluding jumping. If the player falls more than one "
+"block, the entire jump is counted."
+msgstr ""
+"La distance totale chue, en excluant les sauts. Les chutes de plus d'un bloc de "
+"haut sont comptées."
+
+#: hawk_gui/templatetags/minecraft.py:319
+msgid "The total distance traveled up ladders or vines."
+msgstr "La distance totale parcourue sur des échelles ou autres vignes."
+
+#: hawk_gui/templatetags/minecraft.py:321
+msgid ""
+"The total distance traveled upwards and forwards at the same time, while more "
+"than one block above the ground."
+msgstr ""
+"La distance totale parcourue vers le haut et l'avant en même temps, tout en étant "
+"à plus d'un bloc du sol."
+
+#: hawk_gui/templatetags/minecraft.py:323 hawk_gui/templatetags/minecraft.py:324
+msgid "The total distance walked underwater."
+msgstr "La distance totale marchée sous l'eau."
+
+#: hawk_gui/templatetags/minecraft.py:325
+msgid "The total distance traveled by minecarts."
+msgstr "La distance totale parcourue à bort d'un wagonnet."
+
+#: hawk_gui/templatetags/minecraft.py:326
+msgid "The total distance traveled by boats."
+msgstr "La distance totale parcourue en bateau."
+
+#: hawk_gui/templatetags/minecraft.py:327
+msgid "The total distance traveled by pigs via saddles."
+msgstr "La distance totale parcourue sur le dos d'un cochon scellé."
+
+#: hawk_gui/templatetags/minecraft.py:328
+msgid "The total distance traveled by horses."
+msgstr "La distance totale parcourue à cheval."
+
+#: hawk_gui/templatetags/minecraft.py:329
+msgid "The total distance traveled by elytra."
+msgstr "La distance totale parcourue en élytres."
+
+#: hawk_gui/templatetags/minecraft.py:330
+msgid "The total number of jumps performed."
+msgstr "Le nombre totale de sauts effectués."
+
+#: hawk_gui/templatetags/minecraft.py:332
+msgid ""
+"The amount of damage the player has dealt (including towards mobs). Only includes "
+"melee attacks."
+msgstr ""
+"La quantité de dégâts infligés, que ce soit contre les autres joueurs ou contre "
+"les créatures. Ne prends en compte que les dégâts de mêlée."
+
+#: hawk_gui/templatetags/minecraft.py:335
+msgid "The amount of damage the player has dealt that were absorbed."
+msgstr "La quantité de dégâts infligés qu'ont été absorbés."
+
+#: hawk_gui/templatetags/minecraft.py:338
+msgid "The amount of damage the player has dealt that were resisted."
+msgstr "La quantité de dégâts infligés qu'ont été résistés."
+
+#: hawk_gui/templatetags/minecraft.py:340
+msgid "The amount of damage the player has taken."
+msgstr "La quantité de dégâts reçue."
+
+#: hawk_gui/templatetags/minecraft.py:342
+msgid ""
+"The amount of damage the player has absorbed (e.g. via the Absorption potion "
+"effect)."
+msgstr ""
+"La quantité de dégâts absorbés (par exemple, via l'effet de potion “Absorption”)."
+
+#: hawk_gui/templatetags/minecraft.py:345
+msgid "The amount of damage the player has resisted (e.g. using an armor)."
+msgstr "La quantité de dégâts résistés (par exemple, à l'aide d'une armure)."
+
+#: hawk_gui/templatetags/minecraft.py:348
+msgid "The amount of damage the player has blocked with a shield."
+msgstr "La quantité de dégâts bloqués par un bouclier."
+
+#: hawk_gui/templatetags/minecraft.py:350
+msgid "The number of times the player died."
+msgstr "Le nombre de fois que ce joueur ou cette joueuse est mort(e)."
+
+#: hawk_gui/templatetags/minecraft.py:351
+msgid "The number of mobs the player killed."
+msgstr "Le nombre de créatures tuées."
+
+#: hawk_gui/templatetags/minecraft.py:353
+msgid ""
+"The number of players the player killed. Indirect killings (such as pushing "
+"people off a cliff) do not count."
+msgstr ""
+"Le nombre de joueurs ou de joueuses tuées. Les meurtres indirects (par exemple, "
+"en poussant un joueur du haut d'une falaise) ne comptent pas."
+
+#: hawk_gui/templatetags/minecraft.py:356
+msgid "The number of items dropped. This does not include items dropped upon death."
+msgstr ""
+"Le nombre d'objets lâchés. Les objets laissés à la mort ne sont pas pris en "
+"compte."
+
+#: hawk_gui/templatetags/minecraft.py:358
+msgid "The number of items enchanted."
+msgstr "Le nombre d'objets enchantés."
+
+#: hawk_gui/templatetags/minecraft.py:359
+msgid "The number of times the player bred two mobs."
+msgstr "Le nombre de fois qu'un joueur ou qu'une joueuse a accouplé deux créatures."
+
+#: hawk_gui/templatetags/minecraft.py:360
+msgid "The number of times the player ate."
+msgstr "Le nombre de fois qu'un joueur ou qu'une joueuse a mangé."
+
+#: hawk_gui/templatetags/minecraft.py:361
+msgid "The number of fish caught."
+msgstr "Le nombre de poissons pêchés."
+
+#: hawk_gui/templatetags/minecraft.py:363
+msgid "The number of times interacted with villagers (opened the trading GUI)."
+msgstr ""
+"Le nombre d'interactions avec un villageois (autrement dit, le nombre de fois que "
+"l'interface d'échanges a été ouverte)."
+
+#: hawk_gui/templatetags/minecraft.py:365
+msgid "The number of times traded with villagers."
+msgstr "Le nombre d'échanges avec des villageois."
+
+#: hawk_gui/templatetags/minecraft.py:366
+msgid "The number of cake slices eaten."
+msgstr "Le nombre de tranches de gâteau mangées."
+
+#: hawk_gui/templatetags/minecraft.py:368
+msgid "The number of times the player filled cauldrons with water buckets."
+msgstr ""
+"Le nombre de fois qu'un joueur ou qu'une joueuse a rempli un chaudron avec un "
+"seau d'eau."
+
+#: hawk_gui/templatetags/minecraft.py:371
+msgid "The number of times the player took water from cauldrons with glass bottles."
+msgstr ""
+"Le nombre de fois que de l'eau a été retirée d'un chaudron avec une bouteille "
+"d'eau."
+
+#: hawk_gui/templatetags/minecraft.py:374
+msgid "The number of dyed leather armors washed with a cauldron."
+msgstr "Le nombre d'armures de cuir colorées qu'ont été nettoyées dans un chaudron."
+
+#: hawk_gui/templatetags/minecraft.py:377
+msgid "The number of banner patterns washed with a cauldron."
+msgstr "Le nombre de bannières qu'ont été nettoyées dans un chaudron."
+
+#: hawk_gui/templatetags/minecraft.py:380
+msgid "The number of times interacted with brewing stands."
+msgstr "Le nombre d'interactions avec des alambics."
+
+#: hawk_gui/templatetags/minecraft.py:382
+msgid "The number of times interacted with beacons."
+msgstr "Le nombre d'interactions avec des balises."
+
+#: hawk_gui/templatetags/minecraft.py:384
+msgid "The number of times interacted with crafting tables."
+msgstr "Le nombre d'interactions avec des établis."
+
+#: hawk_gui/templatetags/minecraft.py:387
+msgid "The number of times interacted with furnaces."
+msgstr "Le nombre d'interactions avec des fours."
+
+#: hawk_gui/templatetags/minecraft.py:390
+msgid "The number of times interacted with blast furnaces."
+msgstr "Le nombre d'interactions avec des hauts fourneaux."
+
+#: hawk_gui/templatetags/minecraft.py:393
+msgid "The number of times interacted with campfires."
+msgstr "Le nombre d'interactions avec des feux de camp."
+
+#: hawk_gui/templatetags/minecraft.py:396
+msgid "The number of times interacted with cartography tables."
+msgstr "Le nombre d'interactions avec des tables de cartographe."
+
+#: hawk_gui/templatetags/minecraft.py:399
+msgid "The number of times interacted with lecterns."
+msgstr "Le nombre d'interactions avec des pupitres."
+
+#: hawk_gui/templatetags/minecraft.py:401
+msgid "The number of times interacted with looms."
+msgstr "Le nombre d'interactions avec des métiers à tisser."
+
+#: hawk_gui/templatetags/minecraft.py:402
+msgid "The number of times interacted with smokers."
+msgstr "Le nombre d'interactions avec des fumoirs."
+
+#: hawk_gui/templatetags/minecraft.py:404
+msgid "The number of times interacted with stonecutters."
+msgstr "Le nombre d'interactions avec des tailleurs de pierre."
+
+#: hawk_gui/templatetags/minecraft.py:406
+msgid "The number of times interacted with dispensers."
+msgstr "Le nombre d'interactions avec des distributeurs."
+
+#: hawk_gui/templatetags/minecraft.py:407
+msgid "The number of times interacted with droppers."
+msgstr "Le nombre d'interactions avec des droppers."
+
+#: hawk_gui/templatetags/minecraft.py:408
+msgid "The number of times interacted with hoppers."
+msgstr "Le nombre d'interactions avec des entonnoirs."
+
+#: hawk_gui/templatetags/minecraft.py:409
+msgid "The number of times the player opened chests."
+msgstr "Le nombre de fois qu'un coffre a été ouvert."
+
+#: hawk_gui/templatetags/minecraft.py:411
+msgid "The number of times the player opened trapped chests."
+msgstr "Le nombre de fois qu'un coffre piégé a été ouvert."
+
+#: hawk_gui/templatetags/minecraft.py:414
+msgid "The number of times the player opened ender chests."
+msgstr "Le nombre de fois qu'un coffre de l'Ender a été ouvert."
+
+#: hawk_gui/templatetags/minecraft.py:416
+msgid "The number of note blocks hit."
+msgstr "Le nombre de blocs musicaux frappés."
+
+#: hawk_gui/templatetags/minecraft.py:417
+msgid "The number of times interacted with note blocks."
+msgstr "Le nombre d'interactions avec des blocs musicaux."
+
+#: hawk_gui/templatetags/minecraft.py:418
+msgid "The number of plants potted onto flower pots."
+msgstr "Le nombre de plantes plantées dans des pots de fleur."
+
+#: hawk_gui/templatetags/minecraft.py:419
+msgid "The number of music discs played on a jukebox."
+msgstr "Le nombre de disques joués dans un lecteur de musique."
+
+#: hawk_gui/templatetags/minecraft.py:420
+msgid "The number of times the player has slept in a bed."
+msgstr "Le nombre de fois qu'un joueur ou qu'une joueuse a dormi dans un lit."
+
+#: hawk_gui/templatetags/minecraft.py:422
+msgid "The number of times the player has washed a Shulker Box with a cauldron."
+msgstr "Le nombre de fois qu'une boîte de Shulker a été nettoyée dans un chaudron."
+
+#: hawk_gui/templatetags/minecraft.py:425
+msgid "The number of times the player has opened a Shulker Box."
+msgstr "Le nombre de fois qu'une boîte de Shulker a été ouverte."
+
+#: hawk_gui/templatetags/minecraft.py:428
+msgid "The distance covered while bobbing up and down over water."
+msgstr "La distance parcourue en bougeant de haut en bas au-dessus de l'eau."
+
+#: hawk_gui/templatetags/minecraft.py:430
+msgid "The time since the player's last rest."
+msgstr "La durée écoulée depuis le dernier repos."
+
+#: hawk_gui/templatetags/minecraft.py:431
+msgid "The number of times the player has opened a barrel."
+msgstr "Le nombre de fois qu'un tonneau a été ouvert."
+
+#: hawk_gui/templatetags/minecraft.py:432
+msgid "The number of times the player has rung a bell."
+msgstr "Le nombre de fois qu'une cloche a été sonnée."
+
+#: hawk_gui/templatetags/minecraft.py:433
+msgid "The number of times the player has triggered a raid."
+msgstr "Le nombre de fois qu'une invasion a été déclenchée."
+
+#: hawk_gui/templatetags/minecraft.py:434
+msgid "The number of times the player has won a raid."
+msgstr "Le nombre de fois qu'une évasion a été vaincue."
+
+#~ msgid "This section isn't available yet."
+#~ msgstr "Cette section n'est pas encore disponible."
+
+#~ msgid ""
+#~ "When it will be added (soon), your statistics by player will appear here (for "
+#~ "all your reports, including this one)."
+#~ msgstr ""
+#~ "Quand elle sera ajoutée, prochainement, vos statistiques par joueur "
+#~ "apparaîtront ici (pour tous vos rapports, incluant celui-ci)."
