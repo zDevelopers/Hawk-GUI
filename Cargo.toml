@@ -11,7 +11,7 @@ failure = "0.1.*"
 failure_derive = "0.1.*"
 insta = { version = "1.3.*", features = [ "glob"] }
 lazy_static = "1.4.*"
-pyo3 = { version = "0.12.*", features = ["extension-module"] }
+pyo3 = { version = "0.13.*", features = ["extension-module"] }
 regex = "1.4.*"
 roman = "0.1.*"
 serde = "1.0.*"
