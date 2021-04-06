@@ -2,7 +2,7 @@ secret_key = ""
 
 [databases.default]
 host = ""
-post = ""
+port = ""
 name = ""
 user = ""
 password = ""
