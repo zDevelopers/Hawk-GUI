@@ -11,6 +11,7 @@ static/dist/css/*.css
 static/dist/css/*.css.map
 
 config.toml
+maintenance
 
 ### Django ###
 *.log
