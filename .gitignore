@@ -10,6 +10,7 @@ user-generated-content
 static/dist/css/*.css
 static/dist/css/*.css.map
 
+config.toml
 
 ### Django ###
 *.log

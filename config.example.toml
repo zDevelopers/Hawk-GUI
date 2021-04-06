@@ -1,0 +1,8 @@
+secret_key = ""
+
+[databases.default]
+host = ""
+post = ""
+name = ""
+user = ""
+password = ""
