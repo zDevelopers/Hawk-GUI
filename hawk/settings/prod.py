@@ -1,4 +1,5 @@
 import toml
+import pymysql
 
 from .base import *  # noqa
 
@@ -26,8 +27,14 @@ DATABASES = {
         "HOST": config["databases"]["default"].get("host", ""),
         "PORT": config["databases"]["default"].get("port", ""),
         "CONN_MAX_AGE": 600,
+        "init_command": "SET sql_modes = 'STRICT_TRANS_TABLES'",
         "OPTIONS": {
             "charset": "utf8mb4",
         },
     },
 }
+
+# Enable PyMySQL compatibility layer, as Django expect MySQLdb (from
+# mysqlclient), but it's a pain to install on CentOS.
+pymysql.version_info = (2, 0, 3, "final", 0)
+pymysql.install_as_MySQLdb()
