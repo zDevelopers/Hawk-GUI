@@ -12,11 +12,11 @@ except OSError:
     config = {}
 
 DEBUG = False
-ALLOWED_HOSTS = [
-    'hawk.carrade.eu'
-]
 
+ALLOWED_HOSTS = config.get("allowed_hosts", ['hawk.carrade.eu'])
 SECRET_KEY = config["secret_key"]
+
+CONTENTS_DIR = config.get("contents_dir", BASE_DIR / ".." / "hawk-data")
 
 DATABASES = {
     "default": {
@@ -38,3 +38,7 @@ DATABASES = {
 # mysqlclient), but it's a pain to install on CentOS.
 pymysql.version_info = (2, 0, 3, "final", 0)
 pymysql.install_as_MySQLdb()
+
+STATIC_ROOT = CONTENTS_DIR / "static"
+MEDIA_ROOT = CONTENTS_DIR / "user-generated-content"
+MAINTENANCE_MODE_STATE_FILE_PATH = CONTENTS_DIR / "maintenance"

@@ -95,10 +95,10 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, "locale")]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static", "dist")]
+STATICFILES_DIRS = [BASE_DIR / "static" / "dist"]
 STATIC_URL = "/static/"
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "user-generated-content")
+MEDIA_ROOT = BASE_DIR / "user-generated-content"
 MEDIA_URL = "user-generated-content/"
 
 MAINTENANCE_MODE_STATE_FILE_PATH = "maintenance"

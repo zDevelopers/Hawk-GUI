@@ -1,4 +1,9 @@
 secret_key = ""
+allowed_hosts = [
+    "hawk.carrade.eu"
+]
+
+contents_dir = "/home/hawk/data"
 
 [databases.default]
 host = ""
