@@ -1,6 +1,8 @@
 import toml
 import pymysql  # noqa - only installed on the production server
 
+from pathlib import Path
+
 from .base import *  # noqa
 
 config_path = os.environ.get("HAWK_CONFIG", str(BASE_DIR / "config.toml"))
@@ -16,7 +18,7 @@ DEBUG = False
 ALLOWED_HOSTS = config.get("allowed_hosts", ['hawk.carrade.eu'])
 SECRET_KEY = config["secret_key"]
 
-CONTENTS_DIR = config.get("contents_dir", BASE_DIR / ".." / "hawk-data")
+CONTENTS_DIR = Path(config.get("contents_dir", BASE_DIR / ".." / "hawk-data"))
 
 DATABASES = {
     "default": {
