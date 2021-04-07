@@ -1,5 +1,5 @@
 import toml
-import pymysql
+import pymysql  # noqa - only installed on the production server
 
 from .base import *  # noqa
 

@@ -46,7 +46,7 @@ class Report(models.Model):
     """
     The slug of the report, used in the URL.
     """
-    slug = models.SlugField(_("Slug"), max_length=8)
+    slug = models.SlugField(_("Slug"), max_length=8, index=True, unique=True)
 
     """
     The report's UUID, used for updates.
