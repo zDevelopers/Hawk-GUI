@@ -54,8 +54,15 @@ LOGGING = {
     },
     'root': {
         'handlers': ['file'],
-        'level': 'DEBUG',
+        'level': 'WARNING',
     },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    }
 }
 
 STATIC_ROOT = CONTENTS_DIR / "static"
