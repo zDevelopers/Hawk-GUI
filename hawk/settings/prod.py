@@ -1,7 +1,8 @@
-import toml
 import pymysql  # noqa - only installed on the production server
+import sentry_sdk  # noqa - only installed on the production server
+import toml
 
-from pathlib import Path
+from sentry_sdk.integrations.django import DjangoIntegration  # noqa - only installed on the production server
 
 from .base import *  # noqa
 
@@ -55,15 +56,23 @@ LOGGING = {
     'root': {
         'handlers': ['file'],
         'level': 'WARNING',
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
     }
 }
+
+if "sentry_dsn" in config and config["sentry_dsn"]:
+    sentry_sdk.init(
+        dsn=config["sentry_dsn"],
+        integrations=[DjangoIntegration()],
+
+        # Set traces_sample_rate to 1.0 to capture 100%
+        # of transactions for performance monitoring.
+        # We recommend adjusting this value in production.
+        traces_sample_rate=1.0,
+
+        # As we don't really have users (at least for non-administrative
+        # users), it's pointless to send PII data with requests.
+        send_default_pii=False
+    )
 
 STATIC_ROOT = CONTENTS_DIR / "static"
 MEDIA_ROOT = CONTENTS_DIR / "user-generated-content"

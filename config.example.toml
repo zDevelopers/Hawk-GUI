@@ -6,6 +6,8 @@ allowed_hosts = [
 contents_dir = "/home/hawk/data"
 logs_dir = "/var/log/hawk"
 
+sentry_dsn = ""
+
 [databases.default]
 host = ""
 port = ""
