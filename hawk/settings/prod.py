@@ -19,6 +19,7 @@ ALLOWED_HOSTS = config.get("allowed_hosts", ['hawk.carrade.eu'])
 SECRET_KEY = config["secret_key"]
 
 CONTENTS_DIR = Path(config.get("contents_dir", BASE_DIR / ".." / "hawk-data"))
+LOGS_DIR = Path(config.get("logs_dir", CONTENTS_DIR / "logs"))
 
 DATABASES = {
     "default": {
@@ -40,6 +41,22 @@ DATABASES = {
 # mysqlclient), but it's a pain to install on CentOS.
 pymysql.version_info = (2, 0, 3, "final", 0)
 pymysql.install_as_MySQLdb()
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': LOGS_DIR / "django.log",
+        },
+    },
+    'root': {
+        'handlers': ['file'],
+        'level': 'DEBUG',
+    },
+}
 
 STATIC_ROOT = CONTENTS_DIR / "static"
 MEDIA_ROOT = CONTENTS_DIR / "user-generated-content"
