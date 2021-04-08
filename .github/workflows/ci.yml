@@ -37,12 +37,12 @@ jobs:
         run: 'echo "$SSH_KEY" > id_rsa'
         shell: bash
         env:
-          SSH_KEY: ${{ HAWK_SSH_KEY }}
+          SSH_KEY: ${{ secrets.HAWK_SSH_KEY }}
       - name: Write Ansible Vault password to file
         run: 'echo "$VAULT_PASS" > vault_password'
         shell: bash
         env:
-          VAULT_PASS: ${{ HAWK_ANSIBLE_VAULT_PASSWORD }}
+          VAULT_PASS: ${{ secrets.HAWK_ANSIBLE_VAULT_PASSWORD }}
       - name: Run Ansible playbook to deploy to production
         run: |
           ansible-playbook --vault-password-file vault_password --private-key id_rsa playbook.yml
