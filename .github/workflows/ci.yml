@@ -34,7 +34,10 @@ jobs:
         with:
           repository: "zDevelopers/HawkGUI-Ansible"
       - name: Write the SSH key to file
-        run: 'echo "$SSH_KEY" > id_rsa'
+        run: |
+          echo "$SSH_KEY" > id_rsa
+          # Required else ssh reject the private key because of “unsafe permissions”.
+          chmod 0400 id_rsa
         shell: bash
         env:
           SSH_KEY: ${{ secrets.HAWK_SSH_KEY }}
