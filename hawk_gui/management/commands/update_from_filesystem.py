@@ -15,7 +15,7 @@ class Command(BaseCommand):
     help = "Imports existing reports into the database, or updates them if they already exist."
 
     def handle(self, *args, **options):
-        for report_dir in glob(settings.MEDIA_ROOT + "/reports/**/*/"):
+        for report_dir in glob(str(settings.MEDIA_ROOT) + "reports/**/*/"):
             report_dir = Path(report_dir)
             report_filename = report_dir / "report.json"
             report_slug = report_dir.name
@@ -30,10 +30,10 @@ class Command(BaseCommand):
 
             # Filenames relative to MEDIA_ROOT (used for db storage)
             relative_raw_report_filename = str(report_dir / "raw-report.json").replace(
-                settings.MEDIA_ROOT + "/", ""
+                str(settings.MEDIA_ROOT) + "/", ""
             )
             relative_report_filename = str(report_filename).replace(
-                settings.MEDIA_ROOT + "/", ""
+                str(settings.MEDIA_ROOT) + "/", ""
             )
 
             with report_filename.open() as report_file:
