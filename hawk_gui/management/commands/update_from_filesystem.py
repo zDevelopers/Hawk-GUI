@@ -15,7 +15,7 @@ class Command(BaseCommand):
     help = "Imports existing reports into the database, or updates them if they already exist."
 
     def handle(self, *args, **options):
-        for report_dir in glob(str(settings.MEDIA_ROOT) + "reports/**/*/"):
+        for report_dir in glob(str(settings.MEDIA_ROOT) + "/reports/**/*/"):
             report_dir = Path(report_dir)
             report_filename = report_dir / "report.json"
             report_slug = report_dir.name
