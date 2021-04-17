@@ -103,3 +103,7 @@ MEDIA_URL = "user-generated-content/"
 
 MAINTENANCE_MODE_STATE_FILE_PATH = "maintenance"
 MAINTENANCE_MODE_RETRY_AFTER = 60  # one minute
+
+HAWK = {
+    "SLUG_LENGTH": 8
+}

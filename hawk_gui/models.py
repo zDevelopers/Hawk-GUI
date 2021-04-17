@@ -1,6 +1,7 @@
 import random
-
 import string
+
+from django.conf import settings
 from django.db import models
 from django.urls import reverse_lazy
 from django.utils.html import format_html
@@ -140,7 +141,7 @@ class Report(models.Model):
                 slug = "".join(
                     random.choices(
                         string.ascii_lowercase + string.digits,
-                        k=self._meta.get_field("slug").max_length,
+                        k=settings.HAWK['SLUG_LENGTH'],
                     )
                 )
                 # We said unique slug
