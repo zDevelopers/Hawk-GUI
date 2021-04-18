@@ -44,6 +44,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "hawk_gui.context_processors.inject_hawk_settings",
             ]
         },
     }
@@ -105,5 +106,6 @@ MAINTENANCE_MODE_STATE_FILE_PATH = "maintenance"
 MAINTENANCE_MODE_RETRY_AFTER = 60  # one minute
 
 HAWK = {
-    "SLUG_LENGTH": 8
+    "SLUG_LENGTH": 8,
+    'TRANSLATIONS_CONTRIBUTION_LINK': 'https://poeditor.com/join/project?hash=0W06oCXfrR'
 }
