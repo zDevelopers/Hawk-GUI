@@ -2,7 +2,7 @@
 
 <span class="has-minecraft-{% if item_enchantments %}aqua{% else %}white{% endif %}-color">
     {% if item_name %}
-        {{ item_name }}
+        {{ item_name | minecraft_json }}
         {% if not item_enchantments %}<br /><span class="has-minecraft-gray-color">{{ item.id | name }}</span><br />{% endif %}
     {% else %}
         {{ item.id | name }}

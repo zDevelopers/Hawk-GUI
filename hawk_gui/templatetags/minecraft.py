@@ -1,5 +1,6 @@
 import json
 import os
+from json import JSONDecodeError
 from uuid import UUID
 
 from Levenshtein import distance
@@ -18,7 +19,7 @@ register = template.Library()
 
 
 @register.filter
-def minecraft(value):
+def minecraft(value: str):
     """
     Converts a Minecraft formatted string to HTML.
     :param value: The Minecraft formatted string.
@@ -28,13 +29,42 @@ def minecraft(value):
 
 
 @register.filter
-def strip_minecraft(value):
+def strip_minecraft(value: str):
     """
     Converts a Minecraft formatted string to HTML.
     :param value: The Minecraft formatted string.
     :return: The HTML conversion.
     """
     return mark_safe(strip_minecraft_color_codes(value))
+
+
+@register.filter
+def minecraft_json(value: str):
+    """
+    Converts a Minecraft JSON Component Text to HTML.
+    As for now, this is a very partial support, only to
+    handle text—colours and formatting are not supported.
+    In the future, full support will be added.
+
+    See zDevelopers/Hawk-GUI#6.
+
+    :param value: The Minecraft formatted string. If it looks
+    like JSON, we try to parse it. Else we fallback to naive
+    Minecraft format.
+    :return: The HTML conversion.
+    """
+    try:
+        if value.startswith("{"):
+            raw_text = json.loads(value)
+            text = raw_text['text'] if 'text' in raw_text else ''
+            if 'extra' in raw_text:
+                for extra in raw_text['extra']:
+                    text += extra['text'] if 'text' in extra else ''
+            return mark_safe(parse_minecraft_color_codes(text))
+        else:
+            return mark_safe(parse_minecraft_color_codes(value))
+    except JSONDecodeError:
+        return mark_safe(parse_minecraft_color_codes(value))
 
 
 @register.filter
