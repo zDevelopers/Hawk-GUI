@@ -1,0 +1,48 @@
+{% load i18n humanize %}
+{% load minecraft hawk_ui %}
+
+<div class="columns is-vcentered">
+    <div class="column is-7">
+        <h1 class="title">
+            {{ report.title | minecraft }}
+        </h1>
+        <h2 class="subtitle">
+            {% if report.settings.players_count %}
+                {% blocktrans count count=report.players|length with written_number=report.players|length|apnumber|title %}
+                    {{ written_number }} player
+                {% plural %}
+                    {{ written_number }} players
+                {% endblocktrans %}
+            {% endif %}
+
+            {% if report.settings.players_count and report.settings.date %} - {% endif %}
+
+            {% if report.settings.date %}
+                <time datetime="{{ report.settings.date }}" title="{{ report.date | iso_to_datetime | date }}">{{ report.date | iso_to_datetime | naturaltime }}</time>
+            {% endif %}
+        </h2>
+    </div>
+
+    <div class="column is-5 has-text-right uhc-winners">
+        {% if report.settings.winners and report.winners %}
+            <aside class="chest">
+                <h3 class="chest-title is-all-caps">
+                    {% blocktrans count count=report.winners|length %}
+                        Winner
+                    {% plural %}
+                        Winners
+                    {% endblocktrans %}
+                </h3>
+                <ul>
+                    {% for winner in report.winners|dictsort:"name" %}
+                        <li>
+                            <figure class="image minecraft-tooltip" data-tooltip="{{ winner.name }}">
+                                <img src="{{ winner | head:80 }}" alt="{{ winner.name }}" />
+                            </figure>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </aside>
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="columns">
+    {% if report.settings.summary.history %}
+        <div class="column">
+            {% include "sections/summary/history.html" %}
+        </div>
+    {% endif %}
+
+    {% if report.settings.summary.players %}
+        <div class="column">
+            {% include "sections/summary/players.html" %}
+        </div>
+    {% endif %}
+</div>

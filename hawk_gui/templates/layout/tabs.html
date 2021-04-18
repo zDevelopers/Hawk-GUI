@@ -1,0 +1,25 @@
+{% load i18n %}
+
+<nav class="tabs is-boxed is-fullwidth">
+    <div class="container">
+        <ul>
+            {% if report.settings.summary.enabled %}
+                <li {% if default_tab == 'summary' %}class="is-active"{% endif %}>
+                    <a class="js-tab-link" href="#summary" data-target="summary">{% trans "Game Summary" %}</a>
+                </li>
+            {% endif %}
+
+            {% if report.settings.damages.enabled %}
+                <li {% if default_tab == 'damages' %}class="is-active"{% endif %}>
+                    <a class="js-tab-link" href="#damages" data-target="damages">{% trans "Damages and Regenerations" %}</a>
+                </li>
+            {% endif %}
+
+            {% if report.settings.players.enabled %}
+                <li {% if default_tab == 'players' %}class="is-active"{% endif %}>
+                    <a class="js-tab-link" href="#players" data-target="players">{% trans "Players and Statistics" %}</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

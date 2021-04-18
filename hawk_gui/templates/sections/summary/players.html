@@ -1,0 +1,48 @@
+{% load i18n %}
+{% load minecraft hawk_ui %}
+
+<article class="chest teams-list">
+    <h3 class="chest-title">
+        {% if not report.settings.summary.teams or not report.teams %}
+            {% trans "Players" %}
+        {% else %}
+            {% trans "Teams" %}
+        {% endif %}
+    </h3>
+
+    {% if not report.settings.summary.teams or not report.teams %}
+        <ul class="players-list">
+            {% for player in report.players|dictsort:"name" %}
+                <li>
+                    {% player player large=True %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        {% for team in report.teams|dictsort:"name" %}
+            <h4 class="team-{{ team.color | color_to_css }} has-text-colored has-outline">{{ team.name }}</h4>
+
+            <ul class="players-list">
+            {% for player in team.players %}
+                <li>
+                    {% player player large=True %}
+                </li>
+            {% endfor %}
+            </ul>
+        {% endfor %}
+
+        {% if report.has_players_without_team %}
+            <h4 class="team-dark-gray has-text-colored has-outline">{% trans "Teamless players" %}</h4>
+
+            <ul class="players-list">
+                {% for player in report.players %}
+                    {% if not player.team %}
+                        <li>
+                            {% player player large=True %}
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endif %}
+</article>
